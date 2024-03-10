@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt'
 
 import { RegisterState } from '@/lib/definitions';
 import { RegisterSchema } from '@/lib/schemas';
+import { randomString } from '@/lib/utils'
 
 export async function register(prevState: RegisterState, formData: FormData) {
   const validatedFields = RegisterSchema.safeParse({
@@ -25,8 +26,10 @@ export async function register(prevState: RegisterState, formData: FormData) {
   const salt = await bcrypt.genSalt();
   const hash = await bcrypt.hash(pass1, salt);
 
+  const emailVerifyToken = randomString(64);
+
   try {
-    await prisma.user.create({ data: { username, realName: realname, email, passportNumber: passport.padStart(9, '-'), password: hash } });
+    await prisma.user.create({ data: { username, realName: realname, email, passportNumber: passport.padStart(9, '-'), password: hash, verifyToken: emailVerifyToken } });
 
     await resend.emails.send({
       from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
