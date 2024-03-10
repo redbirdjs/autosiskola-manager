@@ -12,7 +12,7 @@ model User {
   username String @db.VarChar(100)
   email String @db.VarChar(255) @unique
   realName String @db.VarChar(100)
-  idNumber String @db.VarChar(8) @unique
+  passportNumber String @db.VarChar(9) @unique
   password String @db.VarChar(255)
   verifyToken String? @db.VarChar(64) @unique
 
