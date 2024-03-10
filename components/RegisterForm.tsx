@@ -9,7 +9,6 @@ import { register } from '@/utils/actions'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
-import { STATIC_STATUS_PAGES } from 'next/dist/shared/lib/constants'
 
 export default function RegisterForm() {
   const initialState = { message: '', errors: {} };
