@@ -18,10 +18,10 @@ export async function register(prevState: RegisterState, formData: FormData) {
     pass2: formData.get('pass2'),
   });
 
-  if (!validatedFields.success) return { message: 'Register failed!', errors: validatedFields.error?.flatten().fieldErrors };
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
 
   const { username, realname, email, passport, pass1, pass2 } = validatedFields.data;
-  if (pass1 !== pass2) return { message: 'Register failed!', errors: { pass2: ['The two password doesn\'t match!'] } }
+  if (pass1 !== pass2) return { message: { title: '' }, errors: { pass2: ['The two password doesn\'t match!'] } }
 
   const salt = await bcrypt.genSalt();
   const hash = await bcrypt.hash(pass1, salt);
@@ -38,9 +38,9 @@ export async function register(prevState: RegisterState, formData: FormData) {
       text: 'You have registered successfully!'
     });
 
-    return { message: 'Registration successful!' }
+    return { message: { title: 'Registration successful!', description: 'You can now login. We have also sent you a verification email.' } }
   } catch(e) {
     if (e) console.error(e);
-    return { message: 'Register failed due to an error.' }
+    return { message: { title: 'Register failed due to an error.' } }
   }
 }

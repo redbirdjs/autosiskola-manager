@@ -1,6 +1,7 @@
 'use client'
 
 import { clsx } from 'clsx'
+import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 import { REGEXP_ONLY_DIGITS_AND_CHARS as Pattern } from 'input-otp'
 
@@ -10,9 +11,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
 
-export default function RegisterForm() {
-  const initialState = { message: '', errors: {} };
+export default function RegisterForm({ setMsg }: { setMsg: Function }) {
+  const initialState = { message: { title: '' }, errors: {} };
   const [state, dispatch] = useFormState(register, initialState);
+
+  useEffect(() => {
+    setMsg(state.message);
+  }, [setMsg, state]);
 
   return (
     <form action={dispatch} className='flex flex-col'>
