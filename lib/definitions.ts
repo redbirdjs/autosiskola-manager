@@ -7,7 +7,10 @@ export type RegisterState = {
     pass1?: string[]
     pass2?: string[]
   }
-  message: string | null
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
 }
 
 export type LoginState = {
@@ -15,5 +18,13 @@ export type LoginState = {
     email?: string[]
     password?: string[]
   }
-  message: string | null
+  message?: {
+    title?: string
+    description?: string
+  }
+}
+
+export type AlertMessageObject = {
+  title?: string
+  description?: string
 }
