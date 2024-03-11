@@ -22,7 +22,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
   return (
     <form action={dispatch} className='flex flex-col'>
       <label htmlFor="username" className='mb-2'>Username <Required /></label>
-      <Input name='username' className='mb-3' />
+      <Input name='username' className={clsx({ 'border-red-600': state.errors?.username }, 'mb-3')} />
       {
         state.errors?.username && (
           <div aria-live='polite' aria-atomic>
@@ -31,7 +31,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
         )
       }
       <label htmlFor="realname" className='mb-2'>Full Name <Required /></label>
-      <Input name='realname' className='mb-3' />
+      <Input name='realname' className={clsx({ 'border-red-600': state.errors?.realname }, 'mb-3')} />
       {
         state.errors?.realname && (
           <div aria-live='polite' aria-atomic>
@@ -40,7 +40,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
         )
       }
       <label htmlFor="email" className='mb-2'>Email address <Required /></label>
-      <Input name='email' className='mb-3' />
+      <Input name='email' className={clsx({ 'border-red-600': state.errors?.email }, 'mb-3')} />
       {
         state.errors?.email && (
           <div aria-live='polite' aria-atomic>
@@ -66,7 +66,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
         )
       }
       <label htmlFor="pass1" className='mb-2'>Password <Required /></label>
-      <Input name='pass1' type='password' className='mb-3' />
+      <Input name='pass1' type='password' className={clsx({ 'border-red-600': state.errors?.pass1 }, 'mb-3')} />
       {
         state.errors?.pass1 && (
           <div aria-live='polite' aria-atomic>
@@ -75,7 +75,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
         )
       }
       <label htmlFor="pass2" className='mb-2'>Repeat password <Required /></label>
-      <Input name='pass2' type='password' className='mb-3' />
+      <Input name='pass2' type='password' className={clsx({ 'border-red-600': state.errors?.pass2 }, 'mb-3')} />
       {
         state.errors?.pass2 && (
           <div aria-live='polite' aria-atomic>
