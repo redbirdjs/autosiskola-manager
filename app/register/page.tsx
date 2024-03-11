@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { AlertMessageObject } from '@/lib/definitions'
+import { UserPlus } from 'lucide-react'
 
 import Required from '@/components/RequiredStar'
 import RegisterForm from '@/components/RegisterForm'
@@ -20,8 +21,10 @@ export default function RegisterPage() {
     <main className='flex min-h-screen flex-row justify-between px-20 py-10'>
       {
         message?.title && (
-          <Alert variant={'default'} className='absolute w-[30vw] left-1/2 -translate-x-1/2'>
-            <AlertTitle className='text-center'>{ message.title }</AlertTitle>
+          <Alert variant={'default'} className='absolute w-max left-1/2 -translate-x-1/2'>
+            <UserPlus className='h-6 w-6' />
+            <AlertTitle>{ message.title }</AlertTitle>
+            <AlertDescription>{ message.description }</AlertDescription>
           </Alert>
         )
       }
