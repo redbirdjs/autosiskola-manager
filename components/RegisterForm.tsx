@@ -25,7 +25,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
       <Input name='username' className='mb-3' />
       {
         state.errors?.username && (
-          <div>
+          <div aria-live='polite' aria-atomic>
             <p className='text-red-600'>{ state.errors.username[0] }</p>
           </div>
         )
@@ -34,7 +34,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
       <Input name='realname' className='mb-3' />
       {
         state.errors?.realname && (
-          <div>
+          <div aria-live='polite' aria-atomic>
             <p className='text-red-600'>{ state.errors.realname[0] }</p>
           </div>
         )
@@ -43,7 +43,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
       <Input name='email' className='mb-3' />
       {
         state.errors?.email && (
-          <div>
+          <div aria-live='polite' aria-atomic>
             <p className='text-red-600'>{ state.errors.email[0] }</p>
           </div>
         )
@@ -60,7 +60,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
       )} />
       {
         state.errors?.passport && (
-          <div>
+          <div aria-live='polite' aria-atomic>
             <p className='text-red-600'>{ state.errors.passport[0] }</p>
           </div>
         )
@@ -69,7 +69,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
       <Input name='pass1' type='password' className='mb-3' />
       {
         state.errors?.pass1 && (
-          <div>
+          <div aria-live='polite' aria-atomic>
             <p className='text-red-600'>{ state.errors.pass1[0] }</p>
           </div>
         )
@@ -78,7 +78,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
       <Input name='pass2' type='password' className='mb-3' />
       {
         state.errors?.pass2 && (
-          <div>
+          <div aria-live='polite' aria-atomic>
             <p className='text-red-600'>{ state.errors.pass2[0] }</p>
           </div>
         )
