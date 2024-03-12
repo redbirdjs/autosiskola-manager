@@ -3,6 +3,10 @@
 import resend from '@/lib/resend'
 import prisma from '@/lib/prisma'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import moment from 'moment'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 import { LoginState, RegisterState } from '@/lib/definitions';
 import { LoginSchema, RegisterSchema } from '@/lib/schemas';
@@ -61,5 +65,17 @@ export async function login(prevState: LoginState, formData: FormData) {
   const checkPassword = await bcrypt.compare(password, user.password);
   if (!checkPassword) return { message: { title: '' }, errors: { 'email': ['Wrong email address / password!'] } };
 
-  return { message: { title: 'Successfully logged in!', description: 'You will be redirected to the dashboard in 3 seconds...' } };
+  const accessToken = jwt.sign({ email: user.email }, process.env.ACC_SECRET!, { expiresIn: process.env.ACC_EXPIRE });
+  const refreshToken = jwt.sign({ email: user.email }, process.env.REF_SECRET!, { expiresIn: process.env.REF_EXPIRE });
+
+  cookies().set('refreshToken', refreshToken, { secure: true, httpOnly: true });
+
+  return { message: { title: 'Successfully logged in!', description: 'You will be redirected to the dashboard in 3 seconds...' }, accessToken };
+}
+
+export async function logout() {
+  if (!cookies().has('refreshToken')) return;
+
+  cookies().delete('refreshToken');
+  redirect('/');
 }
