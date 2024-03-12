@@ -19,7 +19,7 @@ export default function LoginForm({ setMsg }: { setMsg: Function }) {
 
   return (
     <form action={dispatch} className='flex flex-col'>
-      <label htmlFor='email'>Email address</label>
+      <label htmlFor='email' className='mb-1'>Email address</label>
       <Input name='email' type='email' className={clsx({ 'border-red-600': state.errors?.email, 'mb-3': !state.errors?.email })} />
       {
         state.errors?.email && (
@@ -28,7 +28,7 @@ export default function LoginForm({ setMsg }: { setMsg: Function }) {
           </div>
         )
       }
-      <label htmlFor='password'>Password</label>
+      <label htmlFor='password' className='mb-1'>Password</label>
       <Input name='password' type='password' className={clsx({ 'border-red-600': state.errors?.password }, 'mb-1')} />
       {
         state.errors?.password && (
