@@ -4,8 +4,8 @@ import resend from '@/lib/resend'
 import prisma from '@/lib/prisma'
 import bcrypt from 'bcrypt'
 
-import { RegisterState } from '@/lib/definitions';
-import { RegisterSchema } from '@/lib/schemas';
+import { LoginState, RegisterState } from '@/lib/definitions';
+import { LoginSchema, RegisterSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 export async function register(prevState: RegisterState, formData: FormData) {
@@ -43,4 +43,23 @@ export async function register(prevState: RegisterState, formData: FormData) {
     if (e) console.error(e);
     return { message: { title: 'Register failed due to an error.' } }
   }
+}
+
+export async function login(prevState: LoginState, formData: FormData) {
+  const validatedFields = LoginSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  });
+
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { email, password } = validatedFields.data;
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) return { message: { title: '' }, errors: { 'email': ['Wrong email address / password!'] } };
+
+  const checkPassword = await bcrypt.compare(password, user.password);
+  if (!checkPassword) return { message: { title: '' }, errors: { 'email': ['Wrong email address / password!'] } };
+
+  return { message: { title: 'Successfully logged in!', description: 'You will be redirected to the dashboard in 3 seconds...' } };
 }
