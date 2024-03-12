@@ -37,7 +37,7 @@ export default function LoginForm({ setMsg }: { setMsg: Function }) {
           </div>
         )
       }
-      <p className='mb-3 underline'><Link href='/forgotten-password'>Forgot password?</Link></p>
+      <p className='mb-3 underline'><Link href='/forgot-password'>Forgot password?</Link></p>
       <Button type='submit' variant={'default'} className='my-5 self-center w-[50%]'>Login</Button>
     </form>
   )
