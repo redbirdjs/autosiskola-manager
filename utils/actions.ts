@@ -105,3 +105,24 @@ export async function passwordReminder(prevState: PasswordReminderState, formDat
 
   return { message: { title: 'Password reminder sent!', description: 'We have sent a link to the destination address, where you can change your password.' } }
 }
+
+export async function getUserData() {
+  const cookieStore = cookies();
+  
+  if (!cookieStore.has('refreshToken')) return;
+
+  let email = "";
+  jwt.verify(cookieStore.get('refreshToken')!.value, process.env.REF_SECRET!, (err, decoded: any) => {
+    if (err) {
+      cookieStore.delete('refreshToken');
+      return;
+    }
+
+    email = decoded.email;
+  });
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) return;
+
+  return { username: user.username, email: user.email }
+}
