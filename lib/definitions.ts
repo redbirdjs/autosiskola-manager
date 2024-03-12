@@ -24,6 +24,16 @@ export type LoginState = {
   }
 }
 
+export type PasswordReminderState = {
+  errors?: {
+    email?: string[]
+  }
+  message?: {
+    title?: string
+    description?: string
+  }
+}
+
 export type AlertMessageObject = {
   title?: string
   description?: string
