@@ -1,5 +1,7 @@
 'use client'
+
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { AlertMessageObject } from '@/lib/definitions'
 import { Check } from 'lucide-react'
@@ -11,8 +13,14 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
 export default function LoginPage() {
   const [message, setMessage] = useState<AlertMessageObject>({});
+  const router = useRouter();
 
   const setMsg = (message: AlertMessageObject) => {
+    if (message.title?.length != 0) {
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 3000);
+    }
     setMessage(message);
   }
 
