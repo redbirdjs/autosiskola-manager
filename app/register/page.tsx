@@ -22,7 +22,7 @@ export default function RegisterPage() {
       {
         message?.title && (
           <Alert variant={'default'} className='absolute w-max left-1/2 -translate-x-1/2'>
-            <UserPlus className='h-6 w-6' />
+            <UserPlus className='h-5 w-5' />
             <AlertTitle>{ message.title }</AlertTitle>
             <AlertDescription>{ message.description }</AlertDescription>
           </Alert>
