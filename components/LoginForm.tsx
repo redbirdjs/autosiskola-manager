@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { clsx } from 'clsx'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
@@ -36,7 +37,7 @@ export default function LoginForm({ setMsg }: { setMsg: Function }) {
           </div>
         )
       }
-      <p className='mb-3 underline'><a href='/forgotten-password'>Forgot password?</a></p>
+      <p className='mb-3 underline'><Link href='/forgotten-password'>Forgot password?</Link></p>
       <Button type='submit' variant={'default'} className='my-5 self-center w-[50%]'>Login</Button>
     </form>
   )
