@@ -34,7 +34,7 @@ export default function LoginPage() {
         <h1 className='text-center text-4xl'>Login Page</h1>
         <Separator className='my-5' />
         <LoginForm setMsg={setMsg} />
-        <p>Don&apos;t have an account yet? <Link href={'/register'} className='underline'>Register an Account here</Link></p>
+        <p>Don&apos;t have an account yet? <Link href={'/register'} className='underline'>Register a new account</Link></p>
       </div>
     </main>
   );
