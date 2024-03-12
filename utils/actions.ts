@@ -8,8 +8,8 @@ import moment from 'moment'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-import { LoginState, RegisterState } from '@/lib/definitions';
-import { LoginSchema, RegisterSchema } from '@/lib/schemas';
+import { LoginState, PasswordReminderState, RegisterState } from '@/lib/definitions';
+import { LoginSchema, PasswordReminderSchema, RegisterSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 export async function register(prevState: RegisterState, formData: FormData) {
@@ -60,10 +60,10 @@ export async function login(prevState: LoginState, formData: FormData) {
   const { email, password } = validatedFields.data;
 
   const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) return { message: { title: '' }, errors: { 'email': ['Wrong email address / password!'] } };
+  if (!user) return { message: { title: '' }, errors: { email: ['Wrong email address / password!'] } };
 
   const checkPassword = await bcrypt.compare(password, user.password);
-  if (!checkPassword) return { message: { title: '' }, errors: { 'email': ['Wrong email address / password!'] } };
+  if (!checkPassword) return { message: { title: '' }, errors: { email: ['Wrong email address / password!'] } };
 
   const accessToken = jwt.sign({ email: user.email }, process.env.ACC_SECRET!, { expiresIn: process.env.ACC_EXPIRE });
   const refreshToken = jwt.sign({ email: user.email }, process.env.REF_SECRET!, { expiresIn: process.env.REF_EXPIRE });
@@ -78,4 +78,30 @@ export async function logout() {
 
   cookies().delete('refreshToken');
   redirect('/');
+}
+
+export async function passwordReminder(prevState: PasswordReminderState, formData: FormData) {
+  const validatedFields = PasswordReminderSchema.safeParse({
+    email: formData.get('email'),
+  });
+
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { email } = validatedFields.data;
+
+  const user = await prisma.user.findUnique({ where: { email } });
+  if (!user) return { message: { title: '' }, errors: { email: ['This email is not registered.'] } };
+
+  const code = randomString(256);
+
+  resend.emails.send({
+    from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
+    to: user.email,
+    subject: 'Password Reminder',
+    html: `<h1>Someone tried to reset your password.</h1>
+    <p>Click on this link to reset your password: http://localhost:3000/reset-password/?token=${code}</p>
+    <p>If you did not request this, please ignore this email.</p>`
+  });
+
+  return { message: { title: 'Password reminder sent!', description: 'We have sent a link to the destination address, where you can change your password.' } }
 }
