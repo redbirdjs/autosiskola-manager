@@ -9,6 +9,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 import RegEmail from '@/emails/RegistrationSuccess'
+import ReminderEmail from '@/emails/PasswordReminder'
 
 import { LoginState, PasswordReminderState, RegisterState } from '@/lib/definitions';
 import { LoginSchema, PasswordReminderSchema, RegisterSchema } from '@/lib/schemas';
@@ -100,9 +101,7 @@ export async function passwordReminder(prevState: PasswordReminderState, formDat
     from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
     to: user.email,
     subject: 'Password Reminder',
-    html: `<h1>Someone tried to reset your password.</h1>
-    <p>Click on this link to reset your password: http://localhost:3000/reset-password/?token=${code}</p>
-    <p>If you did not request this, please ignore this email.</p>`
+    react: ReminderEmail({ url: `${process.env.SITE_URL || 'http://localhost:3000'}/reset-password?token=${code}` }),
   });
 
   return { message: { title: 'Password reminder sent!', description: 'We have sent a link to the destination address, where you can change your password.' } }
