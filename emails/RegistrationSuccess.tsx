@@ -8,7 +8,7 @@ interface Email {
   url: string;
 }
 
-export function Email({ username, realname, passport, url }: Email) {
+export default function Email({ username, realname, passport, url }: Email) {
   const previewText = "Registration Successful - Welcome to DSM";
 
   return (
@@ -59,5 +59,3 @@ export function Email({ username, realname, passport, url }: Email) {
     </Html>
   )
 }
-
-export default Email;

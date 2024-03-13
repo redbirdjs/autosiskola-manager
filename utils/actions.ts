@@ -8,7 +8,7 @@ import moment from 'moment'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-import { Email as RegEmail } from '@/emails/RegistrationSuccess'
+import RegEmail from '@/emails/RegistrationSuccess'
 
 import { LoginState, PasswordReminderState, RegisterState } from '@/lib/definitions';
 import { LoginSchema, PasswordReminderSchema, RegisterSchema } from '@/lib/schemas';
