@@ -8,12 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "prisma:migrate": "prisma migrate dev --name init",
-    "prisma:deploy": "prisma migrate deploy"
+    "prisma:deploy": "prisma migrate deploy",
+    "rm:dev": "email dev"
   },
   "dependencies": {
     "@prisma/client": "5.10.2",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@react-email/components": "^0.0.15",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -24,6 +26,7 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-email": "^2.1.0",
     "resend": "^3.2.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
