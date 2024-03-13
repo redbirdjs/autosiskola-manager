@@ -25,7 +25,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className='flex min-h-screen flex-row justify-between px-20 py-10'>
+    <main className='flex flex-wrap min-h-screen flex-row justify-between px-20 py-10'>
       {
         message?.title && (
           <Alert variant={'default'} className='absolute w-max left-1/2 -translate-x-1/2'>
