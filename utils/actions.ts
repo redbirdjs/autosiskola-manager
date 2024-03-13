@@ -8,6 +8,8 @@ import moment from 'moment'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
+import { Email as RegEmail } from '@/emails/RegistrationSuccess'
+
 import { LoginState, PasswordReminderState, RegisterState } from '@/lib/definitions';
 import { LoginSchema, PasswordReminderSchema, RegisterSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
@@ -38,8 +40,8 @@ export async function register(prevState: RegisterState, formData: FormData) {
     await resend.emails.send({
       from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
       to: email,
-      subject: 'Registration successful',
-      text: 'You have registered successfully!'
+      subject: 'DSM Registration',
+      react: RegEmail({ username, realname, passport, url: `${process.env.SITE_URL || 'http://localhost:3000'}/verify-email?token=${emailVerifyToken}` }),
     });
 
     return { message: { title: 'Registration successful!', description: 'You can now login. We have also sent you a verification email.' } }
