@@ -1,15 +1,9 @@
 import { Html, Head, Tailwind, Body, Container, Heading, Preview, Hr, Section, Text, Img, Row, Column, Button } from '@react-email/components'
 import * as React from 'react'
+import { RegistrationProps } from '@/emails/definitions';
 
-interface Email {
-  username: string;
-  realname: string;
-  passport: string;
-  url: string;
-}
-
-export default function Email({ username, realname, passport, url }: Email) {
-  const previewText = "Registration Successful - Welcome to DSM";
+export default function Email({ username, realname, passport, url }: RegistrationProps) {
+  const previewText = 'Registration Successful - Welcome to DSM';
 
   return (
     <Html>

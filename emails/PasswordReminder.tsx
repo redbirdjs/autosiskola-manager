@@ -1,11 +1,8 @@
 import { Html, Head, Body, Tailwind, Preview, Container, Section, Heading, Hr, Text, Button } from '@react-email/components'
 import * as React from 'react'
+import { ReminderProps } from '@/emails/definitions';
 
-interface Email {
-  url: string
-}
-
-export default function Email({ url }: Email) {
+export default function Email({ url }: ReminderProps) {
   const previewText = 'Password Reset';
 
   return (
