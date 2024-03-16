@@ -5,11 +5,12 @@ import prisma from '@/lib/prisma'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 import RegEmail from '@/emails/RegistrationSuccess'
 import ReminderEmail from '@/emails/PasswordReminder'
+import NewLoginEmail from '@/emails/NewLogin'
 
 import { LoginState, PasswordReminderState, RegisterState } from '@/lib/definitions';
 import { LoginSchema, PasswordReminderSchema, RegisterSchema } from '@/lib/schemas';
@@ -53,6 +54,8 @@ export async function register(prevState: RegisterState, formData: FormData) {
 }
 
 export async function login(prevState: LoginState, formData: FormData) {
+  const headerList = headers();
+
   const validatedFields = LoginSchema.safeParse({
     email: formData.get('email'),
     password: formData.get('password'),
@@ -70,6 +73,16 @@ export async function login(prevState: LoginState, formData: FormData) {
 
   const accessToken = jwt.sign({ email: user.email }, process.env.ACC_SECRET!, { expiresIn: process.env.ACC_EXPIRE });
   const refreshToken = jwt.sign({ email: user.email }, process.env.REF_SECRET!, { expiresIn: process.env.REF_EXPIRE });
+
+  const address = headerList.get('x-forwarded-for') || '0.0.0.0';
+  const userAgent = headerList.get('user-agent') || 'No-UserAgent';
+
+  resend.emails.send({
+    from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
+    to: user.email,
+    subject: 'New login from different location',
+    react: NewLoginEmail({ address, userAgent }),
+  });
 
   cookies().set('refreshToken', refreshToken, { secure: true, httpOnly: true, sameSite: 'strict', maxAge: moment.duration({ days: parseInt(process.env.REF_EXPIRE || '1') }).asSeconds() });
 
