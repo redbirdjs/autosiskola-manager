@@ -1,8 +1,7 @@
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 
 import { buttonVariants } from '@/components/ui/button'
-import { getUserData, logout } from '@/utils/actions'
+import { getUserData } from '@/utils/actions'
 import LogoutButton from '@/components/LogoutButton'
 
 export default async function DashboardPage() {
