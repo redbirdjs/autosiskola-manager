@@ -71,7 +71,7 @@ export async function login(prevState: LoginState, formData: FormData) {
   const accessToken = jwt.sign({ email: user.email }, process.env.ACC_SECRET!, { expiresIn: process.env.ACC_EXPIRE });
   const refreshToken = jwt.sign({ email: user.email }, process.env.REF_SECRET!, { expiresIn: process.env.REF_EXPIRE });
 
-  cookies().set('refreshToken', refreshToken, { secure: true, httpOnly: true, sameSite: true, maxAge: moment.duration({ days: parseInt(process.env.REF_EXPIRE || '1') }).asSeconds() });
+  cookies().set('refreshToken', refreshToken, { secure: true, httpOnly: true, sameSite: 'strict', maxAge: moment.duration({ days: parseInt(process.env.REF_EXPIRE || '1') }).asSeconds() });
 
   return { message: { title: 'Successfully logged in!', description: 'You will be redirected to the dashboard in 3 seconds...' }, accessToken };
 }
@@ -109,7 +109,6 @@ export async function passwordReminder(prevState: PasswordReminderState, formDat
 
 export async function getUserData() {
   const cookieStore = cookies();
-  
   if (!cookieStore.has('refreshToken')) return;
 
   let email = "";
