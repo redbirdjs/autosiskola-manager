@@ -11,5 +11,5 @@ export interface RegistrationProps {
 
 export interface NewLoginProps {
   address: string;
-  browser: string;
+  userAgent: string;
 }

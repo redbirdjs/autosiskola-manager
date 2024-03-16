@@ -2,8 +2,8 @@ import { Html, Head, Body, Tailwind, Preview, Container, Heading, Section, Hr, I
 import * as React from 'react'
 import { NewLoginProps } from '@/emails/definitions';
 
-export default function Email({ address, browser }: NewLoginProps) {
-  const previewText = '';
+export default function Email({ address, userAgent }: NewLoginProps) {
+  const previewText = 'New login from a different location';
   
   return (
     <Html>
@@ -18,7 +18,7 @@ export default function Email({ address, browser }: NewLoginProps) {
               <Img src={`${process.env.SITE_URL || 'http://localhost:3000'}/vercel.svg`} height={50} alt='Logo of the Driving School Manager' className='my-0 mx-auto text-center' />
             </Section>
             <Section>
-              <Text>A new login was detected from <strong>{ address } ({ browser })</strong></Text>
+              <Text>A new login was detected from <strong>{ address } ({ userAgent })</strong></Text>
             </Section>
             <Section>
               <Text className='text-[#666666] text-sm text-justify'>If it wasn&apos;t you who logged in, please change your password, be sure not to use the same password as for your email address. Changing your password will <span className='text-black font-bold'>unlink all devices from your account</span>. If you no longer have access to your account contact us via email.</Text>
