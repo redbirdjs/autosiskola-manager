@@ -8,3 +8,8 @@ export interface RegistrationProps {
   passport: string;
   url: string;
 }
+
+export interface NewLoginProps {
+  address: string;
+  browser: string;
+}
