@@ -135,8 +135,8 @@ export async function getUserData() {
     email = decoded.email;
   });
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ include: { rank: true }, where: { email } });
   if (!user) return;
 
-  return { username: user.username, email: user.email, avatarPath: user.avatarPath }
+  return { username: user.username, email: user.email, avatarPath: user.avatarPath, rank: user.rank.name }
 }
