@@ -138,5 +138,5 @@ export async function getUserData() {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) return;
 
-  return { username: user.username, email: user.email }
+  return { username: user.username, email: user.email, avatarPath: user.avatarPath }
 }
