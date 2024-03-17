@@ -1,2 +1,2 @@
-INSERT INTO ranks (name) VALUES ('Tanuló'), ('Oktató'), ('Igazgató') ON CONFLICT DO NOTHING;
+INSERT INTO ranks (name) VALUES ('Student'), ('Teacher'), ('Principal') ON CONFLICT DO NOTHING;
 INSERT INTO categories (category) VALUES ('A'), ('B'), ('C'), ('D'), ('BE'), ('CE'), ('DE') ON CONFLICT DO NOTHING;
