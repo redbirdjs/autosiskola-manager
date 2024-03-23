@@ -19,3 +19,11 @@ export function randomString(length: number, filter: RegExp = /[A-Za-z0-9]/g): s
 
   return str;
 }
+
+export function generateRating(sum: number, total: number) {
+  let fullStars = Math.floor(sum / total);
+  let halfStars = (sum % total != 0) ? 1 : 0;
+  let emptyStars = (5 - fullStars);
+
+  return [fullStars, halfStars, emptyStars];
+}
