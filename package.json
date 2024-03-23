@@ -12,6 +12,9 @@
     "prisma:deploy": "prisma migrate deploy",
     "rm:dev": "email dev"
   },
+  "prisma": {
+    "seed": "bun run db/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "5.10.2",
     "@radix-ui/react-separator": "^1.0.3",
