@@ -1,15 +1,18 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { AlertMessageObject } from '@/lib/definitions'
-import { Check } from 'lucide-react'
+import { Check, ChevronLeft } from 'lucide-react'
 
 import LoginForm from '@/components/LoginForm'
 import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
+
+import LoginImage from '@/assets/tesla.png'
 
 export default function LoginPage() {
   const [message, setMessage] = useState<AlertMessageObject>({});
@@ -25,7 +28,8 @@ export default function LoginPage() {
   }
 
   return (
-    <main className='flex flex-wrap min-h-screen flex-row justify-between px-20 py-10'>
+    <main className='flex flex-wrap min-h-screen flex-row justify-between px-20 py-10 bg-login bg-cover'>
+      <Image src={LoginImage} alt='logo' width={800} height={800} placeholder='blur' className='absolute top-1/2 -translate-y-1/2 left-30 -z-10 rounded-lg' />
       {
         message?.title && (
           <Alert variant={'default'} className='absolute w-max left-1/2 -translate-x-1/2'>
@@ -36,13 +40,13 @@ export default function LoginPage() {
         )
       }
       <div>
-        <Link href={'/'} className={buttonVariants({ variant: 'default' })}>Back To Main Page</Link>
+        <Link href={'/'} className={buttonVariants({ variant: 'default', className: 'relative pl-8 group transition-transform' })}><ChevronLeft className='absolute top-1/2 -translate-y-1/2 left-2 group-hover:-translate-x-1' size={20} /> Back To Main Page</Link>
       </div>
-      <div className='self-center px-32'>
-        <h1 className='text-center text-4xl'>Login Page</h1>
-        <Separator className='my-5' />
+      <div className='self-center px-20 py-20 bg-white/80 backdrop-blur-sm rounded-lg lg:mr-40'>
+        <h1 className='text-center text-4xl mb-10'>Login</h1>
+        <Separator className='mb-10' />
         <LoginForm setMsg={setMsg} />
-        <p>Don&apos;t have an account yet? <Link href={'/register'} className='underline'>Register a new account</Link></p>
+        <p className='text-center'>Don&apos;t have an account yet? <Link href={'/register'} className='underline'>Register a new account</Link></p>
       </div>
     </main>
   );
