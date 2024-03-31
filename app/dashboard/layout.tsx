@@ -17,12 +17,12 @@ export default function DashboardLayout({ children }: Readonly<{ children: React
   }
 
   return (
-    <>
+    <div className='h-screen flex flex-col'>
       <Header />
-      <main className='flex flex-row min-h-[70vh] w-full'>
+      <main className='flex flex-row w-full'>
         <Navigation />
         { children }
       </main>
-    </>
+    </div>
   )
 }

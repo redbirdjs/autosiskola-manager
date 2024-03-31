@@ -4,7 +4,7 @@ import NavButton from '@/components/dashboard/NavigationButton'
 
 export default function Navigation() {
   return (
-    <nav className='border-r border-r-[#eaeaea] p-5 w-2/12'>
+    <nav className='p-5 w-2/12'>
       <NavButton href={'/dashboard'}><Home /> Main Menu</NavButton>
       <NavButton href={'/dashboard/courses'}><BookMarked className='h-7 w-7' /> Courses</NavButton>
       <NavButton href={'/dashboard/statistics'}><PieChart className='h-7 w-7' /> Statistics</NavButton>
