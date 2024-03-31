@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 try {
   const ranks = await prisma.rank.createMany({
     data: [
-      { id: 1, name: 'Stundent' },
+      { id: 1, name: 'Student' },
       { id: 2, name: 'Teacher' },
       { id: 3, name: 'Principal' },
       { id: 4, name: 'Admin' }
