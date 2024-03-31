@@ -81,6 +81,10 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
+      backgroundImage: {
+        "login": "url('/img/loginbg.svg')",
+        "register": "url('/img/registerbg.svg')"
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
