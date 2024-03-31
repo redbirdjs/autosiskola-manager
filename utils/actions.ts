@@ -140,3 +140,32 @@ export async function getUserData() {
 
   return { username: user.username, email: user.email, avatarPath: user.avatarPath, rank: user.rank.name }
 }
+
+export async function getUsers({ query, page }: { query: string, page: string }) {
+  const showcount = 7;
+  const currentPage = parseInt(page)-1 || 0;
+
+  try {
+    const users = await prisma.user.findMany({ 
+      include: { rank: true }, 
+      where: { OR: [{ email: { contains: query, mode: 'insensitive' } }, { username: { contains: query, mode: 'insensitive' } }, { realName: { contains: query, mode: 'insensitive' } }, { rank: { name: { contains: query, mode: 'insensitive' } } }] }, 
+      skip: currentPage * showcount, 
+      take: showcount 
+    });
+    
+    const data = users.map(user => {
+      return {
+        path: user.avatarPath,
+        realname: user.realName,
+        username: user.username,
+        email: user.email,
+        rank: user.rank.name
+      };
+    });
+
+    return data;
+  } catch (err) {
+    if (err) console.error(err);
+    throw new Error('There was an error while trying to obtain user information.');
+  }
+}
