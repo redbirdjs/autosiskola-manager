@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function randomString(length: number, filter: RegExp = /[A-Za-z0-9]/g): string {
+export function randomString(length: number, filter: RegExp = /[A-Za-z0-9]/g) {
   let str = '';
   let chars = 'aA0bB1cC2dD3eE4fF5gG6hH7iI8jJ9kKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ';
 
@@ -26,4 +26,8 @@ export function generateRating(sum: number, total: number) {
   let emptyStars = (5 - fullStars);
 
   return [fullStars, halfStars, emptyStars];
+}
+
+export function capitalizeLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
