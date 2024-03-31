@@ -12,6 +12,6 @@ export async function GET(req: NextRequest) {
   const user = await prisma.user.findUnique({ where: { verifyToken: token } });
   if (!user) return redirect('/');
 
-  await prisma.user.update({ data: { verifyToken: '' }, where: { verifyToken: token } });
+  await prisma.user.update({ data: { verifyToken: null }, where: { verifyToken: token } });
   return NextResponse.json({ msg: 'You have successfully verified your email address. You can now access all the features of the site.' });
 }
