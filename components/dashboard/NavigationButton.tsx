@@ -8,6 +8,8 @@ export default function NavigationButton({ href, className, children }: Readonly
   const pathname = usePathname();
 
   return (
-    <Link href={href} className={clsx({ 'bg-[#eaeaea]': pathname == href }, className, 'flex flex-row gap-4 items-center mb-3 px-10 py-2 border border-[#eaeaea] hover:bg-[#eaeaea] transition-colors rounded-lg')}>{ children }</Link>
+    <Link href={href} className={clsx({ 'bg-[#eaeaea]': pathname == href }, className, 'flex flex-row gap-4 items-center mb-3 px-10 py-2 border border-[#eaeaea] hover:bg-[#eaeaea] transition-colors rounded-lg')}>
+      { children }
+    </Link>
   )
 }
