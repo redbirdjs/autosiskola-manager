@@ -65,29 +65,34 @@ export async function login(prevState: LoginState, formData: FormData) {
 
   const { email, password } = validatedFields.data;
 
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) return { message: { title: '' }, errors: { email: ['Wrong email address / password!'] } };
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return { message: { title: '' }, errors: { email: ['Wrong email address / password!'] } };
 
-  const checkPassword = await bcrypt.compare(password, user.password);
-  if (!checkPassword) return { message: { title: '' }, errors: { email: ['Wrong email address / password!'] } };
+    const checkPassword = await bcrypt.compare(password, user.password);
+    if (!checkPassword) return { message: { title: '' }, errors: { email: ['Wrong email address / password!'] } };
 
-  const accessToken = jwt.sign({ email: user.email }, process.env.ACC_SECRET!, { expiresIn: process.env.ACC_EXPIRE });
-  const refreshToken = jwt.sign({ email: user.email }, process.env.REF_SECRET!, { expiresIn: process.env.REF_EXPIRE });
+    const accessToken = jwt.sign({ email: user.email }, process.env.ACC_SECRET!, { expiresIn: process.env.ACC_EXPIRE });
+    const refreshToken = jwt.sign({ email: user.email }, process.env.REF_SECRET!, { expiresIn: process.env.REF_EXPIRE });
 
-  //! Uncomment when making production build!
-  // const address = headerList.get('x-forwarded-for') || '0.0.0.0';
-  // const userAgent = headerList.get('user-agent') || 'No-UserAgent';
+    //! Uncomment when making production build!
+    // const address = headerList.get('x-forwarded-for') || '0.0.0.0';
+    // const userAgent = headerList.get('user-agent') || 'No-UserAgent';
 
-  // resend.emails.send({
-  //   from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
-  //   to: user.email,
-  //   subject: 'New login from different location',
-  //   react: NewLoginEmail({ address, userAgent }),
-  // });
+    // resend.emails.send({
+    //   from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
+    //   to: user.email,
+    //   subject: 'New login from different location',
+    //   react: NewLoginEmail({ address, userAgent }),
+    // });
 
-  cookies().set('refreshToken', refreshToken, { secure: true, httpOnly: true, sameSite: 'strict', maxAge: moment.duration({ days: parseInt(process.env.REF_EXPIRE || '1') }).asSeconds() });
+    cookies().set('refreshToken', refreshToken, { secure: true, httpOnly: true, sameSite: 'strict', maxAge: moment.duration({ days: parseInt(process.env.REF_EXPIRE || '1') }).asSeconds() });
 
-  return { message: { title: 'Successfully logged in!', description: 'You will be redirected to the dashboard in 3 seconds...' }, accessToken };
+    return { message: { title: 'Successfully logged in!', description: 'You will be redirected to the dashboard in 3 seconds...' }, accessToken };
+  } catch (e) {
+    if (e) console.error(e);
+    return { message: { title: 'Login failed due to an error.' } }
+  }
 }
 
 export async function logout() {
@@ -106,19 +111,24 @@ export async function passwordReminder(prevState: PasswordReminderState, formDat
 
   const { email } = validatedFields.data;
 
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) return { message: { title: '' }, errors: { email: ['This email is not registered.'] } };
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return { message: { title: '' }, errors: { email: ['This email is not registered.'] } };
 
-  const code = randomString(256);
+    const code = randomString(256);
 
-  resend.emails.send({
-    from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
-    to: user.email,
-    subject: 'Password Reminder',
-    react: ReminderEmail({ url: `${process.env.SITE_URL || 'http://localhost:3000'}/reset-password?token=${code}` }),
-  });
+    resend.emails.send({
+      from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
+      to: user.email,
+      subject: 'Password Reminder',
+      react: ReminderEmail({ url: `${process.env.SITE_URL || 'http://localhost:3000'}/reset-password?token=${code}` }),
+    });
 
-  return { message: { title: 'Password reminder sent!', description: 'We have sent a link to the destination address, where you can change your password.' } }
+    return { message: { title: 'Password reminder sent!', description: 'We have sent a link to the destination address, where you can change your password.' } }
+  } catch (e) {
+    if (e) console.error(e);
+    return { message: { title: 'Password reminder failed to send due to an error.' } }
+  }
 }
 
 export async function getUserData() {
@@ -135,10 +145,15 @@ export async function getUserData() {
     email = decoded.email;
   });
 
-  const user = await prisma.user.findUnique({ include: { rank: true }, where: { email } });
-  if (!user) return;
-
-  return { realname: user.realName, username: user.username, email: user.email, avatarPath: user.avatarPath, rank: user.rank.name }
+  try {
+    const user = await prisma.user.findUnique({ include: { rank: true }, where: { email } });
+    if (!user) return;
+  
+    return { realname: user.realName, username: user.username, email: user.email, avatarPath: user.avatarPath, rank: user.rank.name }
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to obtain user information.');
+  }
 }
 
 export async function getUsers({ query, page }: { query: string, page: string }) {
