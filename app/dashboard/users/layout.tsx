@@ -1,9 +1,13 @@
 import { Suspense } from 'react'
+import { Metadata } from 'next'
 
 import DynamicBreadcrumb from '@/components/dashboard/DynamicBreadcrumb'
 import Search from '@/components/dashboard/Search'
-import { Button } from '@/components/ui/button'
 import { UserCardSkeleton } from '@/components/skeletons/skeletons'
+
+export const metadata: Metadata = {
+  title: 'Users | Dashboard'
+}
 
 export default function UsersLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
