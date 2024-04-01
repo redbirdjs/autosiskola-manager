@@ -1,21 +1,21 @@
-import { BookMarked, CalendarClock, Car, Home, PieChart, School, UserRound, Users, UsersRound } from 'lucide-react'
+import { BookMarked, CalendarClock, Car, Home, PieChart, School, UserRound, Users, Wallet } from 'lucide-react'
 
 import NavButton from '@/components/dashboard/NavigationButton'
 
 export default function Navigation() {
   return (
     <nav className='p-5 w-2/12'>
-      <NavButton href={'/dashboard'}><Home /> Main Menu</NavButton>
-      <NavButton href={'/dashboard/courses'}><BookMarked className='h-7 w-7' /> Courses</NavButton>
-      <NavButton href={'/dashboard/statistics'}><PieChart className='h-7 w-7' /> Statistics</NavButton>
-      <NavButton href={'/dashboard/calendar'}><CalendarClock className='h-7 w-7' /> Calendar</NavButton>
-      <NavButton href={'/dashboard/users'}><Users className='h-7 w-7' /> Users</NavButton>
-      <NavButton href={'/dashboard/students'}><Users className='h-7 w-7' /> Students</NavButton>
-      <NavButton href={'/dashboard/teachers'}><Users className='h-7 w-7' /> Teachers</NavButton>
-      <NavButton href={'/dashboard/vehicles'}><Car className='h-7 w-7' /> Vehicles</NavButton>
-      <NavButton href={'/dashboard/exams'}><School className='h-7 w-7' /> Exams</NavButton>
-      <NavButton href={'/dashboard/payments'}><UsersRound className='h-7 w-7' /> Payments</NavButton>
-      <NavButton href={'/dashboard/profile'}><UserRound className='h-7 w-7' /> Profile</NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard'}><Home className='min-w-7 min-h-7' /> <span className='truncate max-lg:hidden'>Main Menu</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/courses'}><BookMarked className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Courses</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/statistics'}><PieChart className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Statistics</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/calendar'}><CalendarClock className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Calendar</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/users'}><Users className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Users</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/students'}><Users className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Students</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/teachers'}><Users className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Teachers</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/vehicles'}><Car className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Vehicles</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/exams'}><School className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Exams</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/payments'}><Wallet className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Payments</span></NavButton>
+      <NavButton className='max-lg:justify-center' href={'/dashboard/profile'}><UserRound className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Profile</span></NavButton>
     </nav>
   )
 }
