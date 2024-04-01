@@ -48,10 +48,14 @@ export default function DynamicPagination({ currentPage, pages }: { currentPage:
             { /* Gombok legenerálása */ }
             {
               pageArray.map((item, index) => {
-                if (item < pages) {
-                  return (
-                    <PaginationItem key={index} onClick={() => setPage(item+1)} className={clsx((item+1) == currPage ? 'cursor-default' : 'cursor-pointer')}>
+                if (item <= pages) {
+                  return currPage != pages ? (
+                    <PaginationItem key={index+1} onClick={() => setPage(item+1)} className={clsx((item+1) == currPage ? 'cursor-default' : 'cursor-pointer')}>
                       <PaginationLink isActive={(currPage == item+1)}>{item+1}</PaginationLink>
+                    </PaginationItem>
+                  ) : (
+                    <PaginationItem key={index} onClick={() => setPage(item)} className={clsx((item) == currPage ? 'cursor-default' : 'cursor-pointer')}>
+                      <PaginationLink isActive={(currPage == item)}>{item}</PaginationLink>
                     </PaginationItem>
                   )
                 }
