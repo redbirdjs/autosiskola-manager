@@ -38,6 +38,13 @@ export default function DynamicPagination({ currentPage, pages }: { currentPage:
                 </PaginationItem>
               )
             }
+            {
+              pages > showcount && currPage > (pages-2) && (
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              )
+            }
             { /* Gombok legenerálása */ }
             {
               pageArray.map((item, index) => {
