@@ -138,11 +138,11 @@ export async function getUserData() {
   const user = await prisma.user.findUnique({ include: { rank: true }, where: { email } });
   if (!user) return;
 
-  return { username: user.username, email: user.email, avatarPath: user.avatarPath, rank: user.rank.name }
+  return { realname: user.realName, username: user.username, email: user.email, avatarPath: user.avatarPath, rank: user.rank.name }
 }
 
 export async function getUsers({ query, page }: { query: string, page: string }) {
-  const showcount = 7;
+  const showcount = 5;
   const currentPage = parseInt(page)-1 || 0;
 
   try {
@@ -152,6 +152,10 @@ export async function getUsers({ query, page }: { query: string, page: string })
       skip: currentPage * showcount, 
       take: showcount 
     });
+    const usercount = await prisma.user.count({ 
+      where: { OR: [{ email: { contains: query, mode: 'insensitive' } }, { username: { contains: query, mode: 'insensitive' } }, { realName: { contains: query, mode: 'insensitive' } }, { rank: { name: { contains: query, mode: 'insensitive' } } }] }, 
+     });
+    const pages = Math.ceil(usercount / showcount);
     
     const data = users.map(user => {
       return {
@@ -163,7 +167,7 @@ export async function getUsers({ query, page }: { query: string, page: string })
       };
     });
 
-    return data;
+    return { users: data, pages };
   } catch (err) {
     if (err) console.error(err);
     throw new Error('There was an error while trying to obtain user information.');
