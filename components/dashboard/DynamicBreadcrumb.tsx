@@ -1,4 +1,6 @@
 'use client'
+
+import { Fragment } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Slash } from 'lucide-react'
@@ -26,8 +28,8 @@ export default function DynamicBreadcrumb({ className }: { className?: string })
           { items.map(item => {
                 if (item.href) {
                   return (
-                    <>
-                      <BreadcrumbItem key={item.title}>
+                    <Fragment key={item.title}>
+                      <BreadcrumbItem>
                         <BreadcrumbLink asChild>
                           <Link href={item.href} className='text-base'>{item.title}</Link>
                         </BreadcrumbLink>
@@ -35,7 +37,7 @@ export default function DynamicBreadcrumb({ className }: { className?: string })
                       <BreadcrumbSeparator>
                         <Slash />
                       </BreadcrumbSeparator>
-                    </>
+                    </Fragment>
                   )
                 } else {
                   return (
