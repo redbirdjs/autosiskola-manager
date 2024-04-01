@@ -1,7 +1,8 @@
 import Image from 'next/image'
-import { UserRound } from 'lucide-react';
+import { UserRound } from 'lucide-react'
 
 import { badgeVariants } from '@/components/ui/badge';
+import clsx from 'clsx';
 
 interface UserData {
   path: string;
@@ -25,7 +26,7 @@ export default function UserCard({ user }: { user: UserData }) {
         <h1 className='text-2xl'>{ user.realname } ({ user.username })</h1>
         <p className='text-[#a0a0a0] text-base'>{ user.email }</p>
       </div>
-      <p className={badgeVariants({ variant: 'outline', className: 'self-center text-base border-black cursor-default' })}>{ user.rank }</p>
+      <p className={badgeVariants({ variant: 'outline', className: clsx('self-center border-black cursor-default', { 'border-red-600': user.rank == 'Admin' }) })}>{ user.rank }</p>
     </div>
   );
 }
