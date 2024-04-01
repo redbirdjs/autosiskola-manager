@@ -20,37 +20,34 @@ export default function DynamicBreadcrumb({ className }: { className?: string })
   });
 
   return (
-    <>
-      {
-        items && (
-          <Breadcrumb className={className}>
-            <BreadcrumbList>
-              { items.map(item => (
-                <>
-                  {
-                    item.href ? (
-                      <>
-                        <BreadcrumbItem key={item.title}>
-                          <BreadcrumbLink asChild>
-                            <Link href={item.href} className='text-base'>{item.title}</Link>
-                          </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator>
-                          <Slash />
-                        </BreadcrumbSeparator>
-                      </>
-                    ) : (
+    items && (
+      <Breadcrumb className={className}>
+        <BreadcrumbList>
+          { items.map(item => {
+                if (item.href) {
+                  return (
+                    <>
                       <BreadcrumbItem key={item.title}>
-                        <BreadcrumbPage className='text-base'>{item.title}</BreadcrumbPage>
+                        <BreadcrumbLink asChild>
+                          <Link href={item.href} className='text-base'>{item.title}</Link>
+                        </BreadcrumbLink>
                       </BreadcrumbItem>
-                    )
-                  }
-                </>
-              )) }
-            </BreadcrumbList>
-          </Breadcrumb>
-        )
-      }
-    </>
+                      <BreadcrumbSeparator>
+                        <Slash />
+                      </BreadcrumbSeparator>
+                    </>
+                  )
+                } else {
+                  return (
+                    <BreadcrumbItem key={item.title}>
+                      <BreadcrumbPage className='text-base'>{item.title}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  )
+                }
+            })
+          }
+        </BreadcrumbList>
+      </Breadcrumb>
+    )
   );
 }
