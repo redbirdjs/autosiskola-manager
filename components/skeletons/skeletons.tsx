@@ -9,7 +9,7 @@ export function UserCardSkeleton() {
           <div className='w-[400px] h-[28px] bg-gray-300 rounded-md'></div>
           <div className='w-[300px] h-[21px] bg-gray-300 rounded-md'></div>
         </div>
-        <div className={badgeVariants({ variant: 'outline', className: 'self-center w-[62px] h-[26px] bg-gray-300' })}></div>
+        <div className={badgeVariants({ variant: 'outline', className: 'self-center w-[52px] h-[20px] bg-gray-300' })}></div>
       </div>
     </div>
   );
