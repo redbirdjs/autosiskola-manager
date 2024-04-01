@@ -12,7 +12,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
-import LoginImage from '@/assets/tesla.png'
+import LoginImage from '@/assets/mercedes.svg'
 
 export default function LoginPage() {
   const [message, setMessage] = useState<AlertMessageObject>({});
@@ -29,7 +29,7 @@ export default function LoginPage() {
 
   return (
     <main className='flex flex-wrap min-h-screen flex-row justify-between px-20 py-10 bg-login bg-cover'>
-      <Image src={LoginImage} alt='logo' width={800} height={800} placeholder='blur' className='absolute top-1/2 -translate-y-1/2 left-30 -z-10 rounded-lg' />
+      <Image src={LoginImage} alt='logo' width={800} height={800} className='absolute top-1/2 -translate-y-1/2 left-30 -z-10 rounded-lg' />
       {
         message?.title && (
           <Alert variant={'default'} className='absolute w-max left-1/2 -translate-x-1/2'>
