@@ -158,7 +158,7 @@ export async function getUserData() {
 
 export async function getUsers({ query, page }: { query: string, page: string }) {
   const showcount = 5;
-  const currentPage = parseInt(page)-1 || 0;
+  const currentPage = parseInt(page)-1 < 0 ? 0 : parseInt(page)-1 || 0;
 
   try {
     const users = await prisma.user.findMany({ 
