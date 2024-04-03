@@ -27,12 +27,12 @@ export default function DynamicPagination({ currentPage, pages }: { currentPage:
 
   return (
     <>
-      { pages != 0 &&
+      { pages > 1 &&
         <Pagination>
           <PaginationContent>
             { /* Az előző elem gomb csak akkor jelenjen meg, ha nem az első oldalon vagyunk */ }
             {
-              currPage != 1 && (
+              currPage != 1 && pages != showcount && (
                 <PaginationItem className='cursor-pointer'>
                   <PaginationPrevious onClick={() => setPage(currPage-1)} />
                 </PaginationItem>
@@ -49,6 +49,7 @@ export default function DynamicPagination({ currentPage, pages }: { currentPage:
             {
               pageArray.map((item, index) => {
                 if (item <= pages) {
+                  if (pages == 1 && item == 0) return;
                   return currPage != pages ? (
                     <PaginationItem key={index+1} onClick={() => setPage(item+1)} className={clsx((item+1) == currPage ? 'cursor-default' : 'cursor-pointer')}>
                       <PaginationLink isActive={(currPage == item+1)}>{item+1}</PaginationLink>
@@ -71,7 +72,7 @@ export default function DynamicPagination({ currentPage, pages }: { currentPage:
             }
             { /* A következő elem gomb csak akkor jelenik meg, ha nem az utolsó oldalon vagyunk */ }
             {
-              currPage != pages && currPage < pages && (
+              currPage != pages && currPage < pages && pages != showcount && (
                 <PaginationItem className='cursor-pointer'>
                   <PaginationNext onClick={() => setPage(currPage+1)} />
                 </PaginationItem>
