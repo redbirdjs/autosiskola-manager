@@ -21,7 +21,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
 
   return (
     <form action={dispatch} className='flex flex-col'>
-      <label htmlFor="username" className='mb-2'>Username <Required /></label>
+      <label htmlFor='username' className='mb-2'>Username <Required /></label>
       <Input name='username' className={clsx({ 'border-red-600': state.errors?.username }, 'mb-3')} />
       {
         state.errors?.username && (
@@ -30,7 +30,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
           </div>
         )
       }
-      <label htmlFor="realname" className='mb-2'>Full Name <Required /></label>
+      <label htmlFor='realname' className='mb-2'>Full Name <Required /></label>
       <Input name='realname' className={clsx({ 'border-red-600': state.errors?.realname }, 'mb-3')} />
       {
         state.errors?.realname && (
@@ -39,7 +39,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
           </div>
         )
       }
-      <label htmlFor="email" className='mb-2'>Email address <Required /></label>
+      <label htmlFor='email' className='mb-2'>Email address <Required /></label>
       <Input name='email' className={clsx({ 'border-red-600': state.errors?.email }, 'mb-3')} />
       {
         state.errors?.email && (
@@ -65,7 +65,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
           </div>
         )
       }
-      <label htmlFor="pass1" className='mb-2'>Password <Required /></label>
+      <label htmlFor='pass1' className='mb-2'>Password <Required /></label>
       <Input name='pass1' type='password' className={clsx({ 'border-red-600': state.errors?.pass1 }, 'mb-3')} />
       {
         state.errors?.pass1 && (
@@ -74,7 +74,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
           </div>
         )
       }
-      <label htmlFor="pass2" className='mb-2'>Repeat password <Required /></label>
+      <label htmlFor='pass2' className='mb-2'>Repeat password <Required /></label>
       <Input name='pass2' type='password' className={clsx({ 'border-red-600': state.errors?.pass2 }, 'mb-3')} />
       {
         state.errors?.pass2 && (
