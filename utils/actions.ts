@@ -268,3 +268,41 @@ export async function getCategories() {
     throw new Error('There was an error while trying to obtain category information.');
   }
 }
+
+export async function newVehicle(prevState: VehicleState, formData: FormData) {
+  const validatedFields = NewVehicleSchema.safeParse({
+    brand: formData.get('brand'),
+    type: formData.get('type'),
+    plate: formData.get('plate'),
+    category: parseInt(formData.get('category')?.toString() || ''),
+    color: formData.get('color'),
+    drivetype: formData.get('drivetype'),
+    image: formData.get('car-image'),
+  });
+
+  if (!validatedFields.success) {
+    console.log(formData.get('category'));
+    console.error(validatedFields.error?.flatten().fieldErrors);
+    return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+  }
+
+  const { brand, type, plate, category, color, drivetype, image } = validatedFields.data;
+  const imgData: { url: string | undefined } = { url: '' };
+
+  // Kép útvonal beállítása
+  imgData.url = image && image.size > 0 ? `/vehicles/${image.name}` : undefined;
+
+  try {
+    await prisma.vehicle.create({ data: {
+      brand, type, plate, categoryId: category, color, driveType: drivetype, imageUrl: imgData.url
+    } });
+
+    console.log('success');
+    revalidatePath('/dashboard/vehicles');
+
+    return { message: { title: 'Success', description: 'Vehicle successfully created!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to create vehicle.');
+  }
+}
