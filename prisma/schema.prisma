@@ -101,7 +101,7 @@ model Vehicle {
   imageUrl String @db.VarChar(100) @default("/vehicles/fallback.png")
 
   category Category @relation(fields: [categoryId], references: [id])
-  categoryId Int
+  categoryId Int @default(1)
   course Course[]
 
   @@map("vehicles")
