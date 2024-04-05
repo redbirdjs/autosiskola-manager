@@ -98,8 +98,10 @@ model Vehicle {
   driveType String @default("manual")
   brand String @db.VarChar(50)
   type String @db.VarChar(100)
-  imageUrl String @db.VarChar(100) @default("cars/dummy.webp")
+  imageUrl String @db.VarChar(100) @default("/vehicles/fallback.png")
 
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
   course Course[]
 
   @@map("vehicles")
@@ -109,6 +111,7 @@ model Category {
   id Int @id @default(autoincrement())
   category String @db.VarChar(3)
 
+  vehicle Vehicle[]
   course Course[]
 
   @@map("categories")
