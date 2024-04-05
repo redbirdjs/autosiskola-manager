@@ -17,3 +17,13 @@ export const LoginSchema = z.object({
 export const PasswordReminderSchema = z.object({
   email: z.string().min(1, 'This field is required!').email({ message: 'Invalid email format!' }),
 });
+
+export const NewVehicleSchema = z.object({
+  brand: z.string().min(1, 'This field is required!'),
+  type: z.string().min(1, 'This field is required!'),
+  plate: z.string().min(1, 'This field is required!'),
+  category: z.number({ invalid_type_error: 'Category must be a number' }),
+  color: z.string().min(1, 'This field is required!'),
+  drivetype: z.string().min(1, 'This field is required!'),
+  image: z.instanceof(File).optional()
+});
