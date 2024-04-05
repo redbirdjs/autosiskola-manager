@@ -12,9 +12,10 @@ import RegEmail from '@/emails/RegistrationSuccess'
 import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 
-import { LoginState, PasswordReminderState, RegisterState } from '@/lib/definitions';
-import { LoginSchema, PasswordReminderSchema, RegisterSchema } from '@/lib/schemas';
+import { LoginState, PasswordReminderState, RegisterState, VehicleState } from '@/lib/definitions';
+import { LoginSchema, PasswordReminderSchema, RegisterSchema, NewVehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
+import { revalidatePath } from 'next/cache'
 
 export async function register(prevState: RegisterState, formData: FormData) {
   const validatedFields = RegisterSchema.safeParse({
@@ -219,5 +220,51 @@ export async function getFilteredUsers({ query, page, rankType }: { query: strin
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to obtain user information.');
+  }
+}
+
+export async function getVehicles({ query, page }: { query: string, page: string }) {
+  const showcount = 5;
+  const currentPage = parseInt(page)-1 < 0 ? 0 : parseInt(page)-1 || 0;
+
+  try {
+    const vehicles = await prisma.vehicle.findMany({
+      include: { category: true },
+      where: { OR: [{ brand: { contains: query, mode: 'insensitive' } }, { color: { contains: query, mode: 'insensitive' } }, { driveType: { contains: query, mode: 'insensitive' } }] },
+      skip: currentPage * showcount,
+      take: showcount
+    });
+    const vehiclecount = await prisma.vehicle.count({
+      where: { OR: [{ brand: { contains: query, mode: 'insensitive' } }, { color: { contains: query, mode: 'insensitive' } }, { driveType: { contains: query, mode: 'insensitive' } }] },
+    });
+    const pages = Math.ceil(vehiclecount / showcount);
+
+    const data = vehicles.map(vehicle => {
+      return {
+        path: vehicle.imageUrl,
+        brand: vehicle.brand,
+        type: vehicle.type,
+        plate: vehicle.plate,
+        color: vehicle.color,
+        drivetype: vehicle.driveType,
+        category: vehicle.category.category
+      }
+    });
+
+    return { vehicles: data, pages };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to obtain vehicle information.');
+  }
+}
+
+export async function getCategories() {
+  try {
+    const categories = await prisma.category.findMany();
+
+    return categories;
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to obtain category information.');
   }
 }
