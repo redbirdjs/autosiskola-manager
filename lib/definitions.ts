@@ -38,3 +38,18 @@ export type AlertMessageObject = {
   title?: string
   description?: string
 }
+
+export type VehicleState = {
+  errors?: {
+    brand?: string[]
+    type?: string[]
+    plate?: string[]
+    category?: string[]
+    color?: string[]
+    drivetype?: string[]
+  }
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
