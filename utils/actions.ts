@@ -326,3 +326,7 @@ export async function newVehicle(prevState: VehicleState, formData: FormData) {
     throw new Error('There was an error while trying to create vehicle.');
   }
 }
+
+export async function deleteVehicle(plate: string) {
+  console.log(plate);
+}
