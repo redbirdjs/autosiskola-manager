@@ -1,6 +1,8 @@
 'use client'
 
-import { Plus } from 'lucide-react'
+import { useRef, useState, ChangeEvent } from 'react'
+import Image from 'next/image'
+import { Plus, FileX } from 'lucide-react'
 import { useFormState } from 'react-dom'
 import clsx from 'clsx'
 import { newVehicle } from '@/utils/actions'
@@ -16,8 +18,24 @@ interface CategoryNames {
 }
 
 export default function NewVehicleForm({ categories }: { categories: CategoryNames[] }) {
+  const imageRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<File>();
+
   const initialState = { message: { title: '' }, errors: {} };
   const [state, dispatch] = useFormState(newVehicle, initialState);
+
+  // előnézet módosítás
+  const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setImage(e.target.files[0]);
+    }
+  }
+
+  // kép törlése a mezőből
+  const removeImage = () => {
+    if (imageRef.current) imageRef.current.value = '';
+    setImage(undefined);
+  }
 
   return (
     <form action={dispatch}>
@@ -45,10 +63,19 @@ export default function NewVehicleForm({ categories }: { categories: CategoryNam
       <label htmlFor='drivetype'>Drive Type</label>
       <Input id='drivetype' name='drivetype' className='mt-1 mb-3' />
       <label htmlFor='car-image'>Preview Image</label>
-      <Input id='car-image' name='car-image' type='file' className='mt-1 mb-3' accept='image/png, image/jpeg, image/webp' />
+      <div className='flex flex-col items-center gap-1 mt-1 mb-3'>
+        { image && (
+            <Image src={URL.createObjectURL(image)} alt='Preview' width={100} height={100} />
+          )
+        }
+        <div className='w-full flex items-center gap-1'>
+          <Input ref={imageRef} onChange={changeImage} id='car-image' name='car-image' type='file' accept='image/png, image/jpeg, image/webp' className='w-full' />
+          { image && <Button variant={'destructive'} onClick={removeImage}><FileX className='w-5 h-5' /></Button> }
+        </div>
+      </div>
       <SheetFooter className='mb-3'>
         <SheetClose asChild>
-          <Button type='submit'><Plus className='h-5 w-5' /> Add new vehicles</Button>
+          <Button type='submit'><Plus className='h-5 w-5' /> Add new vehicle</Button>
         </SheetClose>
       </SheetFooter>
       <p className='text-gray-500 text-sm'><RequiredStar />: These fields must be filled.</p>
