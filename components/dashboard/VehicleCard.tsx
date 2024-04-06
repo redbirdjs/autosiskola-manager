@@ -17,7 +17,7 @@ interface VehicleData {
   category: string;
 }
 
-export function VehicleCard({ vehicle }: { vehicle: VehicleData }) {
+export default function VehicleCard({ vehicle }: { vehicle: VehicleData }) {
   return (
     <div className='flex flex-row items-center gap-5 border border-[#eaeaea] rounded-lg mb-3 p-5 hover:bg-gray-100 hover:border-gray-300 transition-colors'>
       <div className='mr-auto flex flex-row items-center gap-3'>
