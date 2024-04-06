@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Delete, PencilRuler } from 'lucide-react'
+import { PencilRuler } from 'lucide-react'
 
 import DeleteVehicle from '@/components/dashboard/vehicles/DeleteVehicle'
 import { Tooltip, TooltipTrigger, TooltipProvider, TooltipContent } from '@/components/ui/tooltip'
