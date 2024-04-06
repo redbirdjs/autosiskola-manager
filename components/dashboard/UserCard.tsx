@@ -2,14 +2,7 @@ import clsx from 'clsx'
 
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { badgeVariants } from '@/components/ui/badge'
-
-interface UserData {
-  path: string;
-  realname: string;
-  username: string;
-  email: string;
-  rank: string;
-}
+import { UserData } from '@/lib/definitions'
 
 export default function UserCard({ user }: { user: UserData }) {
   return (

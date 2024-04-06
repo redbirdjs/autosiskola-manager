@@ -11,13 +11,9 @@ import { SheetFooter, SheetClose } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
 import RequiredStar from '@/components/RequiredStar'
+import { CategoryName } from '@/lib/definitions'
 
-interface CategoryNames {
-  id: number,
-  category: string
-}
-
-export default function NewVehicleForm({ categories }: { categories: CategoryNames[] }) {
+export default function NewVehicleForm({ categories }: { categories: CategoryName[] }) {
   const imageRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File>();
 

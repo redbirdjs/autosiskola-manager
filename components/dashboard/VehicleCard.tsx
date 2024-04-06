@@ -6,16 +6,7 @@ import { PencilRuler } from 'lucide-react'
 import DeleteVehicle from '@/components/dashboard/vehicles/DeleteVehicle'
 import { Tooltip, TooltipTrigger, TooltipProvider, TooltipContent } from '@/components/ui/tooltip'
 import { buttonVariants } from '@/components/ui/button'
-
-interface VehicleData {
-  path: string;
-  brand: string;
-  type: string;
-  plate: string;
-  color: string | null;
-  drivetype: string;
-  category: string;
-}
+import { VehicleData } from '@/lib/definitions'
 
 export default function VehicleCard({ vehicle }: { vehicle: VehicleData }) {
   return (

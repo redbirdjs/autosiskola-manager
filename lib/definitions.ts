@@ -53,3 +53,26 @@ export type VehicleState = {
     description?: string
   }
 }
+
+export interface UserData {
+  path: string;
+  realname: string;
+  username: string;
+  email: string;
+  rank: string;
+}
+
+export interface VehicleData {
+  path: string;
+  brand: string;
+  type: string;
+  plate: string;
+  color: string | null;
+  drivetype: string;
+  category: string;
+}
+
+export interface CategoryName {
+  id: number,
+  category: string
+}
