@@ -1,6 +1,7 @@
 import { Trash2 as Trash } from 'lucide-react'
 import { deleteVehicle as deleteVehicleAction } from '@/utils/actions'
 
+import DeleteConfirmDialog from '@/components/dashboard/DeleteConfirmDialog'
 import { TooltipTrigger } from '@/components/ui/tooltip'
 import { buttonVariants } from '@/components/ui/button'
 
@@ -10,6 +11,10 @@ export default function DeleteVehicle({ plate }: { plate: string }) {
   }
 
   return (
-    <TooltipTrigger onClick={deleteVehicle} className={buttonVariants({ variant: 'destructive' })}><Trash className='h-5 w-5' /></TooltipTrigger>
+    <DeleteConfirmDialog func={deleteVehicle}>
+      <TooltipTrigger className={buttonVariants({ variant: 'destructive' })}>
+        <Trash className='h-5 w-5' />
+      </TooltipTrigger>
+    </DeleteConfirmDialog>
   );
 }
