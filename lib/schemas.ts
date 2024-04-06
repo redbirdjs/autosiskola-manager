@@ -25,5 +25,5 @@ export const NewVehicleSchema = z.object({
   category: z.number({ invalid_type_error: 'Category must be a number' }),
   color: z.string().min(1, 'This field is required!'),
   drivetype: z.string().min(1, 'This field is required!'),
-  image: z.instanceof(File).optional()
+  image: z.instanceof(File).refine((file) => file.size <= 5249494, 'Max image size is 5MB.').optional()
 });
