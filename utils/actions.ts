@@ -7,6 +7,9 @@ import jwt from 'jsonwebtoken'
 import moment from 'moment'
 import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
+import path from 'path'
+import { writeFile } from 'fs/promises'
 
 import RegEmail from '@/emails/RegistrationSuccess'
 import ReminderEmail from '@/emails/PasswordReminder'
@@ -15,7 +18,6 @@ import NewLoginEmail from '@/emails/NewLogin'
 import { LoginState, PasswordReminderState, RegisterState, VehicleState } from '@/lib/definitions';
 import { LoginSchema, PasswordReminderSchema, RegisterSchema, NewVehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
-import { revalidatePath } from 'next/cache'
 
 export async function register(prevState: RegisterState, formData: FormData) {
   const validatedFields = RegisterSchema.safeParse({
@@ -270,6 +272,7 @@ export async function getCategories() {
 }
 
 export async function newVehicle(prevState: VehicleState, formData: FormData) {
+  // form adatok tesztelése, hogy meg felel-e a sémának
   const validatedFields = NewVehicleSchema.safeParse({
     brand: formData.get('brand'),
     type: formData.get('type'),
@@ -280,26 +283,43 @@ export async function newVehicle(prevState: VehicleState, formData: FormData) {
     image: formData.get('car-image'),
   });
 
+  // hiba esetén visszaadjuk a hibás adatokat
   if (!validatedFields.success) {
-    console.log(formData.get('category'));
-    console.error(validatedFields.error?.flatten().fieldErrors);
     return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
   }
 
+  // ha minden átment az ellenőrzésen, kivesszük a szükséges paramétereket
   const { brand, type, plate, category, color, drivetype, image } = validatedFields.data;
   const imgData: { url: string | undefined } = { url: '' };
 
-  // Kép útvonal beállítása
-  imgData.url = image && image.size > 0 ? `/vehicles/${image.name}` : undefined;
+  // kép útvonal beállítása, ha nincs kép akkor undefined
+  imgData.url = image && image.size > 0 ? `/vehicles/[rep]` : undefined;
+
+  // létezik-e a kép, nagyobb-e a mérete mind 0 byte
+  if (!!imgData.url && image && image.size > 0) {
+    // kép buffer változóba helyezése
+    const buffer = Buffer.from(await image.arrayBuffer());
+    // egyedi név létrehozás
+    const fileName = `${randomString(10)}_${Date.now()}${path.extname(image.name)}`;
+    imgData.url = imgData.url.replace('[rep]', fileName);
+
+    try {
+      // fájl feltöltése a szerverre
+      await writeFile(`${path.join(process.cwd())}/public/vehicles/${fileName}`, buffer);
+    } catch (e) {
+      if (e) console.error(e);
+      throw new Error('There was an error while trying to upload the image.');
+    }
+  }
 
   try {
+    // autó felvétele az adatbázisba
     await prisma.vehicle.create({ data: {
       brand, type, plate, categoryId: category, color, driveType: drivetype, imageUrl: imgData.url
     } });
 
-    console.log('success');
+    // oldal adatainak frissítése
     revalidatePath('/dashboard/vehicles');
-
     return { message: { title: 'Success', description: 'Vehicle successfully created!' } };
   } catch (e) {
     if (e) console.error(e);
