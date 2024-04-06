@@ -16,7 +16,7 @@ export default function VehiclesLayout({ children }: Readonly<{ children: React.
     <main className='flex flex-col p-5 w-10/12'>
       <div className='flex justify-between items-center mb-5'>
         <DynamicBreadcrumb />
-        <div className='flex gap-2 w-1/5'>
+        <div className='flex gap-2'>
           <Search className='w-full' />
           <NewVehicleSheet />
         </div>
