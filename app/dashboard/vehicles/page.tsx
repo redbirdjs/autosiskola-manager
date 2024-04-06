@@ -1,17 +1,22 @@
 import { getVehicles } from '@/utils/actions'
 
 import { VehicleCard } from '@/components/dashboard/VehicleCard'
+import DynamicPagination from '@/components/dashboard/Pagination'
 
-export default async function VehiclesPage() {
-  const searchResluts = await getVehicles({ query: '', page: '1' });
+export default async function VehiclesPage({ searchParams }: { searchParams: { query?: string, page?: string } }) {
+  const query = searchParams?.query || '';
+  const page = searchParams?.page || '1';
+  
+  const searchResults = await getVehicles({ query: query, page: page });
 
   return (
     <div>
       {
-        searchResluts.vehicles.map(vehicle => (
+        searchResults.vehicles.map(vehicle => (
           <VehicleCard key={vehicle.plate} vehicle={vehicle} />
         ))
       }
+      <DynamicPagination currentPage={page} pages={searchResults.pages} />
     </div>
   );
 }
