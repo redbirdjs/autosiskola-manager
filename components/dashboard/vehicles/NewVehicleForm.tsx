@@ -1,12 +1,10 @@
 'use client'
 
-import { Fragment } from 'react'
 import { useFormState } from 'react-dom'
 import clsx from 'clsx'
 import { newVehicle } from '@/utils/actions'
 
 import { SheetFooter, SheetClose } from '@/components/ui/sheet'
-import { ToggleGroup, ToggleGroupItem,  } from '@/components/ui/toggle-group'
 import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
 import RequiredStar from '@/components/RequiredStar'
