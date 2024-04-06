@@ -1,8 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import { Trash2 as Trash, PencilRuler } from 'lucide-react'
+import { Delete, PencilRuler } from 'lucide-react'
 
+import DeleteVehicle from '@/components/dashboard/vehicles/DeleteVehicle'
 import { Tooltip, TooltipTrigger, TooltipProvider, TooltipContent } from '@/components/ui/tooltip'
 import { buttonVariants } from '@/components/ui/button'
 
@@ -36,7 +37,7 @@ export function VehicleCard({ vehicle }: { vehicle: VehicleData }) {
             <TooltipContent>Modify</TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger className={buttonVariants({ variant: 'destructive' })}><Trash className='h-5 w-5' /></TooltipTrigger>
+            <DeleteVehicle plate={vehicle?.plate} />
             <TooltipContent>Delete</TooltipContent>
           </Tooltip>
         </TooltipProvider>
