@@ -24,7 +24,7 @@ export default function SearchField({ className }: { className?: string | ClassV
   }, 300);
 
   return (
-    <div className={clsx('relative flex w-1/5', className)}>
+    <div className={clsx('relative flex min-w-32', className)}>
       <label htmlFor='searchbar' className='sr-only'>Search</label>
       <Input id='searchbar' placeholder='Search...' onChange={(e) => handleSearch(e.target.value)} defaultValue={searchParams.get('query')?.toString()} className='peer block py-[9px] pl-10 text-base' />
       <Search className='absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900' />
