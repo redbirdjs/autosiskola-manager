@@ -9,10 +9,10 @@ export default function DynamicPagination({ currentPage, pages }: { currentPage:
   // Jelenlegi oldal ahol vagyunk
   const currPage = parseInt(currentPage) || 1;
   // Előre megjelenítendő oldal gombok száma
-  const showcount = 3;
+  const showcount = (pages >= 3) ? 3 : pages;
   // Gombok legenerálása
   // Csinálunk egy arrayt 3 elemmel és hozzáadunk annyit, hogy mindig középen legyen az éppen aktuális gomb
-  const pageArray = Array.from(Array(showcount).keys()).map(x => (currPage > 2) ? x + currPage-2 : x);
+  const pageArray = Array.from(Array((showcount)).keys()).map(x => (currPage > 2) ? x + currPage-2 : x);
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -49,8 +49,9 @@ export default function DynamicPagination({ currentPage, pages }: { currentPage:
             {
               pageArray.map((item, index) => {
                 if (item <= pages) {
+                  // Ha csak egy oldal van akkor nem jelenik meg gomb
                   if (pages == 1 && item == 0) return;
-                  return currPage != pages ? (
+                  return  pages == 2 || currPage != pages ? (
                     <PaginationItem key={index+1} onClick={() => setPage(item+1)} className={clsx((item+1) == currPage ? 'cursor-default' : 'cursor-pointer')}>
                       <PaginationLink isActive={(currPage == item+1)}>{item+1}</PaginationLink>
                     </PaginationItem>
