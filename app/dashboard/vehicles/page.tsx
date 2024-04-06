@@ -1,7 +1,10 @@
-import { getVehicles } from '@/utils/actions'
+import { SearchX } from 'lucide-react'
 
-import { VehicleCard } from '@/components/dashboard/VehicleCard'
+import VehicleCard from '@/components/dashboard/VehicleCard'
 import DynamicPagination from '@/components/dashboard/Pagination'
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
+
+import { getVehicles } from '@/utils/actions'
 
 export default async function VehiclesPage({ searchParams }: { searchParams: { query?: string, page?: string } }) {
   const query = searchParams?.query || '';
@@ -12,9 +15,19 @@ export default async function VehiclesPage({ searchParams }: { searchParams: { q
   return (
     <div>
       {
-        searchResults.vehicles.map(vehicle => (
+        searchResults.vehicles.length != 0 ? searchResults.vehicles.map(vehicle => (
           <VehicleCard key={vehicle.plate} vehicle={vehicle} />
-        ))
+        )) : (
+          <div className='flex justify-center p-10'>
+            <Alert className='w-max'>
+              <SearchX className='w-5 h-5' />
+              <AlertTitle>No vehicles found!</AlertTitle>
+              <AlertDescription>
+                No vehicles found for the specified query. Please try another one.
+              </AlertDescription>
+            </Alert>
+          </div>
+        )
       }
       <DynamicPagination currentPage={page} pages={searchResults.pages} />
     </div>
