@@ -1,5 +1,6 @@
 'use client'
 
+import { Plus } from 'lucide-react'
 import { useFormState } from 'react-dom'
 import clsx from 'clsx'
 import { newVehicle } from '@/utils/actions'
@@ -48,7 +49,7 @@ export default function NewVehicleForm({ categories }: { categories: CategoryNam
         <Input id='car-image' name='car-image' type='file' className='mt-1 mb-3' accept='image/png, image/jpeg, image/webp' />
         <SheetFooter className='mb-3'>
           <SheetClose asChild>
-            <Button type='submit'>Add new car</Button>
+            <Button type='submit'><Plus className='h-5 w-5' /> Add new vehicles</Button>
           </SheetClose>
         </SheetFooter>
         <p className='text-gray-500 text-sm'><RequiredStar />: These fields must be filled.</p>
