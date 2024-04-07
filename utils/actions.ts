@@ -284,9 +284,7 @@ export async function newVehicle(prevState: VehicleState, formData: FormData) {
   });
 
   // hiba esetén visszaadjuk a hibás adatokat
-  if (!validatedFields.success) {
-    return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
-  }
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
 
   // ha minden átment az ellenőrzésen, kivesszük a szükséges paramétereket
   const { brand, type, plate, category, color, drivetype, image } = validatedFields.data;
