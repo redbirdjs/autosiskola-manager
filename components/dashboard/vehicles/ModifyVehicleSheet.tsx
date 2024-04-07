@@ -5,7 +5,7 @@ import { buttonVariants } from '@/components/ui/button'
 import ModifyVehicleForm from '@/components/dashboard/vehicles/ModifyVehicleForm'
 import { VehicleData } from '@/lib/definitions'
 
-export default async function ModifyVehicleSheet({ vehicle }: { vehicle: VehicleData }) {
+export default function ModifyVehicleSheet({ vehicle }: { vehicle: VehicleData }) {
   return (
     <Sheet>
       <SheetTrigger className={buttonVariants({ variant: 'default' })}><PencilRuler className='h-5 w-5' /></SheetTrigger>
