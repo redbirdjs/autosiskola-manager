@@ -1,7 +1,7 @@
 import { Plus, Car } from 'lucide-react'
 import { getCategories } from '@/utils/actions'
 
-import { Sheet, SheetContent,SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { buttonVariants } from '@/components/ui/button'
 import NewVehicleForm from '@/components/dashboard/vehicles/NewVehicleForm'
 
