@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, ChangeEvent } from 'react'
+import { useRef, useState, useEffect, ChangeEvent } from 'react'
 import Image from 'next/image'
 import { Plus, FileX } from 'lucide-react'
 import { useFormState } from 'react-dom'
@@ -12,13 +12,27 @@ import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
 import RequiredStar from '@/components/RequiredStar'
 import { CategoryName } from '@/lib/definitions'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function NewVehicleForm({ categories }: { categories: CategoryName[] }) {
   const imageRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File>();
+  const { toast } = useToast();
 
   const initialState = { message: { title: '' }, errors: {} };
   const [state, dispatch] = useFormState(newVehicle, initialState);
+
+  useEffect(() => {
+    if (state.errors && Object.values(state.errors).length > 0) {
+      toast({
+        title: 'Adding vehicle failed!',
+        description: Object.values(state.errors).map(err => (
+          <p key={err[0]}>{ err[0] }</p>
+        )),
+        variant: 'destructive'
+      })
+    }
+  }, [state, toast]);
 
   // előnézet módosítás
   const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
