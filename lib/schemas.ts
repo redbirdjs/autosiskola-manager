@@ -19,11 +19,11 @@ export const PasswordReminderSchema = z.object({
 });
 
 export const NewVehicleSchema = z.object({
-  brand: z.string().min(1, 'This field is required!'),
-  type: z.string().min(1, 'This field is required!'),
-  plate: z.string().min(1, 'This field is required!'),
+  brand: z.string().min(1, 'Brand field is required!'),
+  type: z.string().min(1, 'Type field is required!'),
+  plate: z.string().min(1, 'Plate field is required!'),
   category: z.number({ invalid_type_error: 'Category must be a number' }),
-  color: z.string().min(1, 'This field is required!'),
-  drivetype: z.string().min(1, 'This field is required!'),
+  color: z.string().min(1, 'Color field is required!'),
+  drivetype: z.string().min(1, 'Drive type field is required!'),
   image: z.instanceof(File).refine((file) => file.size <= 5249494, 'Max image size is 5MB.').optional()
 });
