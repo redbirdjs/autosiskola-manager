@@ -11,7 +11,7 @@ export default function DeleteConfirmDialog({ children, func }: { children: Reac
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. 
-            This will permanently delete the vehicle from the database with all its data.
+            This will permanently delete the data from the database.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
