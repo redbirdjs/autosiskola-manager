@@ -75,7 +75,7 @@ export default function NewVehicleForm({ categories }: { categories: CategoryNam
       <label htmlFor='car-image'>Preview Image</label>
       <div className='flex flex-col items-center gap-1 mt-1 mb-3'>
         { image && (
-            <Image src={URL.createObjectURL(image)} alt='Preview' width={100} height={100} />
+            <Image src={URL.createObjectURL(image)} className='border border-gray-300 rounded-lg p-2' alt='Preview' width={160} height={160} />
           )
         }
         <div className='w-full flex items-center gap-1'>
