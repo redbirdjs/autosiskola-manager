@@ -1,4 +1,10 @@
+import { Metadata } from 'next'
+
 import DynamicBreadcrumb from '@/components/dashboard/DynamicBreadcrumb'
+
+export const metadata: Metadata = {
+  title: 'Calendar | Dashboard'
+}
 
 export default function CalendarLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
