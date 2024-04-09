@@ -9,14 +9,14 @@ import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import path from 'path'
-import { writeFile } from 'fs/promises'
+import { writeFile, unlink } from 'fs/promises'
 
 import RegEmail from '@/emails/RegistrationSuccess'
 import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 
 import { LoginState, PasswordReminderState, RegisterState, VehicleState } from '@/lib/definitions';
-import { LoginSchema, PasswordReminderSchema, RegisterSchema, NewVehicleSchema } from '@/lib/schemas';
+import { LoginSchema, PasswordReminderSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 export async function register(prevState: RegisterState, formData: FormData) {
@@ -273,7 +273,7 @@ export async function getCategories() {
 
 export async function newVehicle(prevState: VehicleState, formData: FormData) {
   // form adatok tesztelése, hogy meg felel-e a sémának
-  const validatedFields = NewVehicleSchema.safeParse({
+  const validatedFields = VehicleSchema.safeParse({
     brand: formData.get('brand'),
     type: formData.get('type'),
     plate: formData.get('plate'),
@@ -334,5 +334,46 @@ export async function deleteVehicle(plate: string) {
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to delete the vehicle.');
+  }
+}
+
+export async function getCalendarEvents({ email, rank }: { email: string, rank: string }) {
+  try {
+    if (rank.toLowerCase() != "student") {
+      const users = await prisma.course.findMany({
+        select: { studentId: true },
+        where: { teacher: { email } }
+      });
+      const ids = users.map(u => u.studentId);
+
+      const events = await prisma.calendar.findMany({
+        where: { userId: { in: ids } }
+      });
+
+      const data = events.map(event => {
+        return {
+          title: event.title,
+          date: event.date,
+          color: event.color
+        }
+      });
+  
+      return data;
+    } else {
+      const events = await prisma.calendar.findMany({
+        where: { user: { email } }
+      });
+      const data = events.map(event => {
+        return {
+          title: event.title,
+          date: event.date,
+          color: event.color
+        }
+      });
+      return data;
+    }
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to get the calendar events.');
   }
 }
