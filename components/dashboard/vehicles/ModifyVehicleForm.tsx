@@ -2,8 +2,10 @@
 
 import Image from 'next/image'
 import { useState, useRef, ChangeEvent } from 'react'
+import { useFormState } from 'react-dom'
 import clsx from 'clsx'
 import { Pen, FileX } from 'lucide-react'
+import { modifyVehicle } from '@/utils/actions'
 
 import RequiredStar from '@/components/RequiredStar'
 import { Input } from '@/components/ui/input'
@@ -14,6 +16,9 @@ import { VehicleData, CategoryName } from '@/lib/definitions'
 export default function ModifyVehicleForm({ data, categories }: { data: VehicleData, categories: CategoryName[] }) {
   const imageRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File>();
+
+  const initialState = { message: { title: '' }, errors: {} };
+  const [state, dispatch] = useFormState(modifyVehicle, initialState);
 
   const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -27,14 +32,15 @@ export default function ModifyVehicleForm({ data, categories }: { data: VehicleD
   }
 
   return (
-    <form>
+    <form action={dispatch}>
+      <Input id='initplate' name='initplate' value={data.plate} className='hidden' readOnly />
       <label htmlFor='brand'>Brand <RequiredStar /></label>
       <Input className='mt-1 mb-3' id='brand' name='brand' defaultValue={data.brand} />
       <label htmlFor='type'>Type <RequiredStar /></label>
       <Input className='mt-1 mb-3' id='type' name='type' defaultValue={data.type} />
       <label htmlFor='plate'>Plate <RequiredStar /></label>
       <Input className='mt-1 mb-3' id='plate' name='plate' defaultValue={data.plate} />
-      <label htmlFor='brand'>Category<RequiredStar /></label>
+      <label htmlFor='category'>Category <RequiredStar /></label>
       <div className='flex flex-row gap-2 mt-1 mb-3'>
         {
           categories.map(category => (
@@ -47,8 +53,8 @@ export default function ModifyVehicleForm({ data, categories }: { data: VehicleD
           ))
         }
       </div>
-      <label htmlFor='brand'>Color <RequiredStar /></label>
-      <Input className='mt-1 mb-3' id='brand' name='brand' defaultValue={data.color || ''} />
+      <label htmlFor='color'>Color <RequiredStar /></label>
+      <Input className='mt-1 mb-3' id='color' name='color' defaultValue={data.color || ''} />
       <label htmlFor='drivetype'>Drive Type <RequiredStar /></label>
       <Input className='mt-1 mb-3' id='drivetype' name='drivetype' defaultValue={data.drivetype} />
       <label>Preview Image</label>
