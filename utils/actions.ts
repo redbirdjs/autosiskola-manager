@@ -325,6 +325,66 @@ export async function newVehicle(prevState: VehicleState, formData: FormData) {
   }
 }
 
+export async function modifyVehicle(prevState: VehicleState, formData: FormData) {
+  // form adatok tesztelése
+  const ValidatedFields = VehicleSchema.safeParse({
+    brand: formData.get('brand'),
+    type: formData.get('type'),
+    plate: formData.get('plate'),
+    category: parseInt(formData.get('category')?.toString() || ''),
+    color: formData.get('color'),
+    drivetype: formData.get('drivetype'),
+    image: formData.get('car-image') || null
+  });
+
+  if (!ValidatedFields.success) return { message: { title: '' }, errors: ValidatedFields.error?.flatten().fieldErrors };
+
+  // eredeti rendszám mentése a módosításhoz
+  const initPlate = formData.get('initplate')?.toString() || '';
+  if (!initPlate || initPlate.length == 0)  return { message: { title: '' }, errors: { plate: ['There was an error while trying to get plate data.'] } };
+
+  // adatok kikérése a validált mezőkből
+  const { brand, type, plate, category, color, drivetype, image } = ValidatedFields.data;
+  const imgData: { url: string | undefined } = { url: '' }
+
+  //módosított kép mentése
+  imgData.url = image && image.size > 0 ? '/vehicles/[rep]' : undefined;
+
+  if (!!imgData.url && image && image.size > 0) {
+    const buffer = Buffer.from(await image.arrayBuffer());
+
+    const fileName = `${randomString(10)}_${Date.now()}${path.extname(image.name)}`;
+    imgData.url = imgData.url.replace('[rep]', fileName);
+
+    try {
+      await writeFile(`${path.join(process.cwd())}/public/vehicles/${fileName}`, buffer);
+    } catch (e) {
+      if (e) console.error(e);
+      throw new Error('There was an error while trying to upload the image.');
+    }
+  }
+
+  try {
+    // autó kép kikeresése
+    const imgSrc = await prisma.vehicle.findUnique({ select: { imageUrl: true }, where: { plate: initPlate } });
+    if (imgSrc && !imgSrc.imageUrl.endsWith("fallback.png")) {
+      // ha cserlétük a képet, akkor a régi törlése
+      await unlink(`${path.join(process.cwd())}/public${imgSrc.imageUrl}`);
+    }
+    // autó adatainak módosítása
+    await prisma.vehicle.update({
+      data: { brand, type, plate, categoryId: category, color, driveType: drivetype, imageUrl: imgData.url },
+      where: { plate: initPlate }
+    });
+
+    revalidatePath('/dashboard/vehicles');
+    return { message: { title: 'Success', description: 'Vehicle successfully updated.' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to modify the vehicle data.');
+  }
+}
+
 export async function deleteVehicle(plate: string) {
   try {
     await prisma.vehicle.delete({ where: { plate } });
