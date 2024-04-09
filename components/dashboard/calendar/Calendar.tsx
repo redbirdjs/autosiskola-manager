@@ -2,13 +2,13 @@
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import { EventSourceInput } from '@fullcalendar/core/index.js'
+import { EventSourceInput, ToolbarInput } from '@fullcalendar/core/index.js'
 
 export default function Calendar({ events }: { events: EventSourceInput }) {
-  const header = {
+  const header: false | ToolbarInput = {
     left: 'prev,next',
     center: 'title',
-    right: 'dayGridMonth,dayGrid'
+    right: 'dayGridMonth,dayGridWeek',
   };
 
   return (
