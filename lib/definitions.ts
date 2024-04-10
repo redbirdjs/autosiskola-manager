@@ -109,7 +109,7 @@ export interface Exam {
   state: number;
 }
 
-export interface ExamStudentData {
+export interface StudentFormData {
   id: number;
   category: string;
   student: {

@@ -9,9 +9,9 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import RequiredStar from '@/components/RequiredStar'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { ExamStudentData } from '@/lib/definitions'
+import { StudentFormData } from '@/lib/definitions'
 
-export default function NewExamForm({ courses }: { courses: ExamStudentData[] }) {
+export default function NewExamForm({ students }: { students: StudentFormData[] }) {
   const initialState = { message: { title: '' }, errors: {} };
   const [state, dispatch] = useFormState(createExam, initialState);
 
@@ -25,7 +25,7 @@ export default function NewExamForm({ courses }: { courses: ExamStudentData[] })
           </SelectTrigger>
           <SelectContent>
             {
-              courses.map(course => (
+              students.map(course => (
                 <SelectItem key={course.id} value={course.id.toString()}>[{ course.category }] #{ course.id } - { course.student.realname }</SelectItem>
               ))
             }
