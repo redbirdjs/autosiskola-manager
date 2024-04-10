@@ -437,3 +437,27 @@ export async function getCalendarEvents({ email, rank }: { email: string, rank: 
     throw new Error('There was an error while trying to get the calendar events.');
   }
 }
+
+export async function getPayments() {
+  try {
+    const payments = await prisma.payment.findMany({ include: { course: { include: { student: true, teacher: true } } } });
+
+    const data = payments.map(payment => {
+      return {
+        id: payment.id,
+        description: payment.description,
+        student: `${payment.course.student.realName}|${payment.course.student.username}`,
+        issuer: payment.course.teacher.realName,
+        amount: payment.amount,
+        state: payment.state,
+        created: payment.created,
+        due: payment.due
+      }
+    });
+
+    return data;
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to get the payments.');
+  }
+}
