@@ -28,8 +28,15 @@ export const VehicleSchema = z.object({
   image: z.instanceof(File).refine((file) => file.size <= 5249494, 'Max image size is 5MB.').optional()
 });
 
+export const PaymentSchema = z.object({
+  courseId: z.number().min(1, 'Student field is required!'),
+  description: z.string().min(1, 'Description field is required!'),
+  amount: z.number().min(0, 'Amount field is required!').max(10000, 'The maximum amount is $10000'),
+  due: z.date().min(new Date(Date.now()), 'You must specify a future date!')
+});
+
 export const ExamSchema = z.object({
   courseId: z.number().min(1, 'Student field is required!'),
   description: z.string().min(1, 'Description field is required!'),
-  date: z.date().min(new Date(Date.now()), 'You must give a future date!')
+  date: z.date().min(new Date(Date.now()), 'You must specify a future date!')
 });

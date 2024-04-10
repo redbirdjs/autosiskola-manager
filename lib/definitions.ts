@@ -54,6 +54,19 @@ export type VehicleState = {
   }
 }
 
+export type PaymentState = {
+  errors?: {
+    courseId?: string[]
+    description?: string[]
+    amount?: string[]
+    due?: string[]
+  }
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
+
 export type ExamState = {
   errors?: {
     courseId?: string[]
