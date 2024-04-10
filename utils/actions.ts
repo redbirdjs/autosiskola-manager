@@ -390,7 +390,7 @@ export async function deleteVehicle(plate: string) {
     await prisma.vehicle.delete({ where: { plate } });
     revalidatePath('/dashboard/vehicles');
 
-    return { message: { title: 'Success', description: 'Vehicles successfully deleted!' } };
+    return { message: { title: 'Success', description: 'Vehicle successfully deleted!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to delete the vehicle.');
