@@ -122,7 +122,7 @@ model Exam {
   id Int @id @default(autoincrement())
   date DateTime @db.Timestamp()
   description String @db.VarChar(255)
-  state Int
+  state Int @default(0)
 
   course Course @relation(fields: [courseId], references: [id])
   courseId Int
