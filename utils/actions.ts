@@ -530,3 +530,15 @@ export async function createExam(prevState: ExamState, formData: FormData) {
     throw new Error('There was an error while trying to add new exam.');
   }
 }
+
+export async function deleteExam({ examId }: { examId: number }) {
+  try {
+    await prisma.exam.delete({ where: { id: examId } });
+
+    revalidatePath('/dashboard/exams');
+    return { message: { title: 'Success', description: 'Exam has been successfully deleted!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to delete exam.');
+  }
+}
