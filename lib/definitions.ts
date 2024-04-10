@@ -79,7 +79,6 @@ export interface CategoryName {
 
 export interface Payment {
   id: number;
-  name: string;
   description: string;
   student: string;
   issuer: string;
@@ -87,4 +86,21 @@ export interface Payment {
   state: number;
   created: Date;
   due: Date;
+}
+
+export interface Exam {
+  id: number;
+  date: Date;
+  category: string;
+  student: string;
+  description: string;
+  state: number;
+}
+
+export interface ExamStudentData {
+  id: number;
+  category: string;
+  student: {
+    realname: string;
+  }
 }
