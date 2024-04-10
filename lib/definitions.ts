@@ -54,6 +54,18 @@ export type VehicleState = {
   }
 }
 
+export type ExamState = {
+  errors?: {
+    courseId?: string[]
+    description?: string[]
+    date?: string[]
+  }
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
+
 export interface UserData {
   path: string;
   realname: string;

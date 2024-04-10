@@ -27,3 +27,9 @@ export const VehicleSchema = z.object({
   drivetype: z.string().min(1, 'Drive type field is required!'),
   image: z.instanceof(File).refine((file) => file.size <= 5249494, 'Max image size is 5MB.').optional()
 });
+
+export const ExamSchema = z.object({
+  courseId: z.number().min(1, 'Student field is required!'),
+  description: z.string().min(1, 'Description field is required!'),
+  date: z.date().min(new Date(Date.now()), 'You must give a future date!')
+});
