@@ -81,7 +81,7 @@ model Course {
 model Payment {
   id Int @id @default(autoincrement())
   description String @db.VarChar(100)
-  amount Int @default(0)
+  amount Float @default(0)
   created DateTime @db.Date @default(now())
   due DateTime @db.Date @default(now())
   state Int @default(0)
