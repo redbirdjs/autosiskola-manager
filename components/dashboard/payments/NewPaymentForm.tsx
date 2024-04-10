@@ -2,6 +2,7 @@
 
 import { Plus } from 'lucide-react'
 import { useFormState } from 'react-dom'
+import { createPayment } from '@/utils/actions'
 
 import { SheetFooter, SheetClose } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'
@@ -12,9 +13,10 @@ import { StudentFormData } from '@/lib/definitions'
 
 export default function NewPaymentForm({ students }: { students: StudentFormData[] }) {
   const initialState = { message: { title: '' }, errors: {} };
+  const [state, dispatch] = useFormState(createPayment, initialState);
 
   return (
-    <form>
+    <form action={dispatch}>
       <label htmlFor='course'>Course <RequiredStar /></label>
       <div className='mt-1 mb-3'>
         <Select name='course'>
