@@ -483,7 +483,7 @@ export async function getPayments() {
 }
 
 // oktatóhoz tartozó kurzus és tanuló adatok lekérdezése vizsga felvételhez
-export async function getCourses({ teacher }: { teacher: number }) {
+export async function getStudentData({ teacher }: { teacher: number }) {
   try {
     const courses = await prisma.course.findMany({ include: { student: true, category: true }, where: { teacherId: teacher } });
     const data = courses.map(course => {
