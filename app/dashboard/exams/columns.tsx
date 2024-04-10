@@ -6,6 +6,8 @@ import moment from 'moment'
 import { ColumnDef } from '@tanstack/react-table'
 
 import DeleteExamButton from '@/components/dashboard/exams/DeleteExamButton'
+import SetExamFailed from '@/components/dashboard/exams/SetExamFailed'
+import SetExamPassed from '@/components/dashboard/exams/SetExamPassed'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Exam } from '@/lib/definitions'
@@ -102,12 +104,8 @@ export const columns: ColumnDef<Exam>[] = [
             <DropdownMenuItem asChild>
               <Link href={`/dashboard/students/${username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Student</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className='flex gap-2' disabled={exam.state != 0}>
-              <Check className='h-5 w-5' /> Set Exam as Passed
-            </DropdownMenuItem>
-            <DropdownMenuItem className='flex gap-2' disabled={exam.state != 0}>
-              <CircleX className='h-5 w-5' /> Set Exam as Failed
-            </DropdownMenuItem>
+            <SetExamPassed examId={examId} state={exam.state} />
+            <SetExamFailed examId={examId} state={exam.state} />
             <DropdownMenuSeparator />
             <DeleteExamButton examId={examId} />
           </DropdownMenuContent>
