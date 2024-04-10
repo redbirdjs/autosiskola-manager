@@ -76,3 +76,15 @@ export interface CategoryName {
   id: number,
   category: string
 }
+
+export interface Payment {
+  id: number;
+  name: string;
+  description: string;
+  student: string;
+  issuer: string;
+  amount: number;
+  state: number;
+  created: Date;
+  due: Date;
+}

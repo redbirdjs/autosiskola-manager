@@ -7,18 +7,7 @@ import { ColumnDef } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-
-export type Payment = {
-  id: number;
-  name: string;
-  description: string;
-  student: string;
-  issuer: string;
-  amount: number;
-  state: number;
-  created: Date;
-  due: Date;
-}
+import { Payment } from '@/lib/definitions'
 
 const dateFormat = 'YYYY-MM-DD HH:mm:ss';
 
