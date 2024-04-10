@@ -502,7 +502,7 @@ export async function getCourses({ teacher }: { teacher: number }) {
 //! oktatóhoz tartozó vizsgák legyenek csak
 export async function getExams() {
   try {
-    const exams = await prisma.exam.findMany({ include: { course: { include: { category: true, student: true } } } });
+    const exams = await prisma.exam.findMany({ include: { course: { include: { category: true, student: true } } }, orderBy: { id: 'asc' } });
     const data = exams.map(exam => {
       const student = exam.course.student;
       return {
@@ -547,6 +547,20 @@ export async function createExam(prevState: ExamState, formData: FormData) {
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to add new exam.');
+  }
+}
+
+export async function setExamState({ examId, state }: { examId: number, state: number }) {
+  try {
+    await prisma.exam.update({
+      data: { state }, where: { id: examId }
+    });
+
+    revalidatePath('/dashboard/exams');
+    return { message: { title: 'Success', description: 'Exam state has been successfully updated!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to set exam state.');
   }
 }
 
