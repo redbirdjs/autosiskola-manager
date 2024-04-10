@@ -23,10 +23,6 @@ export const columns: ColumnDef<Payment>[] = [
     }
   },
   {
-    accessorKey: 'name',
-    header: 'Name'
-  },
-  {
     accessorKey: 'description',
     header: 'Description'
   },
