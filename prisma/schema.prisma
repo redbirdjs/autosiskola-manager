@@ -121,6 +121,7 @@ model Category {
 model Exam {
   id Int @id @default(autoincrement())
   date DateTime @db.Timestamp()
+  description String @db.VarChar(255)
   passed Boolean
 
   course Course @relation(fields: [courseId], references: [id])
