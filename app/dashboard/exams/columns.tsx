@@ -5,6 +5,7 @@ import { MoreHorizontal, Clock, Check, CircleX, Clipboard, UserRound, Trash2 as 
 import moment from 'moment'
 import { ColumnDef } from '@tanstack/react-table'
 
+import DeleteExamButton from '@/components/dashboard/exams/DeleteExamButton'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Exam } from '@/lib/definitions'
@@ -81,6 +82,7 @@ export const columns: ColumnDef<Exam>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const exam = row.original;
+      const examId = exam.id;
       const username = exam.student.split('|')[1];
 
       return (
@@ -107,9 +109,7 @@ export const columns: ColumnDef<Exam>[] = [
               <CircleX className='h-5 w-5' /> Set Exam as Failed
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className='flex gap-2 text-red-500'>
-              <Trash className='h-5 w-5' /> Delete Exam
-            </DropdownMenuItem>
+            <DeleteExamButton examId={examId} />
           </DropdownMenuContent>
         </DropdownMenu>
       )
