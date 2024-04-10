@@ -1,9 +1,8 @@
 'use client'
 
 import { Plus } from 'lucide-react'
-import clsx from 'clsx'
-import { FormEvent } from 'react'
 import { useFormState } from 'react-dom'
+import { createExam } from '@/utils/actions'
 
 import { SheetFooter, SheetClose } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'
@@ -14,16 +13,13 @@ import { ExamStudentData } from '@/lib/definitions'
 
 export default function NewExamForm({ courses }: { courses: ExamStudentData[] }) {
   const initialState = { message: { title: '' }, errors: {} };
-
-  const logChange = (e: string) => {
-    console.log(e);
-  }
+  const [state, dispatch] = useFormState(createExam, initialState);
 
   return (
-    <form>
+    <form action={dispatch}>
       <label htmlFor='course'>Course <RequiredStar /></label>
       <div className='mt-1 mb-3'>
-        <Select name='course' onValueChange={(e) => logChange(e)}>
+        <Select name='course'>
           <SelectTrigger>
             <SelectValue placeholder='Select a student...' />
           </SelectTrigger>
