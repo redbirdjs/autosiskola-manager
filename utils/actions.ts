@@ -19,6 +19,7 @@ import { LoginState, PasswordReminderState, RegisterState, VehicleState, ExamSta
 import { ExamSchema, LoginSchema, PasswordReminderSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
+// regisztráció
 export async function register(prevState: RegisterState, formData: FormData) {
   const validatedFields = RegisterSchema.safeParse({
     username: formData.get('username'),
@@ -56,6 +57,7 @@ export async function register(prevState: RegisterState, formData: FormData) {
   }
 }
 
+// bejelentkezés
 export async function login(prevState: LoginState, formData: FormData) {
   const headerList = headers();
 
@@ -98,6 +100,7 @@ export async function login(prevState: LoginState, formData: FormData) {
   }
 }
 
+// kijelentkezés
 export async function logout() {
   if (!cookies().has('refreshToken')) return;
 
@@ -105,6 +108,7 @@ export async function logout() {
   redirect('/');
 }
 
+// jelszó emlékeztető küldése
 export async function passwordReminder(prevState: PasswordReminderState, formData: FormData) {
   const validatedFields = PasswordReminderSchema.safeParse({
     email: formData.get('email'),
@@ -134,6 +138,7 @@ export async function passwordReminder(prevState: PasswordReminderState, formDat
   }
 }
 
+// bejelentkezett felhasználó adatainak lekérdezése
 export async function getUserData() {
   const cookieStore = cookies();
   if (!cookieStore.has('refreshToken')) return;
@@ -159,6 +164,7 @@ export async function getUserData() {
   }
 }
 
+// összes felhasználó lekérdezése, keresés, pagináció adatok
 export async function getUsers({ query, page }: { query: string, page: string }) {
   const showcount = 5;
   const currentPage = parseInt(page)-1 < 0 ? 0 : parseInt(page)-1 || 0;
@@ -192,6 +198,7 @@ export async function getUsers({ query, page }: { query: string, page: string })
   }
 }
 
+// felhasználók lekérdezése rang alapján (tanuló, oktató)
 export async function getFilteredUsers({ query, page, rankType }: { query: string, page: string, rankType: 'student' | 'teacher' }) {
   const showcount = 5;
   const currentPage = parseInt(page)-1 || 0;
@@ -225,6 +232,7 @@ export async function getFilteredUsers({ query, page, rankType }: { query: strin
   }
 }
 
+// autók lekérdezése, valamint keresés
 export async function getVehicles({ query, page }: { query: string, page: string }) {
   const showcount = 5;
   const currentPage = parseInt(page)-1 < 0 ? 0 : parseInt(page)-1 || 0;
@@ -260,6 +268,7 @@ export async function getVehicles({ query, page }: { query: string, page: string
   }
 }
 
+// különböző kategóriák lekérdezése
 export async function getCategories() {
   try {
     const categories = await prisma.category.findMany();
@@ -271,6 +280,7 @@ export async function getCategories() {
   }
 }
 
+// új autó felvétele
 export async function newVehicle(prevState: VehicleState, formData: FormData) {
   // form adatok tesztelése, hogy meg felel-e a sémának
   const validatedFields = VehicleSchema.safeParse({
@@ -325,6 +335,7 @@ export async function newVehicle(prevState: VehicleState, formData: FormData) {
   }
 }
 
+// autó adatainak módosítása
 export async function modifyVehicle(prevState: VehicleState, formData: FormData) {
   // form adatok tesztelése
   const ValidatedFields = VehicleSchema.safeParse({
@@ -385,6 +396,7 @@ export async function modifyVehicle(prevState: VehicleState, formData: FormData)
   }
 }
 
+// autó törlése
 export async function deleteVehicle(plate: string) {
   try {
     await prisma.vehicle.delete({ where: { plate } });
@@ -397,6 +409,7 @@ export async function deleteVehicle(plate: string) {
   }
 }
 
+// naptár események lekérdezése
 export async function getCalendarEvents({ email, rank }: { email: string, rank: string }) {
   try {
     if (rank.toLowerCase() != "student") {
@@ -438,6 +451,8 @@ export async function getCalendarEvents({ email, rank }: { email: string, rank: 
   }
 }
 
+// fizetések lekérdezése
+//! csak oktatóhoz tartozó fizetések jelenjenek meg
 export async function getPayments() {
   try {
     const payments = await prisma.payment.findMany({ include: { course: { include: { student: true, teacher: true } } } });
@@ -462,6 +477,7 @@ export async function getPayments() {
   }
 }
 
+// oktatóhoz tartozó kurzus és tanuló adatok lekérdezése vizsga felvételhez
 export async function getCourses({ teacher }: { teacher: number }) {
   try {
     const courses = await prisma.course.findMany({ include: { student: true, category: true }, where: { teacherId: teacher } });
@@ -482,6 +498,8 @@ export async function getCourses({ teacher }: { teacher: number }) {
   }
 }
 
+// vizsgák lekérdezése
+//! oktatóhoz tartozó vizsgák legyenek csak
 export async function getExams() {
   try {
     const exams = await prisma.exam.findMany({ include: { course: { include: { category: true, student: true } } } });
@@ -504,6 +522,7 @@ export async function getExams() {
   }
 }
 
+// új vizsga felvétele
 export async function createExam(prevState: ExamState, formData: FormData) {
   const validatedFields = ExamSchema.safeParse({
     courseId: parseInt(formData.get('course')?.toString() || ''),
@@ -531,6 +550,7 @@ export async function createExam(prevState: ExamState, formData: FormData) {
   }
 }
 
+// vizsga törlése
 export async function deleteExam({ examId }: { examId: number }) {
   try {
     await prisma.exam.delete({ where: { id: examId } });
