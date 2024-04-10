@@ -378,7 +378,7 @@ export async function modifyVehicle(prevState: VehicleState, formData: FormData)
   try {
     // autó kép kikeresése
     const imgSrc = await prisma.vehicle.findUnique({ select: { imageUrl: true }, where: { plate: initPlate } });
-    if (imgSrc && !imgSrc.imageUrl.endsWith("fallback.png")) {
+    if (imgSrc && !imgSrc.imageUrl.endsWith('fallback.png')) {
       // ha cserlétük a képet, akkor a régi törlése
       await unlink(`${path.join(process.cwd())}/public${imgSrc.imageUrl}`);
     }
@@ -399,6 +399,11 @@ export async function modifyVehicle(prevState: VehicleState, formData: FormData)
 // autó törlése
 export async function deleteVehicle(plate: string) {
   try {
+    const imgSrc = await prisma.vehicle.findUnique({ select: { imageUrl: true }, where: { plate } });
+    if (imgSrc && !imgSrc.imageUrl.endsWith('fallback.png')) {
+      await unlink(`${path.join(process.cwd())}/public${imgSrc.imageUrl}`);
+    }
+
     await prisma.vehicle.delete({ where: { plate } });
     revalidatePath('/dashboard/vehicles');
 
