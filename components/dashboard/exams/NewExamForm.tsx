@@ -38,10 +38,10 @@ export default function NewExamForm({ students }: { students: StudentFormData[] 
       <Input className='mt-1 mb-3' type='datetime-local' id='date' name='date' />
       <SheetFooter className='mb-3'>
         <SheetClose asChild>
-          <Button type='submit'><Plus className='w-5 h-5' /> New</Button>
+          <Button type='submit'><Plus className='w-5 h-5' /> Add Exam</Button>
         </SheetClose>
       </SheetFooter>
-      <p className='text-gray-500 text-sm'><RequiredStar />: These fileds must be filled.</p>
+      <p className='text-gray-500 text-sm'><RequiredStar />: These fields must be filled out.</p>
     </form>
   );
 }
