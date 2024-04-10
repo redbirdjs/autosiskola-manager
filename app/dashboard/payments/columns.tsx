@@ -8,8 +8,17 @@ import { ColumnDef } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Payment } from '@/lib/definitions'
+import { toast } from '@/components/ui/use-toast'
 
 const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+
+const copyPaymentId = (paymentid: string) => {
+  navigator.clipboard.writeText(paymentid);
+  toast({
+    title: 'Payment ID copied to clipboard!',
+    duration: 2000
+  });
+}
 
 export const columns: ColumnDef<Payment>[] = [
   {
@@ -106,7 +115,7 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className='flex gap-2' onClick={() => navigator.clipboard.writeText(payment.id.toString())}>
+            <DropdownMenuItem className='flex gap-2' onClick={() => copyPaymentId(payment.id.toString())}>
               <Clipboard className='h-5 w-5' /> Copy Payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
