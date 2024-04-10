@@ -15,8 +15,8 @@ import RegEmail from '@/emails/RegistrationSuccess'
 import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 
-import { LoginState, PasswordReminderState, RegisterState, VehicleState, ExamState } from '@/lib/definitions';
-import { ExamSchema, LoginSchema, PasswordReminderSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
+import { LoginState, PasswordReminderState, RegisterState, VehicleState, ExamState, PaymentState } from '@/lib/definitions';
+import { ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 // regisztráció
@@ -482,6 +482,31 @@ export async function getPayments() {
   }
 }
 
+export async function createPayment(prevState: PaymentState, formData: FormData) {
+  const validatedFields = PaymentSchema.safeParse({
+    courseId: parseInt(formData.get('course')?.toString() || ''),
+    description: formData.get('description'),
+    amount: parseInt(formData.get('amount')?.toString() || ''),
+    due: new Date(formData.get('due')?.toString() || '')
+  });
+
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { courseId, description, amount, due } = validatedFields.data;
+
+  try {
+    await prisma.payment.create({
+      data: { courseId, description, amount, due }
+    });
+
+    revalidatePath('/dashboard/payments');
+    return { message: { title: 'Success', description: 'Payment successfully created.' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to create a new payment.');
+  }
+}
+
 // oktatóhoz tartozó kurzus és tanuló adatok lekérdezése vizsga felvételhez
 export async function getStudentData({ teacher }: { teacher: number }) {
   try {
@@ -535,10 +560,7 @@ export async function createExam(prevState: ExamState, formData: FormData) {
     date: new Date(formData.get('date')?.toString() || '')
   });
 
-  if (!validatedFields.success) {
-    console.log(validatedFields.error?.flatten().fieldErrors);
-    return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
-  }
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
 
   const { courseId, description, date } = validatedFields.data;
 
