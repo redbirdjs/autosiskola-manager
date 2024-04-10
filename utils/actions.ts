@@ -15,8 +15,8 @@ import RegEmail from '@/emails/RegistrationSuccess'
 import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 
-import { LoginState, PasswordReminderState, RegisterState, VehicleState } from '@/lib/definitions';
-import { LoginSchema, PasswordReminderSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
+import { LoginState, PasswordReminderState, RegisterState, VehicleState, ExamState } from '@/lib/definitions';
+import { ExamSchema, LoginSchema, PasswordReminderSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 export async function register(prevState: RegisterState, formData: FormData) {
@@ -501,5 +501,32 @@ export async function getExams() {
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to fetch exam information.');
+  }
+}
+
+export async function createExam(prevState: ExamState, formData: FormData) {
+  const validatedFields = ExamSchema.safeParse({
+    courseId: parseInt(formData.get('course')?.toString() || ''),
+    description: formData.get('description'),
+    date: new Date(formData.get('date')?.toString() || '')
+  });
+
+  if (!validatedFields.success) {
+    console.log(validatedFields.error?.flatten().fieldErrors);
+    return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+  }
+
+  const { courseId, description, date } = validatedFields.data;
+
+  try {
+    await prisma.exam.create({
+      data: { courseId, description, date }
+    });
+
+    revalidatePath('/dashboard/exams');
+    return { message: { title: 'Success', description: 'Exam successfully created!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to add new exam.');
   }
 }
