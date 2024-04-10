@@ -481,3 +481,25 @@ export async function getCourses({ teacher }: { teacher: number }) {
     throw new Error('There was an error while trying to get course information.');
   }
 }
+
+export async function getExams() {
+  try {
+    const exams = await prisma.exam.findMany({ include: { course: { include: { category: true, student: true } } } });
+    const data = exams.map(exam => {
+      const student = exam.course.student;
+      return {
+        id: exam.id,
+        date: exam.date,
+        category: exam.course.category.category,
+        student: `${student.realName}|${student.username}`,
+        description: exam.description,
+        state: exam.state
+      }
+    });
+
+    return data;
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to fetch exam information.');
+  }
+}
