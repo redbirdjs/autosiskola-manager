@@ -138,6 +138,21 @@ export async function passwordReminder(prevState: PasswordReminderState, formDat
   }
 }
 
+export async function verifyEmail({ verifyToken }: { verifyToken: string }) {
+  if (!verifyToken) return redirect('/');
+
+  try {
+    const user = await prisma.user.findUnique({ where: { verifyToken } });
+    if (!user) return { error: { title: 'User not found', description: 'The token you specified does not link to any existing users.' } };
+
+    await prisma.user.update({ data: { verifyToken: null }, where: { verifyToken } });
+    return { message: { title: 'Success', description: 'You have successfully verified your email address.' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to verify email address.');
+  }
+}
+
 // bejelentkezett felhasználó adatainak lekérdezése
 export async function getUserData() {
   const cookieStore = cookies();
