@@ -470,7 +470,7 @@ export async function getCalendarEvents({ email, rank }: { email: string, rank: 
         return {
           title: `Exam - ${exam.course.student.realName}`,
           date: exam.date,
-          color: '#ff0000'
+          color: '#2a94d1'
         }
       });
       const paymentData = payments.map(payment => {
