@@ -1,5 +1,5 @@
 import { Plus, School } from 'lucide-react'
-import { getStudentData } from '@/utils/actions'
+import { getStudentData, getUserData } from '@/utils/actions'
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { buttonVariants } from '@/components/ui/button'
@@ -7,7 +7,8 @@ import NewExamForm from './NewExamForm'
 
 export default async function NewExamSheet() {
   // tanárhoz tartozó kurzusok és tanuló adatok lekérdezése
-  const students = await getStudentData({ teacher: 19 });
+  const userInfo = await getUserData();
+  const students = await getStudentData({ teacher: userInfo?.id });
 
   return (
     <Sheet>
