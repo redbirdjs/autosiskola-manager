@@ -18,6 +18,7 @@ import NewLoginEmail from '@/emails/NewLogin'
 import { LoginState, PasswordReminderState, RegisterState, VehicleState, ExamState, PaymentState } from '@/lib/definitions';
 import { ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
+import { eventTupleToStore } from '@fullcalendar/core/internal.js'
 
 // regisztráció
 export async function register(prevState: RegisterState, formData: FormData) {
@@ -171,7 +172,14 @@ export async function getUserData() {
     const user = await prisma.user.findUnique({ include: { rank: true }, where: { email } });
     if (!user) return;
   
-    return { realname: user.realName, username: user.username, email: user.email, avatarPath: user.avatarPath, rank: user.rank.name }
+    return { 
+      id: user.id,
+      realname: user.realName, 
+      username: user.username, 
+      email: user.email, 
+      avatarPath: user.avatarPath, 
+      rank: user.rank.name 
+    }
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to obtain user information.');
@@ -433,36 +441,104 @@ export async function getCalendarEvents({ email, rank }: { email: string, rank: 
   try {
     if (rank.toLowerCase() != "student") {
       const users = await prisma.course.findMany({
-        select: { studentId: true },
+        select: { studentId: true, id: true },
         where: { teacher: { email } }
       });
+      const courses = users.map(u => u.id);
       const ids = users.map(u => u.studentId);
 
       const events = await prisma.calendar.findMany({
         where: { userId: { in: ids } }
       });
+      const exams = await prisma.exam.findMany({
+        include: { course: { include: { student: true } } },
+        where: { courseId: { in: courses } }
+      });
+      const payments = await prisma.payment.findMany({
+        include: { course: { include: { student: true } } },
+        where: { courseId: { in: courses } }
+      })
 
-      const data = events.map(event => {
+      const eventData = events.map(event => {
         return {
           title: event.title,
           date: event.date,
           color: event.color
+        }
+      });
+      const examData = exams.map(exam => {
+        return {
+          title: `Exam - ${exam.course.student.realName}`,
+          date: exam.date,
+          color: '#ff0000'
+        }
+      });
+      const paymentData = payments.map(payment => {
+        let color = '';
+        if (payment.due.getTime() < Date.now() && payment.state != 1) {
+          color = '#ff0000';
+        } else if (payment.state != 1) {
+          color = '#ff8c00';
+        } else {
+          color = '#00ff00';
+        }
+
+        return {
+          title: `Payment - ${payment.course.student.realName}`,
+          date: payment.due,
+          color: color
         }
       });
   
-      return data;
+      return [...eventData, ...examData, ...paymentData];
     } else {
+      const student = await prisma.user.findUnique({ include: { studentCourse: true }, where: { email } });
+      
+      if (!student) return [];
       const events = await prisma.calendar.findMany({
         where: { user: { email } }
       });
-      const data = events.map(event => {
+      const exams = await prisma.exam.findMany({
+        include: { course: { include: { student: true } } },
+        where: { courseId: student.studentCourse?.id }
+      });
+      const payments = await prisma.payment.findMany({
+        include: { course: { include: { student: true } } },
+        where: { courseId: student.studentCourse?.id }
+      });
+
+      const eventData = events.map(event => {
         return {
           title: event.title,
           date: event.date,
           color: event.color
         }
       });
-      return data;
+      const examData = exams.map(exam => {
+        return {
+          title: `Exam - ${exam.course.student.realName}`,
+          date: exam.date,
+          color: '#ff0000'
+        }
+      });
+      const paymentData = payments.map(payment => {
+        let color = '';
+        if (payment.due.getTime() < Date.now() && payment.state != 1) {
+          color = '#ff0000';
+        } else if (payment.state != 1) {
+          color = '#ff8c00';
+        } else {
+          color = '#00ff00';
+        }
+
+        return {
+          title: `Payment - ${payment.course.student.realName}`,
+          date: payment.due,
+          color: color
+        }
+      });
+
+      return [...eventData, ...examData, ...paymentData];
     }
   } catch (e) {
     if (e) console.error(e);
