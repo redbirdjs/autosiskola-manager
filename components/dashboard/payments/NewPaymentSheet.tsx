@@ -1,12 +1,13 @@
 import { Plus, BadgeJapaneseYen } from 'lucide-react'
-import { getStudentData } from '@/utils/actions'
+import { getStudentData, getUserData } from '@/utils/actions'
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { buttonVariants } from '@/components/ui/button'
 import NewPaymentForm from '@/components/dashboard/payments/NewPaymentForm';
 
 export default async function NewPaymentSheet() {
-  const students = await getStudentData({ teacher: 19 });
+  const userInfo = await getUserData();
+  const students = await getStudentData({ teacher: userInfo?.id });
 
   return (
     <Sheet>
