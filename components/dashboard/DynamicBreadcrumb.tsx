@@ -8,7 +8,7 @@ import { Slash } from 'lucide-react'
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbSeparator, BreadcrumbLink, BreadcrumbEllipsis, BreadcrumbPage } from '@/components/ui/breadcrumb'
 import { capitalizeLetter } from '@/lib/utils'
 
-export default function DynamicBreadcrumb({ className }: { className?: string }) {
+export default function DynamicBreadcrumb({ className, bcPage }: { className?: string, bcPage?: string }) {
   const path = usePathname();
   const pathItems = path.split('/').slice(1);
   
@@ -42,7 +42,7 @@ export default function DynamicBreadcrumb({ className }: { className?: string })
                 } else {
                   return (
                     <BreadcrumbItem key={item.title}>
-                      <BreadcrumbPage className='text-base'>{item.title}</BreadcrumbPage>
+                      <BreadcrumbPage className='text-base'>{bcPage || item.title}</BreadcrumbPage>
                     </BreadcrumbItem>
                   )
                 }
