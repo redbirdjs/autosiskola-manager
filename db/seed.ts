@@ -7,8 +7,7 @@ try {
     data: [
       { id: 1, name: 'Student' },
       { id: 2, name: 'Teacher' },
-      { id: 3, name: 'Principal' },
-      { id: 4, name: 'Admin' }
+      { id: 3, name: 'Admin' }
     ],
     skipDuplicates: true
   });
@@ -18,9 +17,6 @@ try {
       { id: 2, category: 'B' },
       { id: 3, category: 'C' },
       { id: 4, category: 'D' },
-      { id: 5, category: 'BE' },
-      { id: 6, category: 'CE' },
-      { id: 7, category: 'DE' },
     ],
     skipDuplicates: true
   });
