@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 
 import DynamicBreadcrumb from '@/components/dashboard/DynamicBreadcrumb'
 import Search from '@/components/dashboard/Search'
+import NewUserSheet from '@/components/dashboard/users/NewUserSheet'
 import { UserCardSkeleton } from '@/components/skeletons/skeletons'
 
 export const metadata: Metadata = {
@@ -14,7 +15,10 @@ export default function UsersLayout({ children }: Readonly<{ children: React.Rea
     <main className='flex flex-col p-5 w-10/12'>
       <div className='flex justify-between items-center mb-5'>
         <DynamicBreadcrumb />
-        <Search />
+        <div className='flex gap-2'>
+          <Search className='w-full' />
+          <NewUserSheet />
+        </div>
       </div>
       <Suspense fallback={<UserCardSkeleton/>}>
         { children }
