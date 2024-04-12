@@ -7,6 +7,7 @@ import { ColumnDef } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { SetPaymentPaid, SetPaymentPending, DeletePayment } from '@/components/dashboard/payments/PaymentActions'
 import { Payment } from '@/lib/definitions'
 import { toast } from '@/components/ui/use-toast'
 
@@ -123,15 +124,10 @@ export const columns: ColumnDef<Payment>[] = [
               <Link href={`/dashboard/students/${username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Student</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className='flex gap-2' disabled={payment.state == 1}>
-              <Check className='w-5 h-5' /> Set as Paid
-            </DropdownMenuItem>
-            <DropdownMenuItem className='flex gap-2' disabled={payment.state == 0}>
-              <Clock className='w-5 h-5' /> Set as Pending
-            </DropdownMenuItem>
-            <DropdownMenuItem className='flex gap-2 text-red-500'>
-              <Trash className='h-5 w-5' /> Delete Payment
-            </DropdownMenuItem>
+            <SetPaymentPaid paymentId={payment.id} state={payment.state} />
+            <SetPaymentPending paymentId={payment.id} state={payment.state} />
+            <DropdownMenuSeparator />
+            <DeletePayment paymentId={payment.id} />
           </DropdownMenuContent>
         </DropdownMenu>
       )
