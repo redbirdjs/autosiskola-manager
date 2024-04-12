@@ -16,7 +16,7 @@ import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 
 import { LoginState, PasswordReminderState, RegisterState, UserState, VehicleState, ExamState, PaymentState } from '@/lib/definitions';
-import { ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
+import { ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, UserSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 // regisztráció
@@ -254,8 +254,46 @@ export async function getFilteredUsers({ query, page, rankType }: { query: strin
 }
 
 // új felhasználó létrehozása
-export async function newUser(prevState: UserState, formData: FormData) {
+export async function createUser(prevState: UserState, formData: FormData) {
+  const validatedFields = UserSchema.safeParse({
+    username: formData.get('username'),
+    realname: formData.get('realname'),
+    email: formData.get('email'),
+    passport: formData.get('passport')
+  });
 
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { username, realname, email, passport } = validatedFields.data;
+
+  const user = await prisma.user.findMany({ where: { OR: [{ username }, { email }] } });
+  if (user[0]) return { message: { title: '' }, errors: { username: ['User already exists with username or email.'] } };
+
+  const password = randomString(20);
+  const salt = await bcrypt.genSalt();
+  const hash = await bcrypt.hash(password, salt);
+
+  try {
+    await prisma.user.create({
+      data: {
+        username, realName: realname,
+        email, passportNumber: passport, password: hash
+      }
+    });
+
+    await resend.emails.send({
+      from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
+      to: email,
+      subject: 'User added to DSM',
+      text: `A user has been added to Driving School Manager with this email address.\nLogin details:\n\nUsername: ${username}\nPassword: ${password}\n\nWe highly recommend changing this password to a unique one to avoid any leaks that might happen.`
+    });
+
+    revalidatePath('/dashboard');
+    return { message: { title: 'Success', description: 'User successfully created!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to create a new user.');
+  }
 }
 
 // felhasználó törlése
