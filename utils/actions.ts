@@ -19,6 +19,7 @@ import { LoginState, PasswordReminderState, RegisterState, VehicleState, ExamSta
 import { ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 import { eventTupleToStore } from '@fullcalendar/core/internal.js'
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
 
 // regisztráció
 export async function register(prevState: RegisterState, formData: FormData) {
@@ -251,6 +252,24 @@ export async function getFilteredUsers({ query, page, rankType }: { query: strin
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to obtain user information.');
+  }
+}
+
+// új felhasználó létrehozása
+export async function newUser(prevState: UserState, formData: FormData) {
+
+}
+
+// felhasználó törlése
+export async function deleteUser({ username }: { username: string }) {
+  try {
+    await prisma.user.delete({ where: { username } });
+
+    revalidatePath('/dashboard');
+    return { message: { title: 'Success', description: 'User successfully deleted!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to delete the user.');
   }
 }
 
