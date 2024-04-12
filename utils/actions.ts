@@ -15,11 +15,9 @@ import RegEmail from '@/emails/RegistrationSuccess'
 import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 
-import { LoginState, PasswordReminderState, RegisterState, VehicleState, ExamState, PaymentState } from '@/lib/definitions';
+import { LoginState, PasswordReminderState, RegisterState, UserState, VehicleState, ExamState, PaymentState } from '@/lib/definitions';
 import { ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
-import { eventTupleToStore } from '@fullcalendar/core/internal.js'
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
 
 // regisztráció
 export async function register(prevState: RegisterState, formData: FormData) {
@@ -569,7 +567,7 @@ export async function getCalendarEvents({ email, rank }: { email: string, rank: 
 //! csak oktatóhoz tartozó fizetések jelenjenek meg
 export async function getPayments() {
   try {
-    const payments = await prisma.payment.findMany({ include: { course: { include: { student: true, teacher: true } } } });
+    const payments = await prisma.payment.findMany({ include: { course: { include: { student: true, teacher: true } } }, orderBy: { id: 'asc' } });
 
     const data = payments.map(payment => {
       return {
@@ -613,6 +611,33 @@ export async function createPayment(prevState: PaymentState, formData: FormData)
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to create a new payment.');
+  }
+}
+
+export async function setPaymentState(paymentId: number, newState: number) {
+  try {
+    await prisma.payment.update({
+      data: { state: newState },
+      where: { id: paymentId }
+    });
+
+    revalidatePath('/dashboard/payments');
+    return { message: { title: 'Success', description: 'Payment state successfully updated!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to set the state of the payment.');
+  }
+}
+
+export async function deletePayment(paymentId: number) {
+  try {
+    await prisma.payment.delete({ where: { id: paymentId } });
+
+    revalidatePath('/dashboard/payments');
+    return { message: { title: 'Success', description: 'Payment successfully deleted!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to delete the payment.');
   }
 }
 
