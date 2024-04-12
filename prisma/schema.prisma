@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())
-  username String @db.VarChar(100)
+  username String @db.VarChar(100) @unique
   email String @db.VarChar(255) @unique
   realName String @db.VarChar(100)
   passportNumber String @db.VarChar(9) @unique
