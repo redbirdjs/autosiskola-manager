@@ -1,4 +1,5 @@
-import Link from 'next/link'
+'use client'
+
 import clsx from 'clsx'
 import { MoreHorizontal, Clipboard, Trash2 as Trash } from 'lucide-react'
 
@@ -6,9 +7,20 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { badgeVariants } from '@/components/ui/badge'
+import DeleteUserButton from './users/DeleteUserButton'
+import { toast } from '@/components/ui/use-toast'
 import { UserData } from '@/lib/definitions'
 
 export default function UserCard({ user }: { user: UserData }) {
+  const copyUsername = (username: string) => {
+    navigator.clipboard.writeText(username);
+
+    toast({
+      title: 'Username successfully copied!',
+      duration: 2000
+    });
+  }
+
   return (
     <div className='flex flex-row items-center gap-5 border border-[#eaeaea] rounded-lg mb-3 p-5 hover:bg-gray-100 hover:border-gray-300 transition-colors'>
       <Avatar className='border border-gray-300'>
@@ -31,13 +43,11 @@ export default function UserCard({ user }: { user: UserData }) {
           <DropdownMenuContent>
             <DropdownMenuLabel>User Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className='flex gap-2'>
-              <Clipboard className='h-5 w-5' /> Copy User ID
+            <DropdownMenuItem className='flex gap-2' onClick={() => copyUsername(user.username)}>
+              <Clipboard className='h-5 w-5' /> Copy Username
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className='flex gap-2 text-red-600'>
-              <Trash className='h-5 w-5' /> Delete User
-            </DropdownMenuItem>
+            <DeleteUserButton username={user.username} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
