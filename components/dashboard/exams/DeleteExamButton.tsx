@@ -1,4 +1,4 @@
-import { Trash } from 'lucide-react'
+import { Trash2 as Trash } from 'lucide-react'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { deleteExam } from '@/utils/actions'
 
