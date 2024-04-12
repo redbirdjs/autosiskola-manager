@@ -63,6 +63,7 @@ model Course {
   id Int @id @default(autoincrement())
   theory Int @default(0)
   practise Int @default(0)
+  finished Boolean @default(false)
 
   student User @relation("studentCourse", fields: [studentId], references: [id])
   studentId Int @unique
