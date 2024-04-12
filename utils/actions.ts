@@ -14,6 +14,7 @@ import { writeFile, unlink } from 'fs/promises'
 import RegEmail from '@/emails/RegistrationSuccess'
 import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
+import UserAddedEmail from '@/emails/UserAdded'
 
 import { LoginState, PasswordReminderState, RegisterState, UserState, VehicleState, ExamState, PaymentState } from '@/lib/definitions';
 import { ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, UserSchema, VehicleSchema } from '@/lib/schemas';
@@ -285,7 +286,7 @@ export async function createUser(prevState: UserState, formData: FormData) {
       from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
       to: email,
       subject: 'User added to DSM',
-      text: `A user has been added to Driving School Manager with this email address.\nLogin details:\n\nUsername: ${username}\nPassword: ${password}\n\nWe highly recommend changing this password to a unique one to avoid any leaks that might happen.`
+      react: UserAddedEmail({ username, password })
     });
 
     revalidatePath('/dashboard');

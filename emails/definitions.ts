@@ -13,3 +13,8 @@ export interface NewLoginProps {
   address: string;
   userAgent: string;
 }
+
+export interface UserAddedProps {
+  username: string;
+  password: string;
+}
