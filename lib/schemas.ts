@@ -18,6 +18,13 @@ export const PasswordReminderSchema = z.object({
   email: z.string().min(1, 'This field is required!').email({ message: 'Invalid email format!' }),
 });
 
+export const UserSchema = z.object({
+  username: z.string().min(1, 'Username field is required!'),
+  realname: z.string().min(1, 'Real name field is required!'),
+  email: z.string().min(1, 'Email field is required!').email('Invalid email format!'),
+  passport: z.string().min(1, 'Passport field is required!').regex(/^[A-Z0-9]{8,9}$/, 'Invalid passport format!')
+});
+
 export const VehicleSchema = z.object({
   brand: z.string().min(1, 'Brand field is required!'),
   type: z.string().min(1, 'Type field is required!'),

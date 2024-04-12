@@ -39,6 +39,19 @@ export type AlertMessageObject = {
   description?: string
 }
 
+export type UserState = {
+  errors?: {
+    username?: string[]
+    realname?: string[]
+    email?: string[]
+    passport?: string[]
+  }
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
+
 export type VehicleState = {
   errors?: {
     brand?: string[]
