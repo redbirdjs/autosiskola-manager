@@ -21,7 +21,7 @@ model User {
   rankId Int @default(1)
   calendar Calendar[]
   rating Rating?
-  studentCourse Course? @relation("studentCourse")
+  studentCourse Course[] @relation("studentCourse")
   teacherCourse Course[] @relation("teacherCourses")
 
   @@map("users")
@@ -66,12 +66,12 @@ model Course {
   finished Boolean @default(false)
 
   student User @relation("studentCourse", fields: [studentId], references: [id])
-  studentId Int @unique
+  studentId Int
   teacher User @relation("teacherCourses", fields: [teacherId], references: [id])
   teacherId Int
   payments Payment[]
-  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
-  vehicleId Int
+  vehicle Vehicle? @relation(fields: [vehicleId], references: [id])
+  vehicleId Int?
   category Category @relation(fields: [categoryId], references: [id])
   categoryId Int
   exams Exam[]
