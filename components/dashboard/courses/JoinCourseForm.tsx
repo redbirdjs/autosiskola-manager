@@ -1,6 +1,7 @@
 'use client'
 
 import { useFormState } from 'react-dom'
+import { enrollCourse } from '@/utils/actions'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -9,10 +10,14 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@
 import RequiredStar from '@/components/RequiredStar'
 import { CategoryData, TeacherData, VehicleEnrollData } from '@/lib/definitions'
 
-export default function JoinCourseForm({ category, teachers, vehicles }: { category: CategoryData, teachers: TeacherData[], vehicles: VehicleEnrollData[] }) {
+export default function JoinCourseForm({ category, studentId, teachers, vehicles }: { category: CategoryData, studentId: number, teachers: TeacherData[], vehicles: VehicleEnrollData[] }) {
+  const initialState = { message: { title: '' }, errors: {} };
+  const [state, dispatch] = useFormState(enrollCourse, initialState);
+
   return (
-    <form>
-      <Input id='courseid' name='courseid' value={category.id}  className='hidden' readOnly />
+    <form action={dispatch}>
+      <Input id='categoryId' name='categoryId' value={category.id}  className='hidden' readOnly />
+      <Input id='student' name='student' value={studentId} className='hidden' readOnly />
       <label htmlFor='teacher'>Teacher <RequiredStar /></label>
       <div className='mt-1 mb-3'>
         <Select name='teacher'>

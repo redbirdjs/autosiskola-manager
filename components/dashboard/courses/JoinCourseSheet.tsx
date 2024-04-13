@@ -1,5 +1,5 @@
 import { Book } from 'lucide-react'
-import { getTeachers, getVehicleByCategory } from '@/utils/actions';
+import { getUserData, getTeachers, getVehicleByCategory } from '@/utils/actions';
 
 import { Sheet, SheetHeader, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
@@ -7,6 +7,7 @@ import JoinCourseForm from '@/components/dashboard/courses/JoinCourseForm'
 import { CategoryData } from '@/lib/definitions'
 
 export default async function JoinCourseSheet({ category }: { category: CategoryData }) {
+  const studentData = await getUserData();
   const teachers = await getTeachers();
   const vehicles = await getVehicleByCategory(category.id);
 
@@ -25,7 +26,7 @@ export default async function JoinCourseSheet({ category }: { category: Category
           <p className='text-white bg-black rounded-lg px-3 py-2'>{ category.name }</p>
         </div>
         <hr className='mb-3' />
-        <JoinCourseForm category={category} teachers={teachers} vehicles={vehicles} />
+        <JoinCourseForm category={category} teachers={teachers} vehicles={vehicles} studentId={studentData!.id} />
       </SheetContent>
     </Sheet>
   );
