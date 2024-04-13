@@ -877,6 +877,20 @@ export async function getAdminStatistics() {
 //
 //
 
+export async function checkUserEnrollment(studentId: number) {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: studentId } });
+    if (user?.rankId != 1) return true;
+    const results = await prisma.course.findMany({ where: { studentId, finished: false } });
+    if (!results[0]) return false;
+
+    return true;
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to check enrollment.');
+  }
+}
+
 export async function enrollCourse(prevState: CourseState, formData: FormData) {
   const validatedFields = CourseSchema.safeParse({
     categoryId: parseInt(formData.get('categoryId')?.toString() || ''),
