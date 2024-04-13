@@ -848,7 +848,7 @@ export async function getAdminStatistics() {
       pResults: {
         labels: ['Pending', 'Paid', 'Overdue'],
         datasets: [
-          { data: [...paymentResults.map(r => r._count.state), overDuePayments], backgroundColor: ['#ea580c', '#15803d', '#dc2626'] }
+          { data: [...paymentResults.map(r => r._count.state), overDuePayments], backgroundColor: ['#ea580c', '#15803d', '#dc2626'], borderRadius: 10 }
         ]
       },
       categoryResults: {
