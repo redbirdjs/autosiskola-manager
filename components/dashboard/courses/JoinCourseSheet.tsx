@@ -1,5 +1,6 @@
+import { redirect } from 'next/navigation'
 import { Book } from 'lucide-react'
-import { getUserData, getTeachers, getVehicleByCategory } from '@/utils/actions';
+import { getUserData, getTeachers, getVehicleByCategory, checkUserEnrollment } from '@/utils/actions';
 
 import { Sheet, SheetHeader, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
@@ -8,6 +9,12 @@ import { CategoryData } from '@/lib/definitions'
 
 export default async function JoinCourseSheet({ category }: { category: CategoryData }) {
   const studentData = await getUserData();
+  const isEnrolled = await checkUserEnrollment(studentData!.id);
+
+  if (isEnrolled) {
+    redirect('/dashboard');
+  }
+
   const teachers = await getTeachers();
   const vehicles = await getVehicleByCategory(category.id);
 
