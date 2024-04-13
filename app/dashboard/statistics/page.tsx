@@ -1,4 +1,4 @@
-import { UserRound, Car, GraduationCap, ReceiptText, School, Library, LineChart } from 'lucide-react'
+import { UserRound, Car, GraduationCap, ReceiptText, School, Library, Radar } from 'lucide-react'
 import { getAdminStatistics } from '@/utils/actions'
 
 import StatCard from '@/components/dashboard/statistics/StatCard'
@@ -20,7 +20,7 @@ export default async function StatisticsPage() {
       <div className='flex gap-2 justify-between flex-wrap'>
         <PieChartCard title={<><School className='h-8 w-8' /> Passed / Failed Exams</>} data={stats.fpExams} />
         <BarChartCard title={<><ReceiptText className='h-8 w-8' /> Payments</>} data={stats.pResults} />
-        <RadarChartCard title={<><LineChart className='h-8 w-8' /> Exams in last 10 days</>} data={stats.categoryResults} />
+        <RadarChartCard title={<><Radar className='h-8 w-8' /> Students in Courses</>} data={stats.categoryResults} />
       </div>
       
     </div>
