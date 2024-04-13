@@ -220,6 +220,17 @@ export async function getUsers({ query, page }: { query: string, page: string })
   }
 }
 
+export async function getTeachers() {
+  try {
+    const teachers = await prisma.user.findMany({ select: { id: true, realName: true }, where: { rank: { name: 'Teacher' } } });
+
+    return teachers;
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while tryng to get teachers information.');
+  }
+}
+
 // felhasználók lekérdezése rang alapján (tanuló, oktató)
 export async function getFilteredUsers({ query, page, rankType }: { query: string, page: string, rankType: 'student' | 'teacher' }) {
   const showcount = 5;
@@ -343,6 +354,16 @@ export async function getVehicles({ query, page }: { query: string, page: string
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to obtain vehicle information.');
+  }
+}
+
+export async function getVehicleByCategory(category: number) {
+  try {
+    const vehicles = await prisma.vehicle.findMany({ select: { id: true, brand: true, type: true, driveType: true }, where: { categoryId: category } });
+    return vehicles;
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to get vehicle information.');
   }
 }
 
