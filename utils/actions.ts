@@ -16,8 +16,8 @@ import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 import UserAddedEmail from '@/emails/UserAdded'
 
-import { LoginState, PasswordReminderState, RegisterState, UserState, VehicleState, ExamState, PaymentState } from '@/lib/definitions';
-import { ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, UserSchema, VehicleSchema } from '@/lib/schemas';
+import { LoginState, PasswordReminderState, RegisterState, UserState, VehicleState, ExamState, PaymentState, CourseState } from '@/lib/definitions';
+import { CourseSchema, ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, UserSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 // regisztráció
@@ -868,5 +868,38 @@ export async function getAdminStatistics() {
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to get statistics data.');
+  }
+}
+
+//
+//
+// Courses
+//
+//
+
+export async function enrollCourse(prevState: CourseState, formData: FormData) {
+  const validatedFields = CourseSchema.safeParse({
+    categoryId: parseInt(formData.get('categoryId')?.toString() || ''),
+    student: parseInt(formData.get('student')?.toString() || ''),
+    teacher: parseInt(formData.get('teacher')?.toString() || ''),
+    vehicle: parseInt(formData.get('vehicle')?.toString() || '')
+  });
+
+  if (!validatedFields.success) {
+    console.log(validatedFields.error?.flatten().fieldErrors);
+    return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+  }
+
+  const { categoryId, student, teacher, vehicle } = validatedFields.data;
+
+  try {
+    await prisma.course.create({
+      data: { categoryId, studentId: student, teacherId: teacher, vehicleId: vehicle }
+    });
+    
+    return { message: { title: 'Success', description: 'Successfully enrolled to course!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to enroll to course.');
   }
 }
