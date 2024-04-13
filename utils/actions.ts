@@ -548,19 +548,22 @@ export async function getCalendarEvents({ email, rank }: { email: string, rank: 
   
       return [...eventData, ...examData, ...paymentData];
     } else {
-      const student = await prisma.user.findUnique({ include: { studentCourse: true }, where: { email } });
-      
-      if (!student) return [];
+      const studentData = await prisma.user.findMany({ include: { studentCourse: true }, where: { AND: [{ email: email }, { studentCourse: { every: { finished: false } } }] } });
+
+      if (!studentData[0]) return [];
+      const student = studentData[0];
+      if (!student.studentCourse[0]) return [];
+
       const events = await prisma.calendar.findMany({
         where: { user: { email } }
       });
       const exams = await prisma.exam.findMany({
         include: { course: { include: { student: true } } },
-        where: { courseId: student.studentCourse?.id }
+        where: { courseId: student.studentCourse[0].id }
       });
       const payments = await prisma.payment.findMany({
         include: { course: { include: { student: true } } },
-        where: { courseId: student.studentCourse?.id }
+        where: { courseId: student.studentCourse[0].id }
       });
 
       const eventData = events.map(event => {
