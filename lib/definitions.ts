@@ -92,6 +92,19 @@ export type ExamState = {
   }
 }
 
+export type CourseState = {
+  errors?: {
+    categoryId?: string[]
+    student?: string[]
+    teacher?: string[]
+    vehicle?: string[]
+  },
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
+
 export interface UserData {
   path: string;
   realname: string;

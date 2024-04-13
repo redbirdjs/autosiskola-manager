@@ -47,3 +47,10 @@ export const ExamSchema = z.object({
   description: z.string().min(1, 'Description field is required!'),
   date: z.date().min(new Date(Date.now()), 'You must specify a future date!')
 });
+
+export const CourseSchema = z.object({
+  categoryId: z.number().min(1, 'Category field is required!'),
+  student: z.number({ invalid_type_error: 'Student ID is required for enrollment!' }),
+  teacher: z.number({ invalid_type_error: 'You have to choose a teacher!' }),
+  vehicle: z.number({ invalid_type_error: 'You have to choose a vehicle!' })
+});
