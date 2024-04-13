@@ -142,3 +142,20 @@ export interface StudentFormData {
     realname: string;
   }
 }
+
+export interface CategoryData {
+  id: number;
+  name: string;
+}
+
+export interface TeacherData {
+  id: number;
+  realName: string;
+}
+
+export interface VehicleEnrollData {
+  id: number;
+  brand: string;
+  type: string;
+  driveType: string;
+}
