@@ -16,8 +16,8 @@ export default async function ProfileLayoutComponent({ user }: { user: FullUserD
         <div className='p-5 border border-[#eaeaea] rounded-lg'>
           <Avatar className='w-80 h-80'>
             <AvatarImage src={`${provider}${user.avatarPath}`} />
-            <AvatarFallback asChild>
-              <p>{ user.realname.split(' ').map(x => x[0].toUpperCase()).join('') }</p>
+            <AvatarFallback>
+              { user.realname.split(' ').map(x => x[0].toUpperCase()).join('') }
             </AvatarFallback>
           </Avatar>
         </div>

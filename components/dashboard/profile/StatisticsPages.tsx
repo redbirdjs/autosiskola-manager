@@ -10,16 +10,6 @@ export function StudentStats({ stats }: any) {
       <div className='flex gap-2'>
         <StatCard title={<><GraduationCap className='h-8 w-8' /> Finished Courses</>} description={stats.finishedCourses} />
         <StatCard title={<><GraduationCap className='h-8 w-8' /> Has Active Course</>} description={stats.hasActiveCourse ? 'Yes' : 'No'} />
-        {
-          stats.hasActiveCourse && (
-            <StatCard title={<><GraduationCap className='h-8 w-8' /> Course Progress</>} description={
-              <>
-                <p>Theory Percentage: {stats.activeStats.theoryPercent} %</p>
-                <p>Practise Percentage: {stats.activeStats.practisePercent} %</p>
-              </>
-            } />
-          )
-        }
       </div>
     </div>
   );
