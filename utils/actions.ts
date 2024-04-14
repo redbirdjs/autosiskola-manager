@@ -871,6 +871,25 @@ export async function getAdminStatistics() {
   }
 }
 
+export async function getUserByUsername(username: string) {
+  try {
+    const user = await prisma.user.findUnique({ include: { rank: true }, where: { username } });
+    if (!user) return null;
+
+    return {
+      id: user.id,
+      username: user.username,
+      realname: user.realName,
+      email: user.email,
+      avatarPath: user.avatarPath,
+      rank: user.rank.name
+    };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to obtain user information.');
+  }
+}
+
 export async function getUserStatistics(userId: number, rank: string) {
   try {
     if (rank.toLowerCase() == 'teacher') {
