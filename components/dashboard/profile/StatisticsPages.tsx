@@ -3,8 +3,6 @@ import { BookOpen, UserRound, GraduationCap } from 'lucide-react'
 import StatCard from '@/components/dashboard/statistics/StatCard'
 
 export function StudentStats({ stats }: any) {
-  console.log(stats);
-
   return (
     <div>
       <h1 className='text-lg'>Student Statistics</h1>
