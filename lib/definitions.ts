@@ -113,6 +113,15 @@ export interface UserData {
   rank: string;
 }
 
+export interface FullUserData {
+  id: number;
+  realname: string;
+  username: string;
+  email: string;
+  avatarPath: string;
+  rank: string;
+}
+
 export interface VehicleData {
   path: string;
   brand: string;
