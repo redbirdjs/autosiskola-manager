@@ -5,6 +5,7 @@ import DynamicPagination from '@/components/dashboard/Pagination'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
 import { getVehicles, getCategories } from '@/utils/actions'
+import { getImageProvider } from '@/lib/utils'
 
 export default async function VehiclesPage({ searchParams }: { searchParams: { query?: string, page?: string } }) {
   const query = searchParams?.query || '';
@@ -12,12 +13,13 @@ export default async function VehiclesPage({ searchParams }: { searchParams: { q
   
   const searchResults = await getVehicles({ query: query, page: page });
   const categories = await getCategories();
+  const provider = getImageProvider();
 
   return (
     <div>
       {
         searchResults.vehicles.length != 0 ? searchResults.vehicles.map(vehicle => (
-          <VehicleCard key={vehicle.plate} vehicle={vehicle} categories={categories} />
+          <VehicleCard key={vehicle.plate} vehicle={vehicle} categories={categories} provider={provider} />
         )) : (
           <div className='flex justify-center p-10'>
             <Alert className='w-max'>
