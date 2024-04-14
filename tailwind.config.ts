@@ -82,8 +82,8 @@ const config = {
         "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
       backgroundImage: {
-        "login": "url('/img/loginbg-palette.svg')",
-        "register": "url('/img/registerbg.svg')"
+        "login": "url('/static/login-background.svg')",
+        "register": "url('/static/register-background.svg')"
       }
     },
   },
