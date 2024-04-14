@@ -13,7 +13,7 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { SheetFooter, SheetClose } from '@/components/ui/sheet'
 import { VehicleData, CategoryName } from '@/lib/definitions'
 
-export default function ModifyVehicleForm({ data, categories }: { data: VehicleData, categories: CategoryName[] }) {
+export default function ModifyVehicleForm({ data, categories, provider }: { data: VehicleData, categories: CategoryName[], provider: string }) {
   const imageRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File>();
 
@@ -59,7 +59,13 @@ export default function ModifyVehicleForm({ data, categories }: { data: VehicleD
       <Input className='mt-1 mb-3' id='drivetype' name='drivetype' defaultValue={data.drivetype} />
       <label>Preview Image</label>
       <div className='flex flex-col items-center gap-1 mt-1 mb-3'>
-        <Image src={image && URL.createObjectURL(image) || data.path} className='border border-gray-300 rounded-lg p-2' alt='Preview' width={100} height={100} />
+        {
+          data.path ? (
+            <Image src={`${data.path}`}  className='border border-gray-300 rounded-lg p-2' alt='Preview' width={100} height={100} />
+          ) : (
+            <Image src={image && URL.createObjectURL(image) || ''} className='border border-gray-300 rounded-lg p-2' alt='Preview' width={100} height={100} />
+          )
+        }
         <div className='w-full flex items-center gap-1'>
           <Input ref={imageRef} onChange={changeImage} id='car-image' name='car-image' type='file' accept='image/png, image/jpeg, image/webp' className='w-full' />
           { image && <Button variant={'destructive'} onClick={removeImage}><FileX className='w-5 h-5' /></Button> }

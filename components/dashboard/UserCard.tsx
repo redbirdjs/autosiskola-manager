@@ -11,7 +11,7 @@ import DeleteUserButton from './users/DeleteUserButton'
 import { toast } from '@/components/ui/use-toast'
 import { UserData } from '@/lib/definitions'
 
-export default function UserCard({ user }: { user: UserData }) {
+export default function UserCard({ user, provider }: { user: UserData, provider: string }) {
   const copyUsername = (username: string) => {
     navigator.clipboard.writeText(username);
 
@@ -21,10 +21,11 @@ export default function UserCard({ user }: { user: UserData }) {
     });
   }
 
+  const imageSrc = `${provider}${user.path}`;
   return (
     <div className='flex flex-row items-center gap-5 border border-[#eaeaea] rounded-lg mb-3 p-5 hover:bg-gray-100 hover:border-gray-300 transition-colors'>
       <Avatar className='border border-gray-300'>
-        <AvatarImage src={ user.path } />
+        <AvatarImage src={imageSrc} />
         <AvatarFallback>{ user.realname.split(' ').map(x => x[0]).join('') }</AvatarFallback>
       </Avatar>
       <div className='flex flex-col gap-1 justify-center'>

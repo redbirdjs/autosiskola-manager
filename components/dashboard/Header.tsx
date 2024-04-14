@@ -1,13 +1,18 @@
 import Image from 'next/image'
-import { UserRound } from 'lucide-react'
 
 import Logo from '@/assets/logo.svg'
 import { Badge } from '@/components/ui/badge'
 import { getUserData } from '@/utils/actions'
 import LogoutButton from '@/components/LogoutButton'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+
+import { getImageProvider } from '@/lib/utils'
 
 export default async function Header() {
   const user = await getUserData();
+  const provider = getImageProvider();
+
+  const imageSrc = `${provider}${user?.avatarPath}`
 
   return (
     <header className='flex flex-row justify-end px-10 py-5 border-b border-b-[#eaeaea]'>
@@ -18,7 +23,10 @@ export default async function Header() {
             <p className='text-base'>{ user?.realname }</p>
             <Badge className='self-center'>{ user?.rank }</Badge>
           </div>
-          { user?.avatarPath && user?.avatarPath.endsWith('default.svg') && <UserRound className='h-12 w-12 rounded-full text-white bg-black p-2' /> || <Image src={`${user?.avatarPath}`} width={42} height={42} className='rounded-full' priority={true} alt={`${user?.username}'s profile avatar`} /> }
+          <Avatar className='w-12 h-12'>
+            <AvatarImage src={imageSrc} />
+            <AvatarFallback>{ user?.realname.split(' ').map(x => x[0]).join('') }</AvatarFallback>
+          </Avatar>
         </div>
         <LogoutButton />
       </div>
