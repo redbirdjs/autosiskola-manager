@@ -871,6 +871,59 @@ export async function getAdminStatistics() {
   }
 }
 
+export async function getUserStatistics(userId: number, rank: string) {
+  try {
+    if (rank.toLowerCase() == 'teacher') {
+      const stats = await getTeacherStats(userId);
+      return stats;
+    }
+    if (rank.toLowerCase() == 'student') {
+      const stats = await getStudentStats(userId);
+      return stats;
+    }
+
+    return null;
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to get user statistics.');
+  }
+}
+
+async function getTeacherStats(userId: number) {
+  try {
+    const studentCount = await prisma.course.count({ where: { teacherId: userId } });
+    const activeCourses = await prisma.course.count({ where: { finished: false, teacherId: userId } });
+
+    return {
+      studentCount,
+      activeCourses
+    }
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to get teacher statistics.');
+  }
+}
+
+async function getStudentStats(userId: number) {
+  try {
+    const finishedCourses = await prisma.course.count({ where: { AND: [{ finished: true }, { studentId: userId }] } });
+    const hasActiveCourse = await prisma.course.findMany({ where: { AND: [{ finished: false }, { studentId: userId }] } });
+    const activeCourseStats = await prisma.course.findMany({ where: { AND: [{ finished: false }, { studentId: userId }] } });
+
+    return {
+      finishedCourses,
+      hasActiveCourse: !!hasActiveCourse[0],
+      activeStats: {
+        theoryPercent: activeCourseStats[0]?.theory || 0,
+        practisePercent: activeCourseStats[0]?.practise || 0
+      }
+    }
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to get student statistics.');
+  }
+}
+
 //
 //
 // Courses
