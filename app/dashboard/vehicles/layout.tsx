@@ -1,4 +1,6 @@
 import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
+import { getUserData } from '@/utils/actions'
 
 import NewVehicleSheet from '@/components/dashboard/vehicles/NewVehicleSheet'
 import DynamicBreadcrumb from '@/components/dashboard/DynamicBreadcrumb'
@@ -8,7 +10,13 @@ export const metadata: Metadata = {
   title: 'Vehicles | Dashboard'
 }
 
-export default function VehiclesLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function VehiclesLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const user = await getUserData();
+
+  if (user?.rank.toLowerCase() != 'admin') {
+    redirect('/dashboard');
+  }
+
   return (
     <main className='flex flex-col p-5 w-10/12'>
       <div className='flex justify-between items-center mb-5'>
