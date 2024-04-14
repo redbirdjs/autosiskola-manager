@@ -17,12 +17,14 @@ export default async function ProfileLayoutComponent({ user }: { user: FullUserD
           <Avatar className='w-80 h-80'>
             <AvatarImage src={`${provider}${user.avatarPath}`} />
             <AvatarFallback asChild>
-              <p>xd</p>
+              <p>{ user.realname.split(' ').map(x => x[0].toUpperCase()).join('') }</p>
             </AvatarFallback>
           </Avatar>
         </div>
         <div className='border border-[#eaeaea] rounded-lg p-5 w-full text-lg'>
-          <h1 className='mb-3 text-2xl font-bold'>Profile Details</h1>
+          <div className='flex justify-between'>
+            <h1 className='mb-3 text-2xl font-bold'>Profile Details</h1>
+          </div>
           <hr className='mb-3' />
           <p className='mb-3'><span className='font-bold'>Username:</span> { user.username }</p>
           <p className='mb-3'><span className='font-bold'>Full name:</span> { user.realname }</p>
