@@ -1,0 +1,4 @@
+# buildhez nem szükséges mappák
+**/node_modules
+**/.next
+**/.vscode
