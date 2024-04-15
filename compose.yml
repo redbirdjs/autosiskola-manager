@@ -1,0 +1,52 @@
+services:
+  dsm-app:
+    container_name: dsm-app
+    restart: always
+    build:
+      context: .
+      dockerfile: webapp.Dockerfile
+    depends_on:
+      - dsm-db
+    env_file:
+      - prod.env
+    environment:
+      NODE_ENV: production
+    volumes:
+      - image-data:/usr/src/app/public
+    ports:
+      - 3001:3000
+  
+  dsm-db:
+    container_name: dsm-db
+    image: postgres:alpine
+    restart: always
+    user: postgres
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/data/db
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db-password
+    ports:
+      - 40000:5432
+
+  dsm-image-host:
+    container_name: dsm-image-host
+    image: nginx:alpine
+    restart: always
+    build:
+      context: .
+      dockerfile: provider.Dockerfile
+    volumes:
+      #- ./nginx/conf:/etc/nginx/conf.d
+      #- ./nginx/html:/www
+      - image-data:/images
+    ports:
+      - 8080:80
+
+volumes:
+  image-data:
+  db-data:
+secrets:
+  db-password:
+    file: db/db-password.txt
