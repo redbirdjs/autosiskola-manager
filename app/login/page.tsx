@@ -12,7 +12,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
-import LoginImage from '@/assets/mercedes.png'
+import LoginImage from '@/static/car.png'
 
 export default function LoginPage() {
   const [message, setMessage] = useState<AlertMessageObject>({});
