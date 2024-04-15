@@ -5,8 +5,9 @@ import { getImageProvider } from '@/lib/utils'
 import { FullUserData } from '@/lib/definitions'
 import { getUserStatistics } from '@/utils/actions'
 import { TeacherStats, StudentStats } from '@/components/dashboard/profile/StatisticsPages'
+import ProfileEdit from './ProfileEdit'
 
-export default async function ProfileLayoutComponent({ user }: { user: FullUserData }) {
+export default async function ProfileLayoutComponent({ user, modify }: { user: FullUserData, modify: boolean }) {
   const stats = await getUserStatistics(user.id, user.rank);
   const provider = getImageProvider();
 
@@ -33,6 +34,7 @@ export default async function ProfileLayoutComponent({ user }: { user: FullUserD
             <Badge>{ user.rank }</Badge>
           </div>
           <p className='mb-3'><span className='font-bold'>Email address:</span> { user.email }</p>
+          { modify && <ProfileEdit /> }
         </div>
       </div>
       {
