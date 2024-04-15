@@ -35,18 +35,20 @@ export default async function ProfileLayoutComponent({ user }: { user: FullUserD
           <p className='mb-3'><span className='font-bold'>Email address:</span> { user.email }</p>
         </div>
       </div>
-      <div className='border border-[#eaeaea] p-5 rounded-lg'>
-        {
-          stats && user.rank.toLowerCase() == 'teacher' && (
-            <TeacherStats stats={stats} />
-          )
-        }
-        {
-          stats && user.rank.toLowerCase() == 'student' && (
-            <StudentStats stats={stats} />
-          )
-        }
-      </div>
+      {
+        user.rank.toLowerCase() != 'admin' && <div className='border border-[#eaeaea] p-5 rounded-lg'>
+          {
+            stats && user.rank.toLowerCase() == 'teacher' && (
+              <TeacherStats stats={stats} />
+            )
+          }
+          {
+            stats && user.rank.toLowerCase() == 'student' && (
+              <StudentStats stats={stats} />
+            )
+          }
+        </div>
+      }
     </div>
   );
 }
