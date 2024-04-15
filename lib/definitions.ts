@@ -105,6 +105,38 @@ export type CourseState = {
   }
 }
 
+export type AvatarState = {
+  errors?: {
+    avatar?: string[]
+  }
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
+
+export type EmailState = {
+  errors?: {
+    email?: string[]
+  }
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
+
+export type PasswordState = {
+  errors?: {
+    oldpass?: string[]
+    newpass1?: string[]
+    newpass2?: string[]
+  }
+  message: {
+    title: string | undefined
+    description: string
+  }
+}
+
 export interface UserData {
   path: string;
   realname: string;

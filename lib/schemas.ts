@@ -54,3 +54,20 @@ export const CourseSchema = z.object({
   teacher: z.number({ invalid_type_error: 'You have to choose a teacher!' }),
   vehicle: z.number({ invalid_type_error: 'You have to choose a vehicle!' })
 });
+
+export const AvatarSchema = z.object({
+  userId: z.number({ invalid_type_error: 'User ID must be a number!' }),
+  avatar: z.instanceof(File).refine((file) => file.size <= 5249494, 'Max image size is 5MB.')
+});
+
+export const EmailSchema = z.object({
+  userId: z.number({ invalid_type_error: 'User ID must be a number!' }),
+  email: z.string().email().min(1, 'This field is required!')
+});
+
+export const ChangePasswordSchema = z.object({
+  userId: z.number({ invalid_type_error: 'User ID must be a number!' }),
+  oldpass: z.string().min(1, 'This field is required!'),
+  newpass1: z.string().min(1, 'This field is required!'),
+  newpass2: z.string().min(1, 'This field is required!')
+});
