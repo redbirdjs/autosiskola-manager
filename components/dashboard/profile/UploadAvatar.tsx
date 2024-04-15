@@ -13,7 +13,6 @@ import { toast } from '@/components/ui/use-toast'
 
 export default function UploadAvatarForm({ userId }: { userId: number }) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const imageRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File>();
 
   const initialState = { message: { title: '' }, errors: {} };
@@ -22,6 +21,13 @@ export default function UploadAvatarForm({ userId }: { userId: number }) {
   const changeImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setImage(e.target.files[0]);
+    }
+  }
+
+  const closeModal = () => {
+    if (dialogOpen) {
+      setDialogOpen(false);
+      setImage(undefined);
     }
   }
 
@@ -34,11 +40,12 @@ export default function UploadAvatarForm({ userId }: { userId: number }) {
         duration: 2000
       });
       setDialogOpen(false);
+      setImage(undefined);
     }
   }, [state]);
 
   return (
-    <Dialog open={dialogOpen}>
+    <Dialog open={dialogOpen} onOpenChange={closeModal}>
       <DialogTrigger asChild>
         <Button onClick={() => setDialogOpen(true)}>Upload Avatar</Button>
       </DialogTrigger>
