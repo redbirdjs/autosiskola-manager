@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import Logo from '@/assets/logo.svg'
+import Logo from '@/static/logo.svg'
 import { Badge } from '@/components/ui/badge'
 import { getUserData } from '@/utils/actions'
 import LogoutButton from '@/components/LogoutButton'
