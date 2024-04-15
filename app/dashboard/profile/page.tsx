@@ -9,7 +9,7 @@ export default async function ProfilePage() {
 
   return (
     <div>
-      <ProfileLayoutComponent user={user} />
+      <ProfileLayoutComponent user={user} modify={true} />
     </div>
   );
 }

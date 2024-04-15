@@ -17,7 +17,7 @@ export default async function OtherUserPage({ params }: { params: { username: st
 
   return (
     <div>
-      <ProfileLayoutComponent user={user} />
+      <ProfileLayoutComponent user={user} modify={false} />
     </div>
   );
 }
