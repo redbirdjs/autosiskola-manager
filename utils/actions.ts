@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
 import { cookies, headers } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { RedirectType, redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import path from 'path'
 import { writeFile, unlink } from 'fs/promises'
@@ -16,8 +16,8 @@ import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 import UserAddedEmail from '@/emails/UserAdded'
 
-import { LoginState, PasswordReminderState, RegisterState, UserState, VehicleState, ExamState, PaymentState, CourseState } from '@/lib/definitions';
-import { CourseSchema, ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, UserSchema, VehicleSchema } from '@/lib/schemas';
+import { LoginState, PasswordReminderState, RegisterState, UserState, VehicleState, ExamState, PaymentState, CourseState, AvatarState, EmailState, PasswordState } from '@/lib/definitions';
+import { AvatarSchema, ChangePasswordSchema, CourseSchema, EmailSchema, ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, UserSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 // regisztráció
@@ -987,5 +987,97 @@ export async function enrollCourse(prevState: CourseState, formData: FormData) {
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to enroll to course.');
+  }
+}
+
+export async function uploadProfileAvatar(prevState: AvatarState, formData: FormData) {
+  const validatedFields = AvatarSchema.safeParse({
+    userId: parseInt(formData.get('userId')?.toString() || ''),
+    avatar: formData.get('avatar')
+  });
+
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { userId, avatar } = validatedFields.data;
+  let url = avatar && avatar.size > 0 ? `/profiles/[rep]` : undefined;
+
+  if (url) {
+    const buffer = Buffer.from(await avatar.arrayBuffer());
+    const fileName = `p_${randomString(10)}_${Date.now()}${path.extname(avatar.name)}`;
+    url = url.replace('[rep]', fileName);
+
+    try {
+      await writeFile(`${path.join(process.cwd())}/public/profiles/${fileName}`, buffer);
+    } catch (e) {
+      if (e) console.error(e);
+      throw new Error('There was an error while trying to upload avatar.');
+    }
+  }
+
+  try {
+    await prisma.user.update({ data: { avatarPath: url }, where: { id: userId } });
+
+    revalidatePath('/dashboard/profile');
+    return { message: { title: 'Success', description: 'Avatar successfully uploaded!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to upload avatar.');
+  }
+}
+
+export async function changeEmail(prevState: EmailState, formData: FormData) {
+  const validatedFields = EmailSchema.safeParse({
+    userId: parseInt(formData.get('userId')?.toString() || ''),
+    email: formData.get('email')
+  });
+
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { userId, email } = validatedFields.data;
+
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (user) return { message: { title: '' }, errors: { email: ['This email address is in use.'] } };
+
+    await prisma.user.update({ data: { email }, where: { id: userId } });
+
+    cookies().delete('refreshToken');
+    return { message: { title: 'Success', description: 'Email successfully changed!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to change email.');
+  }
+}
+
+export async function changePassword(prevState: PasswordState, formData: FormData) {
+  const validatedFields = ChangePasswordSchema.safeParse({
+    userId: parseInt(formData.get('userId')?.toString() || ''),
+    oldpass: formData.get('oldpass') || '',
+    newpass1: formData.get('newpass1') || '',
+    newpass2: formData.get('newpass2') || ''
+  });
+
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { userId, oldpass, newpass1, newpass2 } = validatedFields.data;
+  
+  try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return { message: { title: '' }, errors: { oldpass: ['User doesn\'t exists.'] } };
+
+    const res = await bcrypt.compare(oldpass, user.password);
+    if (!res) return { message: { title: '' }, errors: { oldpass: ['The password does\'t match.'] } };
+    if (newpass1 != newpass2) return { message: { title: '' }, errors: { newpass1: ['The two passwords doesn\'t match.'] } };
+
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(newpass1, salt);
+
+    await prisma.user.update({ data: { password: hash }, where: { id: userId } });
+
+    cookies().delete('refreshToken');
+    return { message: { title: 'Success', description: 'Password successfully changed!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to change password.');
   }
 }
