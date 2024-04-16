@@ -1,20 +1,47 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useFormState } from 'react-dom'
+import { changePassword, logout } from '@/utils/actions'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger, DialogHeader, DialogTitle, DialogContent, DialogClose, DialogFooter } from '@/components/ui/dialog'
-import { changePassword } from '@/utils/actions'
+import { toast } from '@/components/ui/use-toast'
 
 export default function ChangePasswordForm({ userId }: { userId: number }) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const initialState = { message: { title: '' }, errors: {} };
   const [state, dispatch] = useFormState(changePassword, initialState);
  
+  const closeDialog = () => {
+    if (dialogOpen) {
+      setDialogOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    if (state.errors && Object.values(state.errors).length > 0) {
+      return;
+    }
+    if (state.message && state.message.title.length > 0) {
+      toast({
+        title: state.message.title,
+        description: state.message.description,
+        duration: 2000
+      });
+      setDialogOpen(false);
+      setTimeout(() => {
+        logout();
+      }, 2000);
+    }
+  }, [state]);
+
   return (
-    <Dialog>
+    <Dialog open={dialogOpen} onOpenChange={closeDialog}>
       <DialogTrigger asChild>
-        <Button>Change Password</Button>
+        <Button onClick={() => setDialogOpen(true)}>Change Password</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
