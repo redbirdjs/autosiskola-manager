@@ -18,7 +18,7 @@ export default function LoginForm({ setMsg }: { setMsg: Function }) {
   }, [state, setMsg]);
 
   return (
-    <form action={dispatch} className='flex flex-col'>
+    <form action={dispatch} className='flex flex-col z-10'>
       <label htmlFor='email' className='mb-1'>Email address</label>
       <Input name='email' type='email' className={clsx({ 'border-red-600': state.errors?.email, 'mb-3': !state.errors?.email })} />
       {

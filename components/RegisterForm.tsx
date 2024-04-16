@@ -20,7 +20,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
   }, [setMsg, state]);
 
   return (
-    <form action={dispatch} className='flex flex-col'>
+    <form action={dispatch} className='flex flex-col z-10'>
       <label htmlFor='username' className='mb-2'>Username <Required /></label>
       <Input name='username' className={clsx({ 'border-red-600': state.errors?.username }, 'mb-3')} />
       {
@@ -53,7 +53,7 @@ export default function RegisterForm({ setMsg }: { setMsg: Function }) {
         <>
           <InputOTPGroup>
             {slots.slice(0, 9).map((slot, i) => (
-              <InputOTPSlot className={clsx({ 'border-red-600': state.errors?.passport })} key={i} {...slot} />
+              <InputOTPSlot className={clsx({ 'border-red-600': state.errors?.passport }, 'bg-white')} key={i} {...slot} />
             ))}
           </InputOTPGroup>
         </>
