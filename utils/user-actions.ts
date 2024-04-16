@@ -267,18 +267,30 @@ export async function getFilteredUsers({ query, page, rankType }: { query: strin
   }
 }
 
+export async function getRanks() {
+  try {
+    const ranks = await prisma.rank.findMany();
+
+    return ranks;
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an erro while trying to fetch rank data.');
+  }
+}
+
 // Új felhasználó létrehozása
 export async function createUser(prevState: UserState, formData: FormData) {
   const validatedFields = UserSchema.safeParse({
     username: formData.get('username'),
     realname: formData.get('realname'),
     email: formData.get('email'),
-    passport: formData.get('passport')
+    passport: formData.get('passport'),
+    rankId: parseInt(formData.get('rankId')?.toString() || '')
   });
 
   if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
 
-  const { username, realname, email, passport } = validatedFields.data;
+  const { username, realname, email, passport, rankId } = validatedFields.data;
 
   const user = await prisma.user.findMany({ where: { OR: [{ username }, { email }] } });
   if (user[0]) return { message: { title: '' }, errors: { username: ['User already exists with username or email.'] } };
@@ -291,7 +303,7 @@ export async function createUser(prevState: UserState, formData: FormData) {
     await prisma.user.create({
       data: {
         username, realName: realname,
-        email, passportNumber: passport, password: hash
+        email, passportNumber: passport, password: hash, rankId: rankId
       }
     });
 
