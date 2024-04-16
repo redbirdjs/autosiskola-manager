@@ -63,7 +63,7 @@ export default function UploadAvatarForm({ userId }: { userId: number }) {
               </Avatar>
             )
           }
-          <Input type='file' id='avatar' name='avatar' onChange={changeImage} className='mt-1 mb-3' />
+          <Input type='file' id='avatar' name='avatar' accept='image/png, image/jpeg, image/gif, image/webp' onChange={changeImage} className='mt-1 mb-3' />
           <DialogFooter>
             <DialogClose asChild>
               <Button type='submit'>Upload</Button>
