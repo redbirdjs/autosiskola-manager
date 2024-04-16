@@ -1,7 +1,6 @@
 'use client'
 
-import Image from 'next/image'
-import { useState, useEffect, useRef, ChangeEvent } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { useFormState } from 'react-dom'
 import { uploadProfileAvatar } from '@/utils/actions'
 
