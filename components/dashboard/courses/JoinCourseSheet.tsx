@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation'
 import { Book } from 'lucide-react'
-import { getUserData, getTeachers, getVehicleByCategory, checkUserEnrollment } from '@/utils/actions';
+import { getUserData, getTeachers } from '@/utils/user-actions'
+import { checkUserEnrollment } from '@/utils/course-actions'
+import { getVehicleByCategory } from '@/utils/vehicle-actions'
 
 import { Sheet, SheetHeader, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'

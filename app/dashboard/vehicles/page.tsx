@@ -4,7 +4,8 @@ import VehicleCard from '@/components/dashboard/VehicleCard'
 import DynamicPagination from '@/components/dashboard/Pagination'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
-import { getVehicles, getCategories } from '@/utils/actions'
+import { getCategories } from '@/utils/actions'
+import { getVehicles } from '@/utils/vehicle-actions'
 import { getImageProvider } from '@/lib/utils'
 
 export default async function VehiclesPage({ searchParams }: { searchParams: { query?: string, page?: string } }) {

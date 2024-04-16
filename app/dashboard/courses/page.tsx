@@ -1,4 +1,4 @@
-import { getCategories } from '@/utils/actions'
+import { getCategories } from '@/utils/course-actions'
 
 import CourseCard from '@/components/dashboard/courses/CourseCard'
 

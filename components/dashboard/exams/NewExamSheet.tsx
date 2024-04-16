@@ -1,5 +1,6 @@
 import { Plus, School } from 'lucide-react'
-import { getStudentData, getUserData } from '@/utils/actions'
+import { getUserData } from '@/utils/user-actions'
+import { getStudentData } from '@/utils/course-actions'
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { buttonVariants } from '@/components/ui/button'

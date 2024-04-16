@@ -1,4 +1,4 @@
-import { getUserData } from '@/utils/actions'
+import { getUserData } from '@/utils/user-actions'
 
 import UploadAvatarForm from '@/components/dashboard/profile/UploadAvatar'
 import ModifyEmailForm from './ModifyEmail'

@@ -5,7 +5,7 @@ import { useState, useRef, ChangeEvent } from 'react'
 import { useFormState } from 'react-dom'
 import clsx from 'clsx'
 import { Pen, FileX } from 'lucide-react'
-import { modifyVehicle } from '@/utils/actions'
+import { modifyVehicle } from '@/utils/vehicle-actions'
 
 import RequiredStar from '@/components/RequiredStar'
 import { Input } from '@/components/ui/input'

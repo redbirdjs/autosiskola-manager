@@ -2,7 +2,7 @@
 
 import { useState, useEffect, ChangeEvent } from 'react'
 import { useFormState } from 'react-dom'
-import { uploadProfileAvatar } from '@/utils/actions'
+import { uploadProfileAvatar } from '@/utils/profile-actions'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'

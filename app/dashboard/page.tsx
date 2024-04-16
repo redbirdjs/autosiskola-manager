@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { buttonVariants } from '@/components/ui/button'
-import { getUserData } from '@/utils/actions'
+import { getUserData } from '@/utils/user-actions'
 import LogoutButton from '@/components/LogoutButton'
 
 export default async function DashboardPage() {

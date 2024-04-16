@@ -6,7 +6,7 @@ import clsx from 'clsx'
 
 import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { passwordReminder } from '@/utils/actions'
+import { passwordReminder } from '@/utils/user-actions'
 import { useEffect } from 'react'
 
 export default function PasswordReminderForm({ setMsg }: { setMsg: Function }) {

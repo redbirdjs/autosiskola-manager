@@ -1,5 +1,5 @@
 import { Check, Clock, Trash2 as Trash } from 'lucide-react'
-import { setPaymentState, deletePayment } from '@/utils/actions'
+import { setPaymentState, deletePayment } from '@/utils/payment-actions'
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 

@@ -1,6 +1,6 @@
 import { Trash2 as Trash } from 'lucide-react'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
-import { deleteExam } from '@/utils/actions'
+import { deleteExam } from '@/utils/course-actions'
 
 export default function DeleteExam({ examId }: { examId: number }) {
   return (

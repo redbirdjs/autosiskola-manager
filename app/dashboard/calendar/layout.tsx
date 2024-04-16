@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
-import { getUserData } from '@/utils/actions'
+import { getUserData } from '@/utils/user-actions'
 
 import DynamicBreadcrumb from '@/components/dashboard/DynamicBreadcrumb'
 

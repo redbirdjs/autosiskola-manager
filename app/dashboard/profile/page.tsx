@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { getUserData } from '@/utils/actions'
+import { getUserData } from '@/utils/user-actions'
 
 import ProfileLayoutComponent from '@/components/dashboard/profile/ProfileLayout'
 

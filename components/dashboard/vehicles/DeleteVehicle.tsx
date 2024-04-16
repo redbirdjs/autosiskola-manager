@@ -1,5 +1,5 @@
 import { Trash2 as Trash } from 'lucide-react'
-import { deleteVehicle as deleteVehicleAction } from '@/utils/actions'
+import { deleteVehicle as deleteVehicleAction } from '@/utils/vehicle-actions'
 
 import DeleteConfirmDialog from '@/components/dashboard/DeleteConfirmDialog'
 import { TooltipTrigger } from '@/components/ui/tooltip'

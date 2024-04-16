@@ -1,5 +1,6 @@
-import { notFound, redirect } from 'next/navigation';
-import { getUserByUsername, getUserData } from '@/utils/actions'
+import { notFound, redirect } from 'next/navigation'
+import { getUserData } from '@/utils/user-actions'
+import { getUserByUsername } from '@/utils/profile-actions'
 
 import ProfileLayoutComponent from '@/components/dashboard/profile/ProfileLayout'
 

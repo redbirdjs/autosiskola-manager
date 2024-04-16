@@ -6,7 +6,7 @@ import { useFormState } from 'react-dom'
 import { REGEXP_ONLY_DIGITS_AND_CHARS as Pattern } from 'input-otp'
 
 import Required from '@/components/RequiredStar'
-import { register } from '@/utils/actions'
+import { register } from '@/utils/user-actions'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'

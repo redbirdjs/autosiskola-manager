@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react'
-import { setExamState } from '@/utils/actions'
+import { setExamState } from '@/utils/course-actions'
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 

@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useFormState } from 'react-dom'
-import { changePassword, logout } from '@/utils/actions'
+import { logout } from '@/utils/user-actions'
+import { changePassword } from '@/utils/profile-actions'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'

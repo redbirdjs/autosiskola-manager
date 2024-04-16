@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormState } from 'react-dom'
-import { enrollCourse } from '@/utils/actions'
+import { enrollCourse } from '@/utils/course-actions'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'

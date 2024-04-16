@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 
 import { getImageProvider } from '@/lib/utils'
 import { FullUserData } from '@/lib/definitions'
-import { getUserStatistics } from '@/utils/actions'
+import { getUserStatistics } from '@/utils/stat-actions'
 import { TeacherStats, StudentStats } from '@/components/dashboard/profile/StatisticsPages'
 import ProfileEdit from './ProfileEdit'
 

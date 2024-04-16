@@ -1,9 +1,8 @@
 import { UserRound, Car, GraduationCap, ReceiptText, School, Library, Radar } from 'lucide-react'
-import { getAdminStatistics } from '@/utils/actions'
+import { getAdminStatistics } from '@/utils/stat-actions'
 
 import StatCard from '@/components/dashboard/statistics/StatCard'
 import { BarChartCard, RadarChartCard, PieChartCard } from '@/components/dashboard/statistics/ChartCards'
-import { ChartData } from 'chart.js';
 
 export default async function StatisticsPage() {
   const stats = await getAdminStatistics();

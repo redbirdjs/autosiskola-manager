@@ -2,7 +2,7 @@
 
 import { Plus } from 'lucide-react'
 import { useFormState } from 'react-dom'
-import { createPayment } from '@/utils/actions'
+import { createPayment } from '@/utils/payment-actions'
 
 import { SheetFooter, SheetClose } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'

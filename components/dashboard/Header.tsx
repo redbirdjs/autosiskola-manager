@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import Logo from '@/static/logo.svg'
 import { Badge } from '@/components/ui/badge'
-import { getUserData } from '@/utils/actions'
+import { getUserData } from '@/utils/user-actions'
 import LogoutButton from '@/components/LogoutButton'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 

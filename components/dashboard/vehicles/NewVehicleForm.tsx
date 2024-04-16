@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { Plus, FileX } from 'lucide-react'
 import { useFormState } from 'react-dom'
 import clsx from 'clsx'
-import { newVehicle } from '@/utils/actions'
+import { newVehicle } from '@/utils/vehicle-actions'
 
 import { SheetFooter, SheetClose } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'

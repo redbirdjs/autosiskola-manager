@@ -2,7 +2,7 @@
 
 import { Plus } from 'lucide-react'
 import { useFormState } from 'react-dom'
-import { createExam } from '@/utils/actions'
+import { createExam } from '@/utils/course-actions'
 
 import { SheetFooter, SheetClose } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'

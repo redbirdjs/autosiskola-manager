@@ -1,7 +1,7 @@
 import { DataTable } from '@/components/ui/data-table'
 import { columns } from './columns'
 
-import { getExams } from '@/utils/actions'
+import { getExams } from '@/utils/course-actions'
 
 export default async function ExamsPage() {
   const exams = await getExams();

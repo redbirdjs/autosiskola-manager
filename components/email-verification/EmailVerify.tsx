@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { UserCheck, UserRoundX } from 'lucide-react'
-import { verifyEmail } from '@/utils/actions'
+import { verifyEmail } from '@/utils/user-actions'
 
 import { buttonVariants } from '@/components/ui/button'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'

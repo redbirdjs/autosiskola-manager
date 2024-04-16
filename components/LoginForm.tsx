@@ -5,7 +5,7 @@ import { clsx } from 'clsx'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 
-import { login } from '@/utils/actions'
+import { login } from '@/utils/user-actions'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
