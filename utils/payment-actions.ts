@@ -10,9 +10,28 @@ import { PaymentSchema } from '@/lib/schemas'
 
 // Fizetések lekérdezése
 //! csak oktatóhoz tartozó fizetések jelenjenek meg
-export async function getPayments() {
+export async function getPayments(userId: number, rank: string) {
   try {
-    const payments = await prisma.payment.findMany({ include: { course: { include: { student: true, teacher: true } } }, orderBy: { id: 'asc' } });
+    let payments;
+
+    switch (rank.toLowerCase()) {
+      case 'student':
+        payments = await prisma.payment.findMany({ 
+          include: { course: { include: { student: true, teacher: true } } }, 
+          where: { course: { studentId: userId } }, 
+          orderBy: { id: 'asc' } });
+          break;
+      case 'teacher':
+        payments = await prisma.payment.findMany({ 
+          include: { course: { include: { student: true, teacher: true } } }, 
+          where: { course: { teacherId: userId } }, 
+          orderBy: { id: 'asc' } });
+        break;
+      default:
+        payments = await prisma.payment.findMany({ 
+          include: { course: { include: { student: true, teacher: true } } } 
+        });
+    }
 
     const data = payments.map(payment => {
       return {
