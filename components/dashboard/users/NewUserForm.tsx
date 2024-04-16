@@ -3,7 +3,7 @@
 import { Plus } from 'lucide-react'
 import { useFormState } from 'react-dom'
 import { REGEXP_ONLY_DIGITS_AND_CHARS as Pattern } from 'input-otp'
-import { createUser } from '@/utils/actions'
+import { createUser } from '@/utils/user-actions'
 
 import RequiredStar from '@/components/RequiredStar'
 import { Input } from '@/components/ui/input'

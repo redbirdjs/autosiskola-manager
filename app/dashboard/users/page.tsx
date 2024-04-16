@@ -4,7 +4,7 @@ import DynamicPagination from '@/components/dashboard/Pagination';
 import UserCard from '@/components/dashboard/UserCard'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
-import { getUsers } from '@/utils/actions'
+import { getUsers } from '@/utils/user-actions'
 import { getImageProvider } from '@/lib/utils';
 
 export default async function UsersPage({ searchParams }: { searchParams?: { query?: string, page?: string } }) {

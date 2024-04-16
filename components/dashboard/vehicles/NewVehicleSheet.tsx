@@ -1,5 +1,5 @@
 import { Plus, Car } from 'lucide-react'
-import { getCategories } from '@/utils/actions'
+import { getCategories } from '@/utils/course-actions'
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { buttonVariants } from '@/components/ui/button'

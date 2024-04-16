@@ -4,7 +4,7 @@ import VehicleCard from '@/components/dashboard/VehicleCard'
 import DynamicPagination from '@/components/dashboard/Pagination'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
-import { getCategories } from '@/utils/actions'
+import { getCategories } from '@/utils/course-actions'
 import { getVehicles } from '@/utils/vehicle-actions'
 import { getImageProvider } from '@/lib/utils'
 

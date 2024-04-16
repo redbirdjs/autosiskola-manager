@@ -1,5 +1,5 @@
 import Calendar from '@/components/dashboard/calendar/Calendar'
-import { getUserData } from '@/utils/actions'
+import { getUserData } from '@/utils/user-actions'
 import { getCalendarEvents } from '@/utils/calendar-actions'
 
 export default async function CalendarPage() {

@@ -1,7 +1,7 @@
 import { Trash2 as Trash } from 'lucide-react'
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
-import { deleteUser } from '@/utils/actions'
+import { deleteUser } from '@/utils/user-actions'
 
 export default function DeleteUserButton({ username }: { username: string }) {
   return (
