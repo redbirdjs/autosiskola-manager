@@ -45,6 +45,7 @@ export type UserState = {
     realname?: string[]
     email?: string[]
     passport?: string[]
+    rankId?: string[]
   }
   message?: {
     title?: string | undefined
