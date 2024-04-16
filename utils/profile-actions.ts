@@ -1,20 +1,10 @@
 'use server'
 
-import resend from '@/lib/resend'
 import prisma from '@/lib/prisma'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import moment from 'moment'
-import { cookies, headers } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import path from 'path'
 import { writeFile, unlink } from 'fs/promises'
-
-import RegEmail from '@/emails/RegistrationSuccess'
-import ReminderEmail from '@/emails/PasswordReminder'
-import NewLoginEmail from '@/emails/NewLogin'
-import UserAddedEmail from '@/emails/UserAdded'
 
 import { AvatarState, EmailState, PasswordState } from '@/lib/definitions';
 import { AvatarSchema, EmailSchema, ChangePasswordSchema } from '@/lib/schemas';

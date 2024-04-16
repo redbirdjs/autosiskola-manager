@@ -8,16 +8,14 @@ import moment from 'moment'
 import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
-import path from 'path'
-import { writeFile, unlink } from 'fs/promises'
 
 import RegEmail from '@/emails/RegistrationSuccess'
 import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 import UserAddedEmail from '@/emails/UserAdded'
 
-import { LoginState, PasswordReminderState, RegisterState, UserState, VehicleState, ExamState, PaymentState, CourseState } from '@/lib/definitions';
-import { CourseSchema, ExamSchema, LoginSchema, PasswordReminderSchema, PaymentSchema, RegisterSchema, UserSchema, VehicleSchema } from '@/lib/schemas';
+import { LoginState, PasswordReminderState, RegisterState, UserState } from '@/lib/definitions';
+import { LoginSchema, PasswordReminderSchema, RegisterSchema, UserSchema, VehicleSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 // Felhasználó és session kezeléssel kapcsolatos lekérdezések, ellenőrzések
