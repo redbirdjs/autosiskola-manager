@@ -28,8 +28,8 @@ export default function LoginPage() {
   }
 
   return (
-    <main className='flex flex-wrap min-h-screen flex-row justify-between px-20 py-10 bg-login bg-cover'>
-      <Image src={LoginImage} alt='logo' width={800} height={800} className='absolute top-1/2 -translate-y-1/2 left-30 -z-10 rounded-lg' />
+    <main className='flex flex-wrap min-h-screen flex-row gap-10 justify-between px-20 py-10 bg-login bg-cover'>
+      <Image src={LoginImage} alt='logo' width={800} height={800} className='absolute top-1/2 -translate-y-1/2 left-30 rounded-lg' />
       {
         message?.title && (
           <Alert variant={'default'} className='absolute w-max left-1/2 -translate-x-1/2'>
