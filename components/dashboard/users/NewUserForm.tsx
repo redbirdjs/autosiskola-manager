@@ -8,10 +8,11 @@ import { createUser } from '@/utils/user-actions'
 import RequiredStar from '@/components/RequiredStar'
 import { Input } from '@/components/ui/input'
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
+import { Select, SelectContent, SelectItem, SelectValue, SelectTrigger } from '@/components/ui/select'
 import { SheetFooter, SheetClose } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 
-export default function NewUserForm() {
+export default function NewUserForm({ ranks }: { ranks: { id: number, name: string }[] }) {
   const initialState = { message: { title: '' }, errors: {} };
   const [state, dispatch] = useFormState(createUser, initialState);
 
@@ -33,6 +34,21 @@ export default function NewUserForm() {
           </InputOTPGroup>
         </>
       )} />
+      <label htmlFor='rankId'>Rank <RequiredStar /></label>
+      <div className='mt-1 mb-3'>
+        <Select name='rankId'>
+          <SelectTrigger>
+            <SelectValue placeholder='Select a rank...' />
+          </SelectTrigger>
+          <SelectContent>
+            {
+              ranks.map((rank) => (
+                <SelectItem key={rank.id} value={rank.id.toString()}>{ rank.name }</SelectItem>
+              ))
+            }
+          </SelectContent>
+        </Select>
+      </div>
       <SheetFooter>
         <SheetClose asChild>
           <Button type='submit'><Plus className='h-5 w-5' /> New User</Button>
