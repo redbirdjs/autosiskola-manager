@@ -131,9 +131,9 @@ export type PasswordState = {
     newpass1?: string[]
     newpass2?: string[]
   }
-  message: {
-    title: string | undefined
-    description: string
+  message?: {
+    title?: string | undefined
+    description?: string
   }
 }
 
