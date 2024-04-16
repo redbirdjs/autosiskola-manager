@@ -4,7 +4,7 @@ import DynamicPagination from '@/components/dashboard/Pagination'
 import UserCard from '@/components/dashboard/UserCard'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
-import { getFilteredUsers } from '@/utils/user-actions'
+import { getFilteredUsers, getUserData } from '@/utils/user-actions'
 import { getImageProvider } from '@/lib/utils'
 
 export default async function TeachersPage({ searchParams }: { searchParams: { query: string, page: string } }) {
@@ -12,13 +12,15 @@ export default async function TeachersPage({ searchParams }: { searchParams: { q
   const page = searchParams?.page || '1';
   const provider = getImageProvider();
 
+  const usr = await getUserData();
+  if (!usr) return <></>;
   const searchResults = await getFilteredUsers({ query, page, rankType: 'teacher' });
 
   return (
     <div>
       {
         searchResults.users.length != 0 ? searchResults.users.map((user) => (
-          <UserCard key={user.username} user={user} provider={provider} />
+          <UserCard key={user.username} user={user} provider={provider} rank={usr.rank} />
         )) : (
           <div className='flex justify-center p-10'>
             <Alert className='w-max'>
