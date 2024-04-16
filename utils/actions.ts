@@ -1015,6 +1015,16 @@ export async function uploadProfileAvatar(prevState: AvatarState, formData: Form
   }
 
   try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (user && user.avatarPath.includes('p_')) {
+      try {
+        await unlink(`${path.join(process.cwd())}/public/${user.avatarPath}`);
+      } catch (e) {
+        if (e) console.error(e);
+        console.log('File not found!');
+      }
+    }
+
     await prisma.user.update({ data: { avatarPath: url }, where: { id: userId } });
 
     revalidatePath('/dashboard/profile');
