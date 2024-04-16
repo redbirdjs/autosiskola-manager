@@ -1,7 +1,8 @@
 'use client'
 
+import Link from 'next/link'
 import clsx from 'clsx'
-import { MoreHorizontal, Clipboard, Trash2 as Trash } from 'lucide-react'
+import { MoreHorizontal, Clipboard, UserRound } from 'lucide-react'
 
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from '@/components/ui/dropdown-menu'
@@ -11,7 +12,7 @@ import DeleteUserButton from './users/DeleteUserButton'
 import { toast } from '@/components/ui/use-toast'
 import { UserData } from '@/lib/definitions'
 
-export default function UserCard({ user, provider }: { user: UserData, provider: string }) {
+export default function UserCard({ user, provider, rank }: { user: UserData, provider: string, rank: string }) {
   const copyUsername = (username: string) => {
     navigator.clipboard.writeText(username);
 
@@ -48,7 +49,10 @@ export default function UserCard({ user, provider }: { user: UserData, provider:
               <Clipboard className='h-5 w-5' /> Copy Username
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DeleteUserButton username={user.username} />
+            <DropdownMenuItem asChild>
+              <Link className='flex gap-2' href={`/dashboard/profile/${user.username}`}><UserRound className='h-5 w-5' /> Go to User Profile</Link>
+            </DropdownMenuItem>
+            { rank.toLowerCase() == 'admin' && <DeleteUserButton username={user.username} /> }
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
