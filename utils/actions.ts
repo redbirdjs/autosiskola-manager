@@ -1050,9 +1050,8 @@ export async function changeEmail(prevState: EmailState, formData: FormData) {
     if (user) return { message: { title: '' }, errors: { email: ['This email address is in use.'] } };
 
     await prisma.user.update({ data: { email }, where: { id: userId } });
-
-    cookies().delete('refreshToken');
-    return { message: { title: 'Success', description: 'Email successfully changed!' } };
+    
+    return { message: { title: 'Success', description: 'Email successfully changed! You will be logged out of your account.' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to change email.');

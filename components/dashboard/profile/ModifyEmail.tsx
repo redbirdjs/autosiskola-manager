@@ -1,20 +1,43 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useFormState } from 'react-dom'
-import { changeEmail } from '@/utils/actions'
+import { changeEmail, logout } from '@/utils/actions'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger, DialogHeader, DialogTitle, DialogContent, DialogClose, DialogFooter } from '@/components/ui/dialog'
+import { toast } from '@/components/ui/use-toast'
 
 export default function ModifyEmailForm({ userId }: { userId: number }) {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const initialState = { message: { title: '' }, errors: {} };
   const [state, dispatch] = useFormState(changeEmail, initialState);
 
+  const closeDialog = () => {
+    if (dialogOpen) {
+      setDialogOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    if (state.message.title && state.message.title.length > 0) {
+      toast({
+        title: state.message.title,
+        description: state.message.description,
+        duration: 2000,
+      });
+      setDialogOpen(false);
+      setTimeout(() => {
+        logout();
+      }, 2000);
+    }
+  }, [state]);
+
   return (
-    <Dialog>
+    <Dialog open={dialogOpen} onOpenChange={closeDialog}>
       <DialogTrigger asChild>
-        <Button>Modify Email</Button>
+        <Button onClick={() => setDialogOpen(true)}>Modify Email</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
