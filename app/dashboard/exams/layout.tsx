@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { redirect } from 'next/navigation'
 import { getUserData } from '@/utils/user-actions'
 
 import DynamicBreadcrumb from '@/components/dashboard/DynamicBreadcrumb'
@@ -12,15 +11,11 @@ export const metadata: Metadata = {
 export default async function ExamsLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const user = await getUserData();
 
-  if (user?.rank.toLowerCase() == 'student') {
-    redirect('/dashboard');
-  }
-
   return (
     <main className='flex flex-col p-5 w-10/12'>
       <div className='flex flex-row justify-between mb-5'>
         <DynamicBreadcrumb />
-        <NewExamSheet />
+        { user?.rank.toLowerCase() != 'student' && <NewExamSheet /> }
       </div>
       { children }
     </main>

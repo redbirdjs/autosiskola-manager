@@ -46,9 +46,32 @@ export async function getStudentData({ teacher }: { teacher: number | undefined 
 }
 
 // Vizsgák lekérdezése
-export async function getExams() {
+export async function getExams(userId: number, rank: string) {
   try {
-    const exams = await prisma.exam.findMany({ include: { course: { include: { category: true, student: true } } }, orderBy: { id: 'asc' } });
+    let exams;
+
+    switch (rank.toLowerCase()) {
+      case 'student':
+        exams = await prisma.exam.findMany({
+          include: { course: { include: { category: true, student: true } } },
+          where: { course: { studentId: userId } },
+          orderBy: { id: 'asc' }
+        });
+        break;
+      case 'teacher':
+        exams = await prisma.exam.findMany({
+          include: { course: { include: { category: true, student: true } } },
+          where: { course: { teacherId: userId } },
+          orderBy: { id: 'asc' }
+        });
+        break;
+      default:
+        exams = await prisma.exam.findMany({
+          include: { course: { include: { category: true, student: true } } },
+          orderBy: { id: 'asc' }
+        });
+    }
+
     const data = exams.map(exam => {
       const student = exam.course.student;
       return {
