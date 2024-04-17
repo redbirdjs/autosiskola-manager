@@ -15,6 +15,7 @@ model User {
   passportNumber String @db.VarChar(9) @unique
   password String @db.VarChar(255)
   verifyToken String? @db.VarChar(64) @unique
+  passwordToken String? @db.VarChar(256) @unique
   avatarPath String @db.VarChar(255) @default("/profiles/default.png")
 
   rank Rank @relation(fields: [rankId], references: [id])
