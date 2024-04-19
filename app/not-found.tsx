@@ -9,7 +9,7 @@ export default function NotFound() {
         <h1 className='text-xl font-bold pr-3 mr-3 border-r border-r-[#eaeaea]'>404</h1>
         <p>The page is not found!</p>
       </div>
-      <Link href={'/'} className={buttonVariants({ variant: 'default' })}>Back to Main page</Link>
+      <Link href={'/'} className={buttonVariants({ variant: 'default' })}>Back to Main Menu</Link>
     </div>
   )
 }
