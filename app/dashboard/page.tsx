@@ -11,7 +11,7 @@ export default async function DashboardPage() {
   const rank = user.rank.toLowerCase();
 
   return (
-    <main className='min-h-screen flex flex-col gap-5 items-center p-5 w-10/12'>
+    <main className='flex flex-col gap-5 items-center p-5 w-10/12'>
       <Card className='w-full'>
         <CardHeader>
           <CardTitle>Welcome to the Driving School Manager Dashboard!</CardTitle>
