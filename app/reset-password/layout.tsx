@@ -1,6 +1,6 @@
 export default function ResetPasswordLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <main className='min-w-screen min-h-screen flex flex-col items-center justify-center gap-2'>
+    <main className='min-w-screen min-h-screen flex flex-col items-center justify-center gap-2 bg-main'>
       { children }
     </main>
   );
