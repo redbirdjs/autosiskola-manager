@@ -1,42 +1,24 @@
 'use client'
 
-import { useState } from 'react'
-import { Inbox } from 'lucide-react'
+import Link from 'next/link'
+import { ChevronLeft } from 'lucide-react'
 
 import PasswordReminderForm from '@/components/PasswordReminderForm'
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
-import { Separator } from '@/components/ui/separator'
-import { AlertMessageObject } from '@/lib/definitions'
+import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
+import { buttonVariants } from '@/components/ui/button'
 
 export default function ForgottenPasswordPage() {
-  const [message, setMessage] = useState<AlertMessageObject>({});
-
-  const setMsg = (msg: AlertMessageObject) => {
-    setMessage(msg);
-  }
-
   return (
-    <main className='flex min-h-screen flex-col'>
-      {
-        message?.title && (
-          <Alert variant={'default'} className='absolute w-max left-1/2 -translate-x-1/2 my-20'>
-            <Inbox className='h-5 w-5' />
-            <AlertTitle>{ message.title }</AlertTitle>
-            <AlertDescription>{ message.description }</AlertDescription>
-          </Alert>
-        )
-      }
-      <div className='flex min-h-screen flex-col justify-center items-center'>
-        <div className='flex flex-col w-[30vw] items-center'>
-          <h1 className='text-center text-4xl'>Forgot password</h1>
-          <Separator className='my-5' />
-          <div className='mb-10 w-[20vw]'>
-            <p>If you forget your password, we can send you a password reminder.</p>
-            <p>You have to specify a new password for your account by clicking the link we send you in the email.</p>
-          </div>
-          <PasswordReminderForm setMsg={setMsg} />
-        </div>
-      </div>
-    </main>
+    <Card className='w-2/3 lg:w-1/4'>
+      <CardHeader>
+      <Link href={'/'} className={buttonVariants({ variant: 'default', className: 'w-max mb-3 relative pl-8 group transition-transform' })}><ChevronLeft className='absolute top-1/2 -translate-y-1/2 left-2 group-hover:-translate-x-1' size={20} /> Back to Main Menu</Link>
+        <CardTitle className='text-center'>Forgotten Password</CardTitle>
+        <hr />
+      </CardHeader>
+      <CardContent>
+        <CardDescription className='mb-3'>If you forget your password. You can request a password reset link by typing in your email address.</CardDescription>
+        <PasswordReminderForm />
+      </CardContent>
+    </Card>
   )
 }
