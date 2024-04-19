@@ -138,6 +138,18 @@ export type PasswordState = {
   }
 }
 
+export type ForgotPasswordState = {
+  errors?: {
+    passToken?: string[]
+    pass1?: string[]
+    pass2?: string[]
+  }
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
+
 export interface UserData {
   path: string;
   realname: string;
