@@ -83,7 +83,8 @@ const config = {
       },
       backgroundImage: {
         "login": "url('/static/login-background.svg')",
-        "register": "url('/static/register-background.svg')"
+        "register": "url('/static/register-background.svg')",
+        "main": "url('/static/main-background.svg')"
       }
     },
   },
