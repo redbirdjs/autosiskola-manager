@@ -33,6 +33,7 @@ export async function getStudentData({ teacher }: { teacher: number | undefined 
         id: course.id,
         category: course.category.category,
         student: {
+          id: course.student.id,
           realname: course.student.realName
         }
       }
