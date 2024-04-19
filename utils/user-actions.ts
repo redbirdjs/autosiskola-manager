@@ -80,6 +80,14 @@ export async function login(prevState: LoginState, formData: FormData) {
 
     const refreshToken = jwt.sign({ email: user.email }, process.env.REF_SECRET!, { expiresIn: process.env.REF_EXPIRE });
 
+    // password token törlése ha, kért jelszó módosítást, de mégis betudott jelentkezni
+    if (user.passwordToken) {
+      await prisma.user.update({
+        data: { passwordToken: undefined },
+        where: { email: user.email }
+      });
+    }
+
     //! Uncomment when making production build!
     // const address = headerList.get('x-forwarded-for') || '0.0.0.0';
     // const userAgent = headerList.get('user-agent') || 'No-UserAgent';
@@ -123,6 +131,10 @@ export async function passwordReminder(prevState: PasswordReminderState, formDat
     if (!user) return { message: { title: '' }, errors: { email: ['This email is not registered.'] } };
 
     const code = randomString(256);
+    await prisma.user.update({
+      data: { passwordToken: code },
+      where: { email }
+    });
 
     resend.emails.send({
       from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
@@ -147,7 +159,7 @@ export async function verifyEmail({ verifyToken }: { verifyToken: string }) {
     if (!user) return { error: { title: 'User not found', description: 'The token you specified does not link to any existing users.' } };
 
     await prisma.user.update({ data: { verifyToken: null }, where: { verifyToken } });
-    return { message: { title: 'Success', description: 'You have successfully verified your email address.' } };
+    return { message: { title: 'Success!', description: 'You have successfully verified your email address.' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to verify email address.');
@@ -315,7 +327,7 @@ export async function createUser(prevState: UserState, formData: FormData) {
     });
 
     revalidatePath('/dashboard');
-    return { message: { title: 'Success', description: 'User successfully created!' } };
+    return { message: { title: 'Success!', description: 'User successfully created!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to create a new user.');
@@ -328,7 +340,7 @@ export async function deleteUser({ username }: { username: string }) {
     await prisma.user.delete({ where: { username } });
 
     revalidatePath('/dashboard');
-    return { message: { title: 'Success', description: 'User successfully deleted!' } };
+    return { message: { title: 'Success!', description: 'User successfully deleted!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to delete the user.');
