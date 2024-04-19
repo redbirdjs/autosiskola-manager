@@ -41,7 +41,7 @@ export default function RegisterPage() {
         <Separator className='my-5' />
         <RegisterForm setMsg={setMsg} />
         <p className='mb-3'>Already has an account? <Link href={'/login'} className='underline'>Click here to login</Link></p>
-        <p><Required />: Fields with this symbol must be filled out.</p>
+        <p><Required />: These fields are required.</p>
       </div>
     </main>
   )

@@ -43,7 +43,7 @@ export default function NewPaymentForm({ students }: { students: StudentFormData
           <Button type='submit'><Plus className='h-5 w-5' /> New Payment</Button>
         </SheetClose>
       </SheetFooter>
-      <p className='text-gray-500 text-sm'><RequiredStar />: These fields must be filled out.</p>
+      <p className='text-gray-500 text-sm'><RequiredStar />: These fields are required.</p>
     </form>
   );
 }

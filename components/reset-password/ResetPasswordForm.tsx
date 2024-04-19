@@ -68,7 +68,7 @@ export default function ResetPasswordForm({ token }: { token: string }) {
         )
       }
       <Button type='submit' className='mb-3'>Reset Password</Button>
-      <p className='text-sm'><RequiredStar />: These fields must be filled out.</p>
+      <p className='text-sm'><RequiredStar />: These fields are required.</p>
     </form>
   );
 }
