@@ -22,6 +22,7 @@ export async function getCalendarEvents({ email, rank }: { email: string, rank: 
       const ids = users.map(u => u.studentId);
 
       const events = await prisma.calendar.findMany({
+        include: { user: true },
         where: { userId: { in: ids } }
       });
       const exams = await prisma.exam.findMany({
@@ -35,7 +36,7 @@ export async function getCalendarEvents({ email, rank }: { email: string, rank: 
 
       const eventData = events.map(event => {
         return {
-          title: event.title,
+          title: `${event.title} - ${event.user?.realName}`,
           date: event.date,
           color: event.color
         }
