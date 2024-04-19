@@ -1,6 +1,10 @@
 'use server'
 
 import prisma from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
+
+import { CalendarState } from '@/lib/definitions'
+import { newEventSchema } from '@/lib/schemas'
 
 // Naptár backend funkciók
 
@@ -116,5 +120,33 @@ export async function getCalendarEvents({ email, rank }: { email: string, rank: 
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to get the calendar events.');
+  }
+}
+
+export async function newCalendarEvent(prevState: CalendarState, formData: FormData) {
+  const validatedFields = newEventSchema.safeParse({
+    userId: parseInt(formData.get('userId')?.toString() || ''),
+    date: new Date(formData.get('date')?.toString() || ''),
+    title: formData.get('title'),
+    description: formData.get('description'),
+    color: formData.get('color')
+  });
+
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { userId, date, title, description, color } = validatedFields.data;
+
+  try {
+    await prisma.calendar.create({
+      data: {
+        userId, date, title, description, color
+      }
+    });
+
+    revalidatePath('/dashboard/calendar');
+    return { message: { title: 'Success!', description: 'Event successfully added for the student.' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to add new event to calendar.');
   }
 }
