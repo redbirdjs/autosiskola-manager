@@ -203,7 +203,7 @@ export async function getUserData() {
   const cookieStore = cookies();
   if (!cookieStore.has('refreshToken')) return;
 
-  let email = "";
+  let email = '';
   jwt.verify(cookieStore.get('refreshToken')!.value, process.env.REF_SECRET!, (err, decoded: any) => {
     if (err) {
       cookieStore.delete('refreshToken');

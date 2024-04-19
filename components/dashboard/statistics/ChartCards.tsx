@@ -7,7 +7,7 @@ import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card'
 
 ChartJS.register(...registerables);
 
-export function PieChartCard({ title, data }: { title: React.ReactNode, data: ChartData<"pie", number[], unknown> }) {
+export function PieChartCard({ title, data }: { title: React.ReactNode, data: ChartData<'pie', number[], unknown> }) {
   return (
     <Card className='w-[500px]'>
       <CardHeader>
@@ -31,7 +31,7 @@ export function PieChartCard({ title, data }: { title: React.ReactNode, data: Ch
   );
 }
 
-export function BarChartCard({ title, data }: { title: React.ReactNode, data: ChartData<"bar", number[], unknown> }) {
+export function BarChartCard({ title, data }: { title: React.ReactNode, data: ChartData<'bar', number[], unknown> }) {
   return (
     <Card className='w-[500px]'>
       <CardHeader>
@@ -50,7 +50,7 @@ export function BarChartCard({ title, data }: { title: React.ReactNode, data: Ch
   );
 }
 
-export function RadarChartCard({ title, data }: { title: React.ReactNode, data: ChartData<"radar", number[], unknown> }) {
+export function RadarChartCard({ title, data }: { title: React.ReactNode, data: ChartData<'radar', number[], unknown> }) {
   return (
     <Card className='w-[500px]'>
       <CardHeader>

@@ -13,7 +13,7 @@ import { newEventSchema } from '@/lib/schemas'
 // oktató rank esetén - összes oktatóhoz tartozó tanuló eseményei
 export async function getCalendarEvents({ email, rank }: { email: string, rank: string }) {
   try {
-    if (rank.toLowerCase() != "student") {
+    if (rank.toLowerCase() != 'student') {
       const users = await prisma.course.findMany({
         select: { studentId: true, id: true },
         where: { teacher: { email } }
