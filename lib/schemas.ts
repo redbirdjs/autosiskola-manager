@@ -78,3 +78,11 @@ export const ChangePasswordSchema = z.object({
   newpass1: z.string().min(1, 'This field is required!'),
   newpass2: z.string().min(1, 'This field is required!')
 });
+
+export const newEventSchema = z.object({
+  userId: z.number({ invalid_type_error: 'User ID must be a number!' }),
+  date: z.date().min(new Date(Date.now()), 'You must specify a future date!'),
+  title: z.string().min(1, 'Title field is required!'),
+  description: z.string().optional(),
+  color: z.string().regex(/^#[0-9A-f]{6}$/, 'Invalid HEX format! (ex: #ff0000)').optional()
+})

@@ -150,6 +150,18 @@ export type ForgotPasswordState = {
   }
 }
 
+export type CalendarState = {
+  errors?: {
+    userId?: string[]
+    date?: string[]
+    title?: string[]
+  }
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
+
 export interface UserData {
   path: string;
   realname: string;
