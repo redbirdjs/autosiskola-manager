@@ -14,8 +14,8 @@ import ReminderEmail from '@/emails/PasswordReminder'
 import NewLoginEmail from '@/emails/NewLogin'
 import UserAddedEmail from '@/emails/UserAdded'
 
-import { LoginState, PasswordReminderState, RegisterState, UserState } from '@/lib/definitions';
-import { LoginSchema, PasswordReminderSchema, RegisterSchema, UserSchema, VehicleSchema } from '@/lib/schemas';
+import { LoginState, PasswordReminderState, RegisterState, UserState, ForgotPasswordState } from '@/lib/definitions';
+import { ChangeForgottenPasswordSchema, LoginSchema, PasswordReminderSchema, RegisterSchema, UserSchema } from '@/lib/schemas';
 import { randomString } from '@/lib/utils'
 
 // Felhasználó és session kezeléssel kapcsolatos lekérdezések, ellenőrzések
@@ -147,6 +147,38 @@ export async function passwordReminder(prevState: PasswordReminderState, formDat
   } catch (e) {
     if (e) console.error(e);
     return { message: { title: 'Password reminder failed to send due to an error.' } }
+  }
+}
+
+// Jelszó módosítás
+export async function changeForgottenPassword(prevState: ForgotPasswordState, formData: FormData) {
+  const validatedFields = ChangeForgottenPasswordSchema.safeParse({
+    passToken: formData.get('passToken'),
+    pass1: formData.get('pass1'),
+    pass2: formData.get('pass2')
+  });
+
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { passToken, pass1, pass2 } = validatedFields.data;
+  if (pass1 != pass2) return { message: { title: '' }, errors: { pass1: ['The passwords doesn\'t match.'] } }
+
+  try {
+    const user = await prisma.user.findUnique({ where: { passwordToken: passToken } });
+    if (!user) return { message: { title: '' }, errors: { passToken: ['The provided token is invalid!'] } };
+
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(pass1, salt);
+
+    await prisma.user.update({
+      data: { password: hash, passwordToken: null },
+      where: { passwordToken: passToken }
+    });
+
+    return { message: { title: 'Success!', description: 'You have successfully changed the password. You will be redirected to the login page in 2 seconds.' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to reset the password for the user.');
   }
 }
 
