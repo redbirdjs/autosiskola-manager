@@ -206,6 +206,7 @@ export interface StudentFormData {
   id: number;
   category: string;
   student: {
+    id: number;
     realname: string;
   }
 }
