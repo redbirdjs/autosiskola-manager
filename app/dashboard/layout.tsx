@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation'
 
 import Header from '@/components/dashboard/Header'
 import Navigation from '@/components/dashboard/Navigation'
-import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
   title: 'Dashboard'
@@ -23,7 +22,6 @@ export default function DashboardLayout({ children }: Readonly<{ children: React
       <main className='flex flex-row w-full'>
         <Navigation />
         { children }
-        <Toaster />
       </main>
     </div>
   )
