@@ -1,24 +1,30 @@
 'use client'
 
-import Link from 'next/link'
+import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 import clsx from 'clsx'
+import { passwordReminder } from '@/utils/user-actions'
 
 import { Input } from '@/components/ui/input'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { passwordReminder } from '@/utils/user-actions'
-import { useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { toast } from '@/components/ui/use-toast'
 
-export default function PasswordReminderForm({ setMsg }: { setMsg: Function }) {
+export default function PasswordReminderForm() {
   const initialState = { message: { title: '' }, errors: {} };
   const [state, dispatch] = useFormState(passwordReminder, initialState);
 
   useEffect(() => {
-    setMsg(state.message);
-  }, [state, setMsg]);
+    if (state.message && state.message.title.length > 0) {
+      toast({
+        title: state.message.title,
+        description: state.message.description,
+        duration: 2000
+      });
+    }
+  }, [state]);
 
   return (
-    <form action={dispatch} className='flex flex-col w-[60%]'>
+    <form action={dispatch} className='flex flex-col'>
       <label htmlFor='email' className='mb-1'>Email address</label>
       <Input name='email' className={clsx(state.errors?.email ? 'mb-1' : 'mb-3')} />
       {
@@ -30,7 +36,6 @@ export default function PasswordReminderForm({ setMsg }: { setMsg: Function }) {
       }
       <div className='flex flex-row gap-2 justify-center flex-wrap'>
         <Button type='submit' className='self-center'>Send reminder</Button>
-        <Link href='/' className={buttonVariants({ variant: 'default' })}>Back to Main Page</Link>
       </div>
     </form>
   )
