@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { AlertMessageObject } from '@/lib/definitions'
-import { Check, ChevronLeft } from 'lucide-react'
+import { Check } from 'lucide-react'
 
 import LoginForm from '@/components/LoginForm'
-import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
+import Logo from '@/static/logo.svg'
 import LoginImage from '@/static/car.png'
 
 export default function LoginPage() {
@@ -39,7 +39,11 @@ export default function LoginPage() {
           </Alert>
         )
       }
-      <div></div>
+      <div className='flex items-center gap-4 h-max'>
+        <Image src={Logo} alt='DSM Logo' width={50} height={50} />
+        <div className='h-[60px] border border-black'></div>
+        <h1 className='text-xl font-bold'>Driving School Manager</h1>
+      </div>
       <div className='self-center px-20 py-20 bg-white/80 backdrop-blur-sm rounded-lg lg:mr-40'>
         <h1 className='text-center text-4xl mb-10'>Login</h1>
         <Separator className='mb-10' />

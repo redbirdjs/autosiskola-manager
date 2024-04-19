@@ -4,14 +4,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { AlertMessageObject } from '@/lib/definitions'
-import { UserPlus, ChevronLeft } from 'lucide-react'
+import { UserPlus } from 'lucide-react'
 
 import Required from '@/components/RequiredStar'
 import RegisterForm from '@/components/RegisterForm'
-import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 
+import Logo from '@/static/logo.svg'
 import RegisterImage from '@/static/car2.png'
 
 export default function RegisterPage() {
@@ -33,7 +33,11 @@ export default function RegisterPage() {
           </Alert>
         )
       }
-      <div></div>
+      <div className='flex items-center gap-4 h-max'>
+        <Image src={Logo} alt='DSM Logo' width={50} height={50} />
+        <div className='h-[60px] border border-black'></div>
+        <h1 className='text-xl font-bold'>Driving School Manager</h1>
+      </div>
       <div className='self-center px-20 py-20 bg-white/80 backdrop-blur-sm rounded-lg lg:mr-40'>
         <h1 className='text-center text-4xl'>Register</h1>
         <Separator className='my-5' />
