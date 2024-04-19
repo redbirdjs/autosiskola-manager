@@ -33,7 +33,7 @@ export default function RegisterPage() {
           </Alert>
         )
       }
-      <div className='flex items-center gap-4 h-max'>
+      <div className='flex items-center gap-4 h-max z-10'>
         <Image src={Logo} alt='DSM Logo' width={50} height={50} />
         <div className='h-[60px] border border-black'></div>
         <h1 className='text-xl font-bold'>Driving School Manager</h1>
