@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger, DialogHeader, DialogTitle, DialogContent, DialogClose, DialogFooter } from '@/components/ui/dialog'
 import { toast } from '@/components/ui/use-toast'
+import RequiredStar from '@/components/RequiredStar'
 
 export default function ChangePasswordForm({ userId }: { userId: number }) {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -24,7 +25,17 @@ export default function ChangePasswordForm({ userId }: { userId: number }) {
 
   useEffect(() => {
     if (state.errors && Object.values(state.errors).length > 0) {
-      return;
+      toast({
+        title: 'Error!',
+        description: Object.values(state.errors).map((err) => (
+          <div key={err[0]} aria-live='polite' aria-atomic>
+            <p>{ err[0] }</p>
+          </div>
+        )),
+        duration: 2000,
+        variant: 'destructive'
+      });
+      setDialogOpen(true);
     }
     if (state.message && state.message.title.length > 0) {
       toast({
@@ -50,17 +61,18 @@ export default function ChangePasswordForm({ userId }: { userId: number }) {
         </DialogHeader>
         <form action={dispatch}>
           <Input id='userId' name='userId' value={userId} className='hidden' readOnly />
-          <label htmlFor='oldpass'>Old Password</label>
+          <label htmlFor='oldpass'>Old Password <RequiredStar /></label>
           <Input type='password' id='oldpass' name='oldpass' className='mt-1 mb-3' />
-          <label htmlFor='newpass1'>New Password</label>
+          <label htmlFor='newpass1'>New Password <RequiredStar /></label>
           <Input type='password' id='newpass1' name='newpass1' className='mt-1 mb-3' />
-          <label htmlFor='newpass2'>Repeat Password</label>
+          <label htmlFor='newpass2'>Repeat Password <RequiredStar /></label>
           <Input type='password' id='newpass2' name='newpass2' className='mt-1 mb-3' />
           <DialogFooter>
             <DialogClose asChild>
               <Button type='submit'>Change Password</Button>
             </DialogClose>
           </DialogFooter>
+          <p className='text-sm text-[#a0a0a0]'><RequiredStar/>: These fields are required!</p>
         </form>
       </DialogContent>
     </Dialog>
