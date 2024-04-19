@@ -12,15 +12,15 @@ export default async function TeachersPage({ searchParams }: { searchParams: { q
   const page = searchParams?.page || '1';
   const provider = getImageProvider();
 
-  const usr = await getUserData();
-  if (!usr) return <></>;
+  const loggedUser = await getUserData();
+  if (!loggedUser) return <></>;
   const searchResults = await getFilteredUsers({ query, page, rankType: 'teacher' });
 
   return (
     <div>
       {
         searchResults.users.length != 0 ? searchResults.users.map((user) => (
-          <UserCard key={user.username} user={user} provider={provider} rank={usr.rank} />
+          <UserCard key={user.username} loggedUser={loggedUser.username} user={user} provider={provider} rank={loggedUser.rank} />
         )) : (
           <div className='flex justify-center p-10'>
             <Alert className='w-max'>
