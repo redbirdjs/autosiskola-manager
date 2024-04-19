@@ -10,6 +10,7 @@ import { newVehicle } from '@/utils/vehicle-actions'
 import { SheetFooter, SheetClose } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'
 import { Button, buttonVariants } from '@/components/ui/button'
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select'
 import RequiredStar from '@/components/RequiredStar'
 import { CategoryName } from '@/lib/definitions'
 import { useToast } from '@/components/ui/use-toast'
@@ -70,8 +71,18 @@ export default function NewVehicleForm({ categories }: { categories: CategoryNam
       </div>
       <label htmlFor='color'>Color <RequiredStar /></label>
       <Input id='color' name='color' className='mt-1 mb-3' />
-      <label htmlFor='drivetype'>Drive Type</label>
-      <Input id='drivetype' name='drivetype' className='mt-1 mb-3' />
+      <label htmlFor='drivetype'>Drive Type <RequiredStar /></label>
+      <div className='mt-1 mb-3'>
+        <Select name='drivetype'>
+          <SelectTrigger>
+            <SelectValue placeholder='Select the drive type...' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='manual'>Manual</SelectItem>
+            <SelectItem value='automatic'>Automatic</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       <label htmlFor='car-image'>Preview Image</label>
       <div className='flex flex-col items-center gap-1 mt-1 mb-3'>
         { image && (
@@ -88,7 +99,7 @@ export default function NewVehicleForm({ categories }: { categories: CategoryNam
           <Button type='submit'><Plus className='h-5 w-5' /> Add new vehicle</Button>
         </SheetClose>
       </SheetFooter>
-      <p className='text-gray-500 text-sm'><RequiredStar />: These fields must be filled.</p>
+      <p className='text-gray-500 text-sm'><RequiredStar />: These fields are required.</p>
     </form>
   );
 }
