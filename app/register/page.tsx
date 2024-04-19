@@ -33,9 +33,7 @@ export default function RegisterPage() {
           </Alert>
         )
       }
-      <div>
-      <Link href={'/'} className={buttonVariants({ variant: 'default', className: 'relative pl-8 group transition-transform' })}><ChevronLeft className='absolute top-1/2 -translate-y-1/2 left-2 group-hover:-translate-x-1' size={20} /> Back To Main Page</Link>
-      </div>
+      <div></div>
       <div className='self-center px-20 py-20 bg-white/80 backdrop-blur-sm rounded-lg lg:mr-40'>
         <h1 className='text-center text-4xl'>Register</h1>
         <Separator className='my-5' />
