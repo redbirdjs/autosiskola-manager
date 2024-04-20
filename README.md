@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Autós Iskola Manager (Driving School Manager)
 
-## Getting Started
+Az autós iskola manager web applikáció egy Next.js-ben (React alapú full-stack framework) íródott autós iskola menedzsment applikáció. A papír alapú adminisztrációval ellentétben az autós iskola manager egy egyszerű és gyors megoldást kínál az autós iskolák adminisztratív tevékenységeinek digitalizálására és hatékonyságára.  
 
-First, run the development server:
+## Tartalomjegyzék
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [.env fájl felépítése](#env-felépítése)
+- [Telepítés Docker containerbe](#telepítés-docker)
+
+## .env felépítése
+
+A .env fájl érzékeny adatok tárolására alkalmas, mint például API kulcsok vagy jelszavak. Ezeket a fájlokat legtöbb esetben kitöltetlenül töltik fel a Github repository-kba, hogy úgy tudjuk használni a feltöltött alkalmazást, hogy közben nem adjuk meg a saját érzékeny adatainkat.
+
+```
+DATABASE_URL="postgresql://<username>:<passwd>@<db-host>:<db-port>/<db-name>?schema=<db-schema>"
+RESEND_KEY="<resend-api-key>"
+REF_SECRET="<refresh-token-secret>"
+REF_EXPIRE="1d"
+SITE_URL="http://localhost:3000"
+IMAGE_PROVIDER="http://localhost:8080"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- DATABASE_URL: Adatbázis elérési útvonal a Prisma számára.
+- RESEND_KEY: Email kiszolgáló API kulcsa.
+- REF_SECRET: Session kezelésre használt Refresh Token rejtjele.
+- REF_EXPIRE: Refresh Token lejárati ideje.
+- SITE_URL: Weboldal elérési címe
+- IMAGE_PROVIDER: Kép kiszolgáló elérési címe.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Telepítés (Docker)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+A web applikáció telepítése nagyon egyszerű. Az egész applikáció egyszerűen telepíthető
+egy Docker containerbe az összes szükséges contrainerrel együtt.
 
-## Learn More
+A telepítés előfeltétele, hogy a következő programok telepítve vannak a számítógépre:
 
-To learn more about Next.js, take a look at the following resources:
+- Git - repository letöltéséhez
+- Docker - applikáció telepítéséhez és futtatásához
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Töltsük le a repositoryt a saját számítógépünkre vagy szerverünkre.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+git clone https://github.com/redbirdjs/autosiskola-manager.git
+```
 
-## Deploy on Vercel
+2. Nevezzük át a `.env.example` nevű fájlt `prod.env`-re és töltsük ki a saját adatainkal. (A .env fájl felépítését a fájl tetején vagy [ide kattintva](#env-felépítése) tudja megtekinteni.)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Navigáljunk be a létrehozott mappába és futtassuk a következő parancsot:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+útvonal/a/projekthez > docker compose --build -d
+```
+
+4. Ha véget ért a telepítés létrejött a három container és már használható is az applikáció.
+
+**Az applikáció a http://localhost:3000 linken érhető el.**
