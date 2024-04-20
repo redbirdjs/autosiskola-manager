@@ -9,7 +9,7 @@ Az autós iskola manager web applikáció egy Next.js-ben (React alapú full-sta
 
 ## .env felépítése
 
-A .env fájl érzékeny adatok tárolására alkalmas, mint például API kulcsok vagy jelszavak. Ezeket a fájlokat legtöbb esetben kitöltetlenül töltik fel a Github repository-kba, hogy úgy tudjuk használni a feltöltött alkalmazást, hogy közben nem adjuk meg a saját érzékeny adatainkat.
+A .env fájl érzékeny adatok tárolására alkalmas, mint például API kulcsok vagy jelszavak. Ezeket a fájlokat legtöbb esetben kitöltetlenül töltik fel a Github repository-kba, hogy úgy tudják mások is használni a feltöltött alkalmazást, hogy közben nem adjuk meg a saját érzékeny adatainkat.
 
 ```
 DATABASE_URL="postgresql://<username>:<passwd>@<db-host>:<db-port>/<db-name>?schema=<db-schema>"
