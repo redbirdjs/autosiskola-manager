@@ -14,8 +14,8 @@ export default async function ProfileLayoutComponent({ user, modify }: { user: F
   return (
     <div className='flex flex-col gap-2 min-h-[600px] flex-wrap'>
       <div className='flex gap-2 flex-wrap md:flex-nowrap'>
-        <div className='p-5 border border-[#eaeaea] rounded-lg'>
-          <Avatar className='w-full h-full md:w-80 md:h-80 block'>
+        <div className='w-full md:w-auto p-5 border border-[#eaeaea] rounded-lg'>
+          <Avatar className='w-full h-full md:w-80 md:h-80 aspect-square'>
             <AvatarImage src={`${provider}${user.avatarPath}`} />
             <AvatarFallback>
               { user.realname.split(' ').map(x => x[0].toUpperCase()).join('') }
