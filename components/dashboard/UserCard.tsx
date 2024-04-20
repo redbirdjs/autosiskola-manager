@@ -24,7 +24,7 @@ export default function UserCard({ loggedUser, user, provider, rank }: { loggedU
 
   const imageSrc = `${provider}${user.path}`;
   return (
-    <div className='flex flex-row items-center gap-5 border border-[#eaeaea] rounded-lg mb-3 p-5 hover:bg-gray-100 hover:border-gray-300 transition-colors'>
+    <div className='min-w-[500px] flex flex-row items-center gap-5 border border-[#eaeaea] rounded-lg mb-3 p-5 hover:bg-gray-100 hover:border-gray-300 transition-colors'>
       <Avatar className='border border-gray-300'>
         <AvatarImage src={imageSrc} />
         <AvatarFallback>{ user.realname.split(' ').map(x => x[0]).join('') }</AvatarFallback>
