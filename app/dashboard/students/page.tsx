@@ -17,7 +17,7 @@ export default async function StudentsPage({ searchParams }: { searchParams: { q
   const searchResults = await getFilteredUsers({ query, page, rankType: 'student' });
 
   return (
-    <div>
+    <div className='overflow-x-scroll pb-10'>
       {
         searchResults.users.length != 0 ? searchResults.users.map((user) => (
           <UserCard key={user.username} loggedUser={loggedUser.username} user={user} provider={provider} rank={loggedUser.rank} />

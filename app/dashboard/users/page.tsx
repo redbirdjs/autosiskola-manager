@@ -17,7 +17,7 @@ export default async function UsersPage({ searchParams }: { searchParams?: { que
   const searchResults = await getUsers({ query, page });
 
   return (
-    <div>
+    <div className='overflow-x-scroll pb-10'>
       {
         searchResults.users.length != 0 ? searchResults.users.map((user) => (
           <UserCard key={user.username} loggedUser={loggedUser.username} user={user} provider={provider} rank={loggedUser.rank} />
@@ -33,7 +33,7 @@ export default async function UsersPage({ searchParams }: { searchParams?: { que
           </div>
         )
       }
-      <DynamicPagination currentPage={page} pages={searchResults.pages}  />
+      <DynamicPagination currentPage={page} pages={searchResults.pages} />
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default async function VehiclesPage({ searchParams }: { searchParams: { q
   const provider = getImageProvider();
 
   return (
-    <div>
+    <div className='overflow-x-scroll'>
       {
         searchResults.vehicles.length != 0 ? searchResults.vehicles.map(vehicle => (
           <VehicleCard key={vehicle.plate} vehicle={vehicle} categories={categories} provider={provider} />
