@@ -53,4 +53,4 @@ git clone https://github.com/redbirdjs/autosiskola-manager.git
 
 4. Ha véget ért a telepítés létrejött a három container és már használható is az applikáció.
 
-**Az applikáció a http://localhost:3000 linken érhető el.**
+**A futó applikáció a http://localhost:3000 linken érhető el.**
