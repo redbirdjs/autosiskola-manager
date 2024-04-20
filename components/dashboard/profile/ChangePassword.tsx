@@ -53,7 +53,7 @@ export default function ChangePasswordForm({ userId }: { userId: number }) {
   return (
     <Dialog open={dialogOpen} onOpenChange={closeDialog}>
       <DialogTrigger asChild>
-        <Button onClick={() => setDialogOpen(true)}>Change Password</Button>
+        <Button onClick={() => setDialogOpen(true)} className='w-full md:w-max'>Change Password</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

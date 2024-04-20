@@ -46,7 +46,7 @@ export default function UploadAvatarForm({ userId }: { userId: number }) {
   return (
     <Dialog open={dialogOpen} onOpenChange={closeModal}>
       <DialogTrigger asChild>
-        <Button onClick={() => setDialogOpen(true)}>Upload Avatar</Button>
+        <Button onClick={() => setDialogOpen(true)} className='w-full md:w-max'>Upload Avatar</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

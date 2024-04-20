@@ -38,7 +38,7 @@ export default function ModifyEmailForm({ userId }: { userId: number }) {
   return (
     <Dialog open={dialogOpen} onOpenChange={closeDialog}>
       <DialogTrigger asChild>
-        <Button onClick={() => setDialogOpen(true)}>Modify Email</Button>
+        <Button onClick={() => setDialogOpen(true)} className='w-full md:w-max'>Modify Email</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

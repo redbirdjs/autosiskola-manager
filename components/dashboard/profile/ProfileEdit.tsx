@@ -11,7 +11,7 @@ export default async function ProfileEdit() {
     <div>
       <h1 className='text-xl font-bold'>Edit Profile</h1>
       <hr className='mb-3' />
-      <div className='flex gap-2'>
+      <div className='flex gap-2 flex-wrap'>
         <UploadAvatarForm userId={user?.id || 0} />
         <ModifyEmailForm userId={user?.id || 0} />
         <ChangePasswordForm userId={user?.id || 0} />
