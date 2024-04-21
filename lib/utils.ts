@@ -5,16 +5,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function randomString(length: number, filter: RegExp = /[A-Za-z0-9]/g) {
+/**
+ * Random string generátor.
+ * @param length A string hossza
+ * @param exclude Regex ami azokat a karaktereket tartalmazza, amit nem szeretnénk a stringbe beletenni.
+ * @returns Random string a regex alapján.
+ */
+export function randomString(length: number, exclude: RegExp = /[^A-Za-z0-9]/g) {
   let str = '';
-  let chars = 'aA0bB1cC2dD3eE4fF5gG6hH7iI8jJ9kKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ';
+  let chars = 'aA0bB1cC2dD3eE4fF5gG6hH7iI8jJ9kKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ'.replaceAll(exclude, '');
 
   for (let i = 0; i < length; i++) {
-    if (chars.match(filter)) {
       str += chars.charAt(Math.floor(Math.random() * chars.length));
-    } else {
-      i--;
-    }
   }
 
   return str;
