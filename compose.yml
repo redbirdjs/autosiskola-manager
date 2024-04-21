@@ -15,7 +15,7 @@ services:
     volumes:
       - image-data:/usr/src/app/public
     ports:
-      - 3001:3000
+      - 3000:3000
   
   dsm-db:
     container_name: dsm-db
@@ -29,6 +29,7 @@ services:
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/db-password
     ports:
+      # port eltávolítható, csak tesztelési céllal van hozzáadva
       - 40000:5432
 
   dsm-image-host:
