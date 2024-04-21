@@ -34,14 +34,23 @@ export async function register(prevState: RegisterState, formData: FormData) {
   if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
 
   const { username, realname, email, passport, pass1, pass2 } = validatedFields.data;
-  if (pass1 !== pass2) return { message: { title: '' }, errors: { pass2: ['The two password doesn\'t match!'] } }
-
-  const salt = await bcrypt.genSalt();
-  const hash = await bcrypt.hash(pass1, salt);
-
-  const emailVerifyToken = randomString(64);
+  if (pass1 !== pass2) return { message: { title: '' }, errors: { pass2: ['The two password doesn\'t match!'] } };
 
   try {
+    const checkUsername = await prisma.user.findUnique({ where: { username } });
+    if (checkUsername) return { message: { title: '' }, errors: { username: ['Username already in use!'] } };
+    
+    const checkEmail = await prisma.user.findUnique({ where: { email } });
+    if (checkEmail) return { message: { title: '' }, errors: { email: ['Email already registered!'] } };
+
+    const checkPassport = await prisma.user.findUnique({ where: { passportNumber: passport } });
+    if (checkPassport) return { message: { title: '' }, errors: { passport: ['Passport already in use!'] } };
+
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(pass1, salt);
+
+    const emailVerifyToken = randomString(64);
+    
     await prisma.user.create({ data: { username, realName: realname, email, passportNumber: passport.padStart(9, '-'), password: hash, verifyToken: emailVerifyToken } });
 
     await resend.emails.send({
@@ -95,7 +104,7 @@ export async function login(prevState: LoginState, formData: FormData) {
     // resend.emails.send({
     //   from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
     //   to: user.email,
-    //   subject: 'New login from different location',
+    //   subject: 'New login detected from a different location',
     //   react: NewLoginEmail({ address, userAgent }),
     // });
 
