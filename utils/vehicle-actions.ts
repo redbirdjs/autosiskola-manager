@@ -108,7 +108,7 @@ export async function newVehicle(prevState: VehicleState, formData: FormData) {
 
     // oldal adatainak frissítése
     revalidatePath('/dashboard/vehicles');
-    return { message: { title: 'Success', description: 'Vehicle successfully created!' } };
+    return { message: { title: 'Success!', description: 'Vehicle successfully created!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to create vehicle.');
@@ -169,7 +169,7 @@ export async function modifyVehicle(prevState: VehicleState, formData: FormData)
     });
 
     revalidatePath('/dashboard/vehicles');
-    return { message: { title: 'Success', description: 'Vehicle successfully updated.' } };
+    return { message: { title: 'Success!', description: 'Vehicle successfully updated.' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to modify the vehicle data.');
@@ -187,7 +187,7 @@ export async function deleteVehicle(plate: string) {
     await prisma.vehicle.delete({ where: { plate } });
     revalidatePath('/dashboard/vehicles');
 
-    return { message: { title: 'Success', description: 'Vehicle successfully deleted!' } };
+    return { message: { title: 'Success!', description: 'Vehicle successfully deleted!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to delete the vehicle.');

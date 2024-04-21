@@ -72,7 +72,7 @@ export async function createPayment(prevState: PaymentState, formData: FormData)
     });
 
     revalidatePath('/dashboard/payments');
-    return { message: { title: 'Success', description: 'Payment successfully created.' } };
+    return { message: { title: 'Success!', description: 'Payment successfully created.' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to create a new payment.');
@@ -88,7 +88,7 @@ export async function setPaymentState(paymentId: number, newState: number) {
     });
 
     revalidatePath('/dashboard/payments');
-    return { message: { title: 'Success', description: 'Payment state successfully updated!' } };
+    return { message: { title: 'Success!', description: 'Payment state successfully updated!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to set the state of the payment.');
@@ -101,7 +101,7 @@ export async function deletePayment(paymentId: number) {
     await prisma.payment.delete({ where: { id: paymentId } });
 
     revalidatePath('/dashboard/payments');
-    return { message: { title: 'Success', description: 'Payment successfully deleted!' } };
+    return { message: { title: 'Success!', description: 'Payment successfully deleted!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to delete the payment.');

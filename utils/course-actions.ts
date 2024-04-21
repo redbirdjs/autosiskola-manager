@@ -110,7 +110,7 @@ export async function createExam(prevState: ExamState, formData: FormData) {
     });
 
     revalidatePath('/dashboard/exams');
-    return { message: { title: 'Success', description: 'Exam successfully created!' } };
+    return { message: { title: 'Success!', description: 'Exam successfully created!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to add new exam.');
@@ -125,7 +125,7 @@ export async function setExamState({ examId, state }: { examId: number, state: n
     });
 
     revalidatePath('/dashboard/exams');
-    return { message: { title: 'Success', description: 'Exam state has been successfully updated!' } };
+    return { message: { title: 'Success!', description: 'Exam state has been successfully updated!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to set exam state.');
@@ -138,7 +138,7 @@ export async function deleteExam({ examId }: { examId: number }) {
     await prisma.exam.delete({ where: { id: examId } });
 
     revalidatePath('/dashboard/exams');
-    return { message: { title: 'Success', description: 'Exam has been successfully deleted!' } };
+    return { message: { title: 'Success!', description: 'Exam has been successfully deleted!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to delete exam.');
@@ -181,7 +181,7 @@ export async function enrollCourse(prevState: CourseState, formData: FormData) {
       data: { categoryId, studentId: student, teacherId: teacher, vehicleId: vehicle }
     });
     
-    return { message: { title: 'Success', description: 'Successfully enrolled to course!' } };
+    return { message: { title: 'Success!', description: 'Successfully enrolled to course!' } };
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to enroll to course.');
