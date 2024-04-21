@@ -39,8 +39,6 @@ services:
       context: .
       dockerfile: provider.Dockerfile
     volumes:
-      #- ./nginx/conf:/etc/nginx/conf.d
-      #- ./nginx/html:/www
       - image-data:/images
     ports:
       - 8080:80
