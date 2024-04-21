@@ -17,7 +17,7 @@ export default function NewExamForm({ students }: { students: StudentFormData[] 
 
   return (
     <form action={dispatch}>
-      <label htmlFor='course'>Course <RequiredStar /></label>
+      <label htmlFor='course'>Student <RequiredStar /></label>
       <div className='mt-1 mb-3'>
         <Select name='course'>
           <SelectTrigger>
