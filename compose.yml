@@ -7,6 +7,7 @@ services:
       dockerfile: webapp.Dockerfile
     depends_on:
       - dsm-db
+      - dsm-image-host
     env_file:
       - prod.env
     environment:
