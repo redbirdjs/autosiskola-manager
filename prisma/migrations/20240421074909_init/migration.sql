@@ -7,6 +7,7 @@ CREATE TABLE "users" (
     "passportNumber" VARCHAR(9) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
     "verifyToken" VARCHAR(64),
+    "passwordToken" VARCHAR(256),
     "avatarPath" VARCHAR(255) NOT NULL DEFAULT '/profiles/default.png',
     "rankId" INTEGER NOT NULL DEFAULT 1,
 
@@ -104,6 +105,9 @@ CREATE UNIQUE INDEX "users_passportNumber_key" ON "users"("passportNumber");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_verifyToken_key" ON "users"("verifyToken");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_passwordToken_key" ON "users"("passwordToken");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "vehicles_plate_key" ON "vehicles"("plate");
