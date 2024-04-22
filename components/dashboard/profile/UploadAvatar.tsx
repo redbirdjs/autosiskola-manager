@@ -31,6 +31,15 @@ export default function UploadAvatarForm({ userId }: { userId: number }) {
   }
 
   useEffect(() => {
+    if (state.errors?.avatar) {
+      toast({
+        title: 'Error!',
+        description: state.errors.avatar,
+        variant: 'destructive',
+        duration: 2000
+      });
+      setDialogOpen(true);
+    }
     if (state.message.title.length > 0) {
       toast({
         title: state.message.title,
@@ -58,7 +67,7 @@ export default function UploadAvatarForm({ userId }: { userId: number }) {
           {
             image && (
               <Avatar className='mx-auto my-5 w-60 h-60'>
-                <AvatarImage src={URL.createObjectURL(image)} />
+                <AvatarImage src={URL.createObjectURL(image)} className='object-cover' />
                 <AvatarFallback>Avatar Preview</AvatarFallback>
               </Avatar>
             )

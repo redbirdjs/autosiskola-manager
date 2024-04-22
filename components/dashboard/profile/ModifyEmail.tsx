@@ -22,6 +22,15 @@ export default function ModifyEmailForm({ userId }: { userId: number }) {
   }
 
   useEffect(() => {
+    if (state.errors?.email) {
+      toast({
+        title: 'Error!',
+        description: state.errors.email[0],
+        variant: 'destructive',
+        duration: 2000
+      });
+      setDialogOpen(true);
+    }
     if (state.message.title && state.message.title.length > 0) {
       toast({
         title: state.message.title,
@@ -47,7 +56,7 @@ export default function ModifyEmailForm({ userId }: { userId: number }) {
         <form action={dispatch}>
           <Input id='userId' name='userId' value={userId} className='hidden' readOnly />
           <label htmlFor='avatar'>New Email</label>
-          <Input type='email' id='email' name='email' className='mt-1 mb-3' />
+          <Input type='text' id='email' name='email' className='mt-1 mb-3' />
           <DialogFooter>
             <DialogClose asChild>
               <Button type='submit'>Modify Email</Button>
