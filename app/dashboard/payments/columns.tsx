@@ -121,7 +121,7 @@ export const columns: ColumnDef<Payment>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/students/${username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Student</Link>
+              <Link href={`/dashboard/profile/${username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Student</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <SetPaymentPaid paymentId={payment.id} state={payment.state} />

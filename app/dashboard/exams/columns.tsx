@@ -102,7 +102,7 @@ export const columns: ColumnDef<Exam>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/students/${username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Student</Link>
+              <Link href={`/dashboard/profile/${username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Student</Link>
             </DropdownMenuItem>
             <SetExamPassed examId={examId} state={exam.state} />
             <SetExamFailed examId={examId} state={exam.state} />
