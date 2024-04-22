@@ -30,6 +30,7 @@ export default function JoinCourseForm({ category, studentId, teachers, vehicles
                 <SelectItem key={teacher.id} value={teacher.id.toString()}>{teacher.realName}</SelectItem>
               ))
             }
+            { teachers.length == 0 && <SelectItem value='-1' disabled>No teachers found.</SelectItem> }
           </SelectContent>
         </Select>
       </div>
@@ -45,6 +46,7 @@ export default function JoinCourseForm({ category, studentId, teachers, vehicles
                 <SelectItem key={vehicle.id} value={vehicle.id.toString()}>{vehicle.brand} {vehicle.type} - {vehicle.driveType}</SelectItem>
               ))
             }
+            { vehicles.length == 0 && <SelectItem value='-1' disabled>No vehicles found.</SelectItem> }
           </SelectContent>
         </Select>
       </div>

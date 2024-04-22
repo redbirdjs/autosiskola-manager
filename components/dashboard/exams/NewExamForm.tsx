@@ -29,6 +29,7 @@ export default function NewExamForm({ students }: { students: StudentFormData[] 
                 <SelectItem key={course.id} value={course.id.toString()}>[{ course.category }] #{ course.id } - { course.student.realname }</SelectItem>
               ))
             }
+            { students.length == 0 && <SelectItem value='-1' disabled>No students found.</SelectItem> }
           </SelectContent>
         </Select>
       </div>
