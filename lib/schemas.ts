@@ -36,7 +36,7 @@ export const VehicleSchema = z.object({
   brand: z.string().min(1, 'Brand field is required!'),
   type: z.string().min(1, 'Type field is required!'),
   plate: z.string().min(1, 'Plate field is required!'),
-  category: z.number({ invalid_type_error: 'Category must be a number' }),
+  category: z.number({ invalid_type_error: 'Category must be a number!' }),
   color: z.string().min(1, 'Color field is required!'),
   drivetype: z.string().min(1, 'Drive type field is required!'),
   image: z.instanceof(File).refine((file) => file.size <= 5249494, 'Max image size is 5MB.').optional()
@@ -64,19 +64,19 @@ export const CourseSchema = z.object({
 
 export const AvatarSchema = z.object({
   userId: z.number({ invalid_type_error: 'User ID must be a number!' }),
-  avatar: z.instanceof(File).refine((file) => file.size <= 5249494, 'Max image size is 5MB.')
+  avatar: z.instanceof(File).refine((file) => file.size > 0, 'You didn\'t upload a file!').refine((file) => file.size <= 5249494, 'Max image size is 5MB.')
 });
 
 export const EmailSchema = z.object({
   userId: z.number({ invalid_type_error: 'User ID must be a number!' }),
-  email: z.string().email().min(1, 'This field is required!')
+  email: z.string().min(1, 'This field is required!').email('Invalid email address format!')
 });
 
 export const ChangePasswordSchema = z.object({
   userId: z.number({ invalid_type_error: 'User ID must be a number!' }),
-  oldpass: z.string().min(1, 'This field is required!'),
-  newpass1: z.string().min(1, 'This field is required!'),
-  newpass2: z.string().min(1, 'This field is required!')
+  oldpass: z.string().min(1, 'Old password field is required!'),
+  newpass1: z.string().min(1, 'New password field is required!'),
+  newpass2: z.string().min(1, 'Repeat password field is required!')
 });
 
 export const newEventSchema = z.object({
