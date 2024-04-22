@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma'
 
 import { revalidatePath } from 'next/cache'
 import path from 'path'
+import { existsSync } from 'fs'
 import { writeFile, unlink } from 'fs/promises'
 
 import { VehicleState } from '@/lib/definitions';
@@ -158,9 +159,11 @@ export async function modifyVehicle(prevState: VehicleState, formData: FormData)
   try {
     // autó kép kikeresése
     const imgSrc = await prisma.vehicle.findUnique({ select: { imageUrl: true }, where: { plate: initPlate } });
-    if (imgSrc && !imgSrc.imageUrl.endsWith('fallback.png')) {
-      // ha cserlétük a képet, akkor a régi törlése
-      await unlink(`${path.join(process.cwd())}/public${imgSrc.imageUrl}`);
+
+    if (image && image.size > 0 && imgSrc && !imgSrc.imageUrl.endsWith('fallback.png')) {
+      // ha cserlétük a képet, akkor a régi törlése ha létezik
+      const exists = existsSync(`${path.join(process.cwd())}/public${imgSrc.imageUrl}`);
+      exists && await unlink(`${path.join(process.cwd())}/public${imgSrc.imageUrl}`);
     }
     // autó adatainak módosítása
     await prisma.vehicle.update({
