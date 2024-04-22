@@ -120,7 +120,8 @@ export async function changePassword(prevState: PasswordState, formData: FormDat
     if (!user) return { message: { title: '' }, errors: { oldpass: ['User doesn\'t exists.'] } };
 
     const res = await bcrypt.compare(oldpass, user.password);
-    if (!res) return { message: { title: '' }, errors: { oldpass: ['The password does\'t match.'] } };
+    if (!res) return { message: { title: '' }, errors: { oldpass: ['The old password didn\'t match.'] } };
+    if (oldpass == newpass1) return { message: { title: '' }, errors: { oldpass: ['You can\'t use your old password.'] } };
     if (newpass1 != newpass2) return { message: { title: '' }, errors: { newpass1: ['The two passwords doesn\'t match.'] } };
 
     const salt = await bcrypt.genSalt();
