@@ -2,20 +2,15 @@
 
 import Link from 'next/link'
 import { clsx } from 'clsx'
-import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 
 import { login } from '@/utils/user-actions'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-export default function LoginForm({ setMsg }: { setMsg: Function }) {
+export default function LoginForm() {
   const initialState = { message: { title: '' }, errors: {} };
   const [state, dispatch] = useFormState(login, initialState);
-
-  useEffect(() => {
-    setMsg(state.message);
-  }, [state, setMsg]);
 
   return (
     <form action={dispatch} className='flex flex-col z-10'>
