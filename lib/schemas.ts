@@ -26,7 +26,7 @@ export const ChangeForgottenPasswordSchema = z.object({
 
 export const UserSchema = z.object({
   username: z.string().min(1, 'Username field is required!'),
-  realname: z.string().min(1, 'Real name field is required!'),
+  realname: z.string().min(1, 'Full name field is required!'),
   email: z.string().min(1, 'Email field is required!').email('Invalid email format!'),
   passport: z.string().min(1, 'Passport field is required!').regex(/^[A-Z0-9]{8,9}$/, 'Invalid passport format!'),
   rankId: z.number({ invalid_type_error: 'Rank ID must be a number!' })

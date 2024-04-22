@@ -20,7 +20,7 @@ export default function NewUserForm({ ranks }: { ranks: { id: number, name: stri
     <form action={dispatch}>
       <label htmlFor='username'>Username <RequiredStar /></label>
       <Input id='username' name='username' className='mt-1 mb-3' />
-      <label htmlFor='realname'>Real Name <RequiredStar /></label>
+      <label htmlFor='realname'>Full Name <RequiredStar /></label>
       <Input id='realname' name='realname' className='mt-1 mb-3' />
       <label htmlFor='email'>Email <RequiredStar /></label>
       <Input id='email' name='email' type='email' className='mt-1 mb-3' />
