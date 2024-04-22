@@ -180,7 +180,8 @@ export async function enrollCourse(prevState: CourseState, formData: FormData) {
     await prisma.course.create({
       data: { categoryId, studentId: student, teacherId: teacher, vehicleId: vehicle }
     });
-    
+
+    revalidatePath('/dashboard/courses');
     return { message: { title: 'Success!', description: 'Successfully enrolled to course!' } };
   } catch (e) {
     if (e) console.error(e);
