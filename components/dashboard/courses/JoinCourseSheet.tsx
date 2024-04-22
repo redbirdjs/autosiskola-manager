@@ -13,9 +13,7 @@ export default async function JoinCourseSheet({ category }: { category: Category
   const studentData = await getUserData();
   const isEnrolled = await checkUserEnrollment(studentData!.id);
 
-  if (isEnrolled) {
-    redirect('/dashboard');
-  }
+  if (isEnrolled) redirect('/dashboard');
 
   const teachers = await getTeachers();
   const vehicles = await getVehicleByCategory(category.id);
