@@ -27,7 +27,13 @@ export async function getStudentData({ teacher }: { teacher: number | undefined 
   }
 
   try {
-    const courses = await prisma.course.findMany({ include: { student: true, category: true }, where: { teacherId: teacher } });
+    const user = await prisma.user.findUnique({ include: { rank: true }, where: { id: teacher } });
+    let courses;
+    if (user?.rank.name.toLowerCase() == 'admin') {
+      courses = await prisma.course.findMany({ include: { student: true, category: true } });
+    } else {
+      courses = await prisma.course.findMany({ include: { student: true, category: true }, where: { teacherId: teacher } });
+    }
     const data = courses.map(course => {
       return {
         id: course.id,
