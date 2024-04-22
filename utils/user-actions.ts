@@ -60,7 +60,7 @@ export async function register(prevState: RegisterState, formData: FormData) {
       react: RegEmail({ username, realname, passport, url: `${process.env.SITE_URL || 'http://localhost:3000'}/verify-email?token=${emailVerifyToken}` }),
     });
 
-    return { message: { title: 'Registration successful!', description: 'You can now login. We have also sent you a verification email.' } }
+    return { message: { title: 'Registration successful!', description: 'You can now login. We have also sent you a verification email. You will be redirected to the login page in 5 seconds...' } }
   } catch(e) {
     if (e) console.error(e);
     return { message: { title: 'Register failed due to an error.' } }
@@ -110,7 +110,7 @@ export async function login(prevState: LoginState, formData: FormData) {
 
     cookies().set('refreshToken', refreshToken, { secure: true, httpOnly: true, sameSite: 'strict', maxAge: moment.duration({ days: parseInt(process.env.REF_EXPIRE || '1') }).asSeconds() });
 
-    return { message: { title: 'Successfully logged in!', description: 'You will be redirected to the dashboard in 3 seconds...' } };
+    return { message: { title: 'Successfully logged in!', description: '' } };
   } catch (e) {
     if (e) console.error(e);
     return { message: { title: 'Login failed due to an error.' } }
