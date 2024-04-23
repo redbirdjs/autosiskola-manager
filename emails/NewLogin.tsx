@@ -15,7 +15,7 @@ export default function Email({ address, userAgent }: NewLoginProps) {
             <Heading className='text-center text-black'>New Login Detected</Heading>
             <Hr />
             <Section className='my-10'>
-              <Img src={`${process.env.SITE_URL || 'http://localhost:3000'}/vercel.svg`} height={50} alt='Logo of the Driving School Manager' className='my-0 mx-auto text-center' />
+              <Img src={`https://sbcraft.hu/preview/logo.svg`} height={100} alt='Logo of the Driving School Manager' className='my-0 mx-auto text-center' />
             </Section>
             <Section>
               Your security is very important to us. This account was recently accessed from this IP address:

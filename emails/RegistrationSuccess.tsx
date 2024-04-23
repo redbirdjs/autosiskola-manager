@@ -15,7 +15,7 @@ export default function Email({ username, realname, passport, url }: Registratio
             <Heading className='text-center text-black'>Welcome to DSM!</Heading>
             <Hr />
             <Section className='my-10'>
-              <Img src={`http://localhost:3000/vercel.svg`} height={50} alt='Logo of the Driving School' className='my-0 mx-auto text-center' />
+              <Img src={`https://sbcraft.hu/preview/logo.svg`} height={100} alt='Logo of the Driving School' className='my-0 mx-auto text-center' />
             </Section>
             <Section>
               <Text className='text-black'>You have successfully registered an account!</Text>
