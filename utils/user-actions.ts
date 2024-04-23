@@ -97,16 +97,15 @@ export async function login(prevState: LoginState, formData: FormData) {
       });
     }
 
-    //! Uncomment when making production build!
-    // const address = headerList.get('x-forwarded-for') || '0.0.0.0';
-    // const userAgent = headerList.get('user-agent') || 'No-UserAgent';
-
-    // resend.emails.send({
-    //   from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
-    //   to: user.email,
-    //   subject: 'New login detected from a different location',
-    //   react: NewLoginEmail({ address, userAgent }),
-    // });
+    const address = headerList.get('x-forwarded-for') || '0.0.0.0';
+    const userAgent = headerList.get('user-agent') || 'No-UserAgent';
+    
+    resend.emails.send({
+      from: 'DSM - No Reply <noreply@dsm.sbcraft.hu>',
+      to: user.email,
+      subject: 'New login detected from a different location',
+      react: NewLoginEmail({ address, userAgent }),
+    });
 
     cookies().set('refreshToken', refreshToken, { secure: true, httpOnly: true, sameSite: 'strict', maxAge: moment.duration({ days: parseInt(process.env.REF_EXPIRE || '1') }).asSeconds() });
 
