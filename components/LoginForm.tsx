@@ -15,7 +15,7 @@ export default function LoginForm() {
   return (
     <form action={dispatch} className='flex flex-col z-10'>
       <label htmlFor='email' className='mb-1'>Email address</label>
-      <Input name='email' type='email' className={clsx({ 'border-red-600': state.errors?.email, 'mb-3': !state.errors?.email })} />
+      <Input id='email' name='email' type='email' className={clsx({ 'border-red-600': state.errors?.email, 'mb-3': !state.errors?.email })} />
       {
         state.errors?.email && (
           <div aria-live='polite' aria-atomic>
@@ -24,7 +24,7 @@ export default function LoginForm() {
         )
       }
       <label htmlFor='password' className='mb-1'>Password</label>
-      <Input name='password' type='password' className={clsx({ 'border-red-600': state.errors?.password }, 'mb-1')} />
+      <Input id='password' name='password' type='password' className={clsx({ 'border-red-600': state.errors?.password }, 'mb-1')} />
       {
         state.errors?.password && (
           <div aria-live='polite' aria-atomic>

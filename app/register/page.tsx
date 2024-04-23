@@ -32,7 +32,7 @@ export default function RegisterPage() {
   }, [message, router]);
 
   return (
-    <main className='flex flex-wrap min-h-screen flex-row justify-between px-20 py-10 bg-register bg-cover'>
+    <main className='flex flex-wrap min-h-screen flex-row gap-10 justify-center lg:justify-between px-20 py-10 bg-register bg-cover'>
       <Image src={RegisterImage} alt='logo' height={600} placeholder='blur' className='absolute top-1/2 -translate-y-1/2 left-40 rounded-lg' />
       {
         message?.title && (
@@ -48,7 +48,7 @@ export default function RegisterPage() {
         <div className='h-[60px] border border-black'></div>
         <h1 className='text-xl font-bold'>Driving School Manager</h1>
       </div>
-      <div className='self-center px-20 py-20 bg-white/80 backdrop-blur-sm rounded-lg lg:mr-40'>
+      <div className='self-center p-10 lg:p-20 bg-white/80 backdrop-blur-sm rounded-lg lg:mr-40'>
         <h1 className='text-center text-4xl'>Register</h1>
         <Separator className='my-5' />
         <RegisterForm setMsg={setMsg} />
