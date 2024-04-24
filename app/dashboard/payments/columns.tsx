@@ -105,7 +105,8 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => {
       const payment = row.original;
       const username = payment.student.split('|')[1];
-
+      
+      if (payment.rank && payment.rank == 'student') return;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

@@ -87,6 +87,7 @@ export const columns: ColumnDef<Exam>[] = [
       const examId = exam.id;
       const username = exam.student.split('|')[1];
 
+      if (exam.rank && exam.rank == 'student') return;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
