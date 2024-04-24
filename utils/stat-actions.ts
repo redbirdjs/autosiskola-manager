@@ -22,6 +22,9 @@ export async function getAdminStatistics() {
     const overDuePayments = await prisma.payment.count({ where: { AND: [{ state: 0 }, { due: { lt: date } }] } });
     // adott kategóriába jelentkezett tanulók száma
     const categoryResults = await prisma.course.groupBy({ _count: { id: true }, by: ['categoryId'], orderBy: { categoryId: 'asc' } });
+    const catResultsData = [0, 0, 0, 0];
+
+    categoryResults.forEach(res => catResultsData[res.categoryId-1] = res._count.id);
 
     return {
       userCount,
@@ -45,12 +48,7 @@ export async function getAdminStatistics() {
         labels: ['A', 'B', 'C', 'D'],
         datasets: [
           {
-            data: [
-              categoryResults[0] ? categoryResults[0]._count.id : 0,
-              categoryResults[1] ? categoryResults[1]._count.id : 0,
-              categoryResults[2] ? categoryResults[2]._count.id : 0,
-              categoryResults[3] ? categoryResults[3]._count.id : 0
-            ]
+            data: catResultsData
           }
         ]
       }
