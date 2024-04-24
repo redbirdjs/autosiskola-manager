@@ -83,6 +83,7 @@ export async function getExams(userId: number, rank: string) {
       const student = exam.course.student;
       return {
         id: exam.id,
+        rank: rank.toLowerCase(),
         date: exam.date,
         category: exam.course.category.category,
         student: `${student.realName}|${student.username}`,

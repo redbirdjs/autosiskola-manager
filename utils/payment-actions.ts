@@ -36,6 +36,7 @@ export async function getPayments(userId: number, rank: string) {
     const data = payments.map(payment => {
       return {
         id: payment.id,
+        rank: rank.toLowerCase(),
         description: payment.description,
         student: `${payment.course.student.realName}|${payment.course.student.username}`,
         issuer: payment.course.teacher.realName,
