@@ -52,7 +52,7 @@ export default function RegisterPage() {
         <h1 className='text-center text-4xl'>Register</h1>
         <Separator className='my-5' />
         <RegisterForm setMsg={setMsg} />
-        <p className='mb-3'>Already has an account? <Link href={'/login'} className='underline'>Click here to login</Link></p>
+        <p className='mb-3'>Already have an account? <Link href={'/login'} className='underline'>Click here to login</Link></p>
         <p><Required />: These fields are required.</p>
       </div>
     </main>
