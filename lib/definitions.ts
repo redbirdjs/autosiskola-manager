@@ -196,6 +196,7 @@ export interface CategoryName {
 
 export interface Payment {
   id: number;
+  rank?: string;
   description: string;
   student: string;
   issuer: string;
@@ -207,6 +208,7 @@ export interface Payment {
 
 export interface Exam {
   id: number;
+  rank?: string;
   date: Date;
   category: string;
   student: string;
