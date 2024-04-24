@@ -17,6 +17,8 @@ export async function getAdminStatistics() {
 
     // grafikonos statisztikák
     const examResults = await prisma.exam.groupBy({ _count: { state: true }, where: { NOT: { state: 0 } }, by: ['state'], orderBy: { state: 'asc' } }); // vizsga eredmények száma
+    const examResultsData = [0, 0];
+    examResults.forEach(res => examResultsData[res.state-1] = res._count.state);
     // fizetések száma típus szerint (folyamatban, fizetett, nem fizetett)
     const paymentResults = await prisma.payment.groupBy({ _count: { state: true }, where: { OR: [{ state: 1 }, { due: { gte: date } }] },  by: ['state'], orderBy: { state: 'asc' } });
     const overDuePayments = await prisma.payment.count({ where: { AND: [{ state: 0 }, { due: { lt: date } }] } });
@@ -35,7 +37,7 @@ export async function getAdminStatistics() {
       fpExams: {
         labels: ['Passed', 'Failed'],
         datasets: [
-          { data: examResults.map(r => r._count.state), backgroundColor: ['#505050', '#ababab'] }
+          { data: examResultsData, backgroundColor: ['#15803d', '#b91c1c'] }
         ]
       },
       pResults: {
