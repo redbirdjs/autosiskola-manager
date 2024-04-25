@@ -11,11 +11,7 @@ export default async function Navigation() {
   return (
     <nav className='p-5 w-2/12'>
       <NavButton className='max-lg:justify-center' href={'/dashboard'}><Home className='min-w-7 min-h-7' /> <span className='truncate max-lg:hidden'>Main Menu</span></NavButton>
-      { 
-        rank == 'student' && (
-          <NavButton className='max-lg:justify-center' href={'/dashboard/courses'}><BookMarked className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Courses</span></NavButton>
-        ) 
-      }
+      <NavButton className='max-lg:justify-center' href={'/dashboard/courses'}><BookMarked className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Courses</span></NavButton>
       {
         rank == 'admin' && (
           <NavButton className='max-lg:justify-center' href={'/dashboard/statistics'}><PieChart className='min-h-7 min-w-7' /> <span className='truncate max-lg:hidden'>Statistics</span></NavButton>
