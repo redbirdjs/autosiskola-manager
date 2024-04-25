@@ -106,6 +106,18 @@ export type CourseState = {
   }
 }
 
+export type CourseDataState = {
+  errors?: {
+    courseId?: string[]
+    theory?: string[]
+    practise?: string[]
+  }
+  message?: {
+    title?: string | undefined
+    description?: string
+  }
+}
+
 export type AvatarState = {
   errors?: {
     avatar?: string[]
