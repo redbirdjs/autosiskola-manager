@@ -3,8 +3,8 @@
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 
-import { ExamState, CourseState } from '@/lib/definitions'
-import { CourseSchema, ExamSchema } from '@/lib/schemas'
+import { ExamState, CourseState, CourseDataState } from '@/lib/definitions'
+import { CourseDataSchema, CourseSchema, ExamSchema } from '@/lib/schemas'
 
 // Kurzus backend funkciók
 
@@ -234,6 +234,31 @@ export async function getCourses(userId: number, rank: string) {
   } catch (e) {
     if (e) console.error(e);
     throw new Error('There was an error while trying to fetch course information.');
+  }
+}
+
+// Kurzus elméleti és gyakorlati százalékainak módosítása
+export async function modifyCourseData(prevState: CourseDataState, formData: FormData) {
+  const validatedFields = CourseDataSchema.safeParse({
+    courseId: parseInt(formData.get('courseId')?.toString() || ''),
+    theory: parseInt(formData.get('theory')?.toString() || ''),
+    practise: parseInt(formData.get('practise')?.toString() || '')
+  });
+
+  if (!validatedFields.success) return { message: { title: '' }, errors: validatedFields.error?.flatten().fieldErrors };
+
+  const { courseId, theory, practise } = validatedFields.data;
+
+  try {
+    await prisma.course.update({
+      data: { theory, practise }, where: { id: courseId }
+    });
+
+    revalidatePath('/dashboard/courses');
+    return { message: { title: 'Success!', description: 'Course data successfully modified!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to modify course data.');
   }
 }
 
