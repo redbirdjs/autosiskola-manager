@@ -30,9 +30,9 @@ export function SetCourseFinished({ state, courseId }: { state: boolean, courseI
   );
 }
 
-export function ModifyCourseData({ courseId }: { courseId: number }) {
+export function ModifyCourseData({ setOpen }: { setOpen: (state: boolean) => void }) {
   return (
-    <DropdownMenuItem className='flex gap-2'>
+    <DropdownMenuItem className='flex gap-2' onClick={() => setOpen(true)}>
       <FilePenLine className='h-5 w-5' /> Modify Course
     </DropdownMenuItem>
   );
