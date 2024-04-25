@@ -62,6 +62,12 @@ export const CourseSchema = z.object({
   vehicle: z.number({ invalid_type_error: 'You have to choose a vehicle!' })
 });
 
+export const CourseDataSchema = z.object({
+  courseId: z.number({ invalid_type_error: 'Course ID must be a number!' }),
+  theory: z.number({ invalid_type_error: 'Theory % must be a number!' }).min(0, '% can\'t be lower than 0!').max(100, '% can\'t be greater than 100!'),
+  practise: z.number({ invalid_type_error: 'Practise % must be a number!' }).min(0, '% can\'t be lower than 0!').max(100, '% can\'t be greater than 100!')
+})
+
 export const AvatarSchema = z.object({
   userId: z.number({ invalid_type_error: 'User ID must be a number!' }),
   avatar: z.instanceof(File).refine((file) => file.size > 0, 'You didn\'t upload a file!').refine((file) => file.size <= 5249494, 'Max image size is 5MB.')
