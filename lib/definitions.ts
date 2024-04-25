@@ -216,6 +216,22 @@ export interface Exam {
   state: number;
 }
 
+export interface UserNameData {
+  username: string;
+  realname: string;
+}
+
+export interface Course {
+  id: number;
+  theory: number;
+  practise: number;
+  finished: boolean;
+  category: string;
+  student: UserNameData;
+  teacher: UserNameData;
+  vehicle: string | null;
+}
+
 export interface StudentFormData {
   id: number;
   category: string;
