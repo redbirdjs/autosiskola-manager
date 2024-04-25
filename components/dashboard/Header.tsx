@@ -24,7 +24,7 @@ export default async function Header() {
             <Badge className='self-center'>{ user?.rank }</Badge>
           </div>
           <Avatar className='w-12 h-12'>
-            <AvatarImage src={imageSrc} />
+            <AvatarImage src={imageSrc} className='object-cover' />
             <AvatarFallback>{ user?.realname.split(' ').map(x => x[0]).join('') }</AvatarFallback>
           </Avatar>
         </div>
