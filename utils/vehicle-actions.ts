@@ -184,7 +184,8 @@ export async function deleteVehicle(plate: string) {
   try {
     const imgSrc = await prisma.vehicle.findUnique({ select: { imageUrl: true }, where: { plate } });
     if (imgSrc && !imgSrc.imageUrl.endsWith('fallback.png')) {
-      await unlink(`${path.join(process.cwd())}/public${imgSrc.imageUrl}`);
+      const exists = existsSync(`${path.join(process.cwd())}/public${imgSrc.imageUrl}`);
+      exists && await unlink(`${path.join(process.cwd())}/public${imgSrc.imageUrl}`);
     }
 
     await prisma.vehicle.delete({ where: { plate } });
