@@ -195,3 +195,73 @@ export async function enrollCourse(prevState: CourseState, formData: FormData) {
     throw new Error('There was an error while trying to enroll to course.');
   }
 }
+
+// Kurzus adatok lekérdezése oktatók és adminok számára
+export async function getCourses(userId: number, rank: string) {
+  let results;
+  try {
+    if (rank == 'admin') {
+      results = await prisma.course.findMany({
+        include: { category: true, student: true, teacher: true, vehicle: true }
+      });
+    } else {
+      results = await prisma.course.findMany({
+        include: { category: true, student: true, teacher: true, vehicle: true },
+        where: { teacherId: userId }
+      });
+    }
+
+    const courses = results.map(res => {
+      return {
+        id: res.id,
+        theory: res.theory,
+        practise: res.practise,
+        finished: res.finished,
+        category: res.category.category,
+        student: {
+          username: res.student.username,
+          realname: res.student.realName
+        },
+        teacher: {
+          username: res.teacher.username,
+          realname: res.teacher.realName
+        },
+        vehicle: res.vehicle ? `${res.vehicle.brand} ${res.vehicle.type}` : null
+      }
+    });
+
+    return courses;
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to fetch course information.');
+  }
+}
+
+// Kurzus állapot módosítása elvégzettre
+export async function setCourseToFinished(courseId: number) {
+  try {
+    await prisma.course.update({
+      data: { finished: true },
+      where: { id: courseId }
+    });
+
+    revalidatePath('/dashboard/courses');
+    return { message: { title: 'Success!', description: 'Course successfully set to finished!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to set course state.');
+  }
+}
+
+// Kurzus törlése
+export async function deleteCourse(courseId: number) {
+  try {
+    await prisma.course.delete({ where: { id: courseId } });
+
+    revalidatePath('/dashboard/courses');
+    return { message: { title: 'Success!', description: 'Course successfully deleted!' } };
+  } catch (e) {
+    if (e) console.error(e);
+    throw new Error('There was an error while trying to delete course.');
+  }
+}
