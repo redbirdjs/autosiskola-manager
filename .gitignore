@@ -43,3 +43,6 @@ next-env.d.ts
 
 # vehicle images
 public/vehicles/[^fallback.png]*
+
+# profile images
+public/profiles/p_*
