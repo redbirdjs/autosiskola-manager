@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useState } from 'react'
 import { MoreHorizontal, Clipboard, Check, Clock, UserRound, BookCheck } from 'lucide-react'
 import { ColumnDef } from '@tanstack/react-table'
 
@@ -9,6 +10,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuConte
 import { Course, UserNameData } from '@/lib/definitions'
 import { toast } from '@/components/ui/use-toast'
 import { SetCourseFinished, ModifyCourseData, DeleteCourse } from '@/components/dashboard/courses/CourseActions'
+import ModifyCourseDialog from '@/components/dashboard/courses/ModifyCourseDialog'
 
 const copyCourseId = (courseId: string) => {
   navigator.clipboard.writeText(courseId);
@@ -100,33 +102,38 @@ export const columns: ColumnDef<Course>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const course = row.original;
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [open, setOpen] = useState(false);
 
       return (
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger asChild>
-            <Button variant={'ghost'} className='h-8 w-8'>
-              <span className='sr-only'>Open Menu</span>
-              <MoreHorizontal className='min-w-5 min-h-5' />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className='flex gap-2' onClick={() => copyCourseId(course.id.toString())}>
-              <Clipboard className='h-5 w-5' /> Copy Course ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href={`/dashboard/profile/${course.student.username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Student</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href={`/dashboard/profile/${course.teacher.username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Teacher</Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <SetCourseFinished state={course.finished} courseId={course.id} />
-            <ModifyCourseData courseId={course.id} />
-            <DeleteCourse courseId={course.id} />
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant={'ghost'} className='h-8 w-8'>
+                <span className='sr-only'>Open Menu</span>
+                <MoreHorizontal className='min-w-5 min-h-5' />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem className='flex gap-2' onClick={() => copyCourseId(course.id.toString())}>
+                <Clipboard className='h-5 w-5' /> Copy Course ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href={`/dashboard/profile/${course.student.username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Student</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={`/dashboard/profile/${course.teacher.username}`} className='flex gap-2'><UserRound className='h-5 w-5' /> Go to Teacher</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <SetCourseFinished state={course.finished} courseId={course.id} />
+              <ModifyCourseData setOpen={setOpen} />
+              <DeleteCourse courseId={course.id} />
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <ModifyCourseDialog courseId={course.id} open={open} setOpen={setOpen} />
+        </>
       )
     }
   }
