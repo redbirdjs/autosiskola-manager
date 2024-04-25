@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { MoreHorizontal, Clock, Check, Clipboard, CircleAlert, Trash2 as Trash, UserRound } from 'lucide-react'
+import { MoreHorizontal, Clock, Check, Clipboard, CircleAlert, UserRound } from 'lucide-react'
 import moment from 'moment'
 import { ColumnDef } from '@tanstack/react-table'
 
