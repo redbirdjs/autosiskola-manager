@@ -10,6 +10,7 @@
     "lint": "next lint",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:deploy": "prisma migrate deploy",
+    "prisma:demo": "bun db/example.seed.ts",
     "rm:dev": "email dev"
   },
   "prisma": {
