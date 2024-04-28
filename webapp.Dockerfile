@@ -34,7 +34,7 @@ FROM base AS release
 ENV NODE_ENV=production
 
 # felmásoljuk a seed fájlt a helyi gépről
-COPY db/seed.ts ./db/
+COPY db/ ./db/
 
 # a deps stage-ből átmásoljuk a package.json-t a képfájlba
 COPY --chown=bun --from=deps /temp/prod/package.json ./package.json
@@ -52,4 +52,4 @@ USER bun
 EXPOSE 3000
 
 # telepítjük a sémát az adatbázisra, seedeljük és indítjuk a webszervert
-CMD bun run prisma:deploy && bun prisma db seed && bun start
+CMD bun run prisma:deploy && bun prisma db seed && bun prisma:demo && bun start
