@@ -6,6 +6,7 @@ Az autós iskola manager web applikáció egy Next.js-ben (React alapú full-sta
 
 - [.env fájl felépítése](#env-felépítése)
 - [Telepítés Docker containerbe](#telepítés-docker)
+- [Manuális telepítés](#manuális-telepítés)
 
 ## .env felépítése
 
@@ -29,7 +30,7 @@ IMAGE_PROVIDER="http://localhost:8080"
 
 ## Telepítés (Docker)
 
-A web applikáció telepítése nagyon egyszerű. Az egész applikáció egyszerűen telepíthető
+A webapplikáció telepítése nagyon egyszerű. Az egész applikáció egyszerűen telepíthető
 egy Docker containerbe az összes szükséges contrainerrel együtt.
 
 A telepítés előfeltétele, hogy a következő programok telepítve vannak a számítógépre:
@@ -53,4 +54,47 @@ git clone https://github.com/redbirdjs/autosiskola-manager.git
 
 4. Ha véget ért a telepítés létrejött a három container és már használható is az applikáció.
 
-**A futó applikáció a http://localhost:3000 linken érhető el.**
+## Manuális telepítés
+
+A manuális telepítés valamennyivel nehezebb, mint a Docker konténer létrehozása, ezért a Docker telepítést ajánlom. Amennyiben mégis manuálisan szeretnénk telepíteni a webalkalmazást, szükséges, hogy a számítógépünkön telepítve legyen egy PostgreSQL szerver.
+
+Szükséges szoftverek:
+
+- Bun - Javascript futtatási környezet
+- Git - repository letöltéséhez
+
+Ha az adatbázis szerver telepítve van a következő módon tudjuk telepíteni az alkalmazást:
+
+1. Töltsük le a forráskódot a github repository-ból.
+
+```
+git clone https://github.com/redbirdjs/autosiskola-manager.git
+```
+
+2. Telepítsük a szükséges függőségeket.
+
+```
+bun install
+```
+
+3. Nevezzük át a `.env.example` nevű fájlt `.env`-re és töltsük ki a saját adatainkal. (A .env fájl felépítését a fájl tetején vagy [ide kattintva](#env-felépítése) tudja megtekinteni.)
+
+4. Generáljuk le a Prisma sémánkat és telepítsük.
+
+```
+bunx prisma generate && bun run prisma:migrate
+```
+
+5. Készítsük el a production buildet a forráskódból.
+
+```
+bun run build
+```
+
+6. Indítsuk el a production webalkalmazást.
+
+```
+bun start
+```
+
+**A futó applikáció a http://localhost:3000 linken érhető el, ha még nem fut applikáció, amely már foglalja a 3000-es portot.**
